@@ -10,7 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/minishell.h"
+
 int main()
 {
+	char	*read;
+
+	read = NULL;
+	while (1)
+	{
+		read = readline("Minishell $> ");
+		printf("%s\n", read);
+	}
 	return (0);
 }
