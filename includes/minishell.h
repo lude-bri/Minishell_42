@@ -33,19 +33,43 @@ typedef struct s_command
 }			t_command;
 
 //main struct to deal with the hole minishell system
-typedef struct s_shell
+//it's called msh because its a MiniSHell
+typedef struct s_msh
 {
 	t_command	*cmds;
-	int			cmd_count;
-	int			exit_status;
 	char		**envp;
 	char		**path;
-	int			shell_level;
-}				t_shell;
+	int			cmd_count;
+	int			exit_status;
+
+}				t_msh;
 
 /* ************************************************************************** */
 /*                                 FUNCTIONS                                  */
 /* ************************************************************************** */
+
+/* **************** */
+/*      100        */
+/* *************** */
+
+//100_main.c
+int	main(int ac, char **av, char **envp);
+int	msh_loop(t_msh *msh);
+
+/* **************** */
+/*      110        */
+/* *************** */
+
+//110_init.c
+char	**init_envp(char **envp);
+void	init_struct(t_msh *msh);
+
+/* **************** */
+/*      900        */
+/* *************** */
+
+//900_free.c
+int	free_array(char **str, int error);
 
 
 #endif

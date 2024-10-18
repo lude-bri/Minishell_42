@@ -38,6 +38,8 @@ LIBFT_PATH		= $(LIBS_PATH)/libft
 
 ### Files Source
 FILES = 100_main.c
+FILES += 110_init.c
+FILES += 900_free.c
 
 ### Paths
 SRC		= $(addprefix $(SRC_PATH)/, $(FILES))
