@@ -32,6 +32,8 @@ int	msh_loop(t_msh *msh)
 	{
 		init_struct(msh);
 		prompt = readline("Minishell $> ");
+		if (*prompt)
+			add_history(prompt);
 		printf("%s\n", prompt);
 	}
 	return (0);
