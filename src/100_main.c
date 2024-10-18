@@ -12,15 +12,22 @@
 
 #include "../includes/minishell.h"
 
-int main()
-{
-	char	*read;
 
-	read = NULL;
-	while (1)
-	{
-		read = readline("Minishell $> ");
-		printf("%s\n", read);
-	}
-	return (0);
+int	main(int ac, char **av, char **envp)
+{
+	(void)ac;
+	(void)av;
 }
+
+// int main()
+// {
+// 	char	*read;
+//
+// 	read = NULL;
+// 	while (1)
+// 	{
+// 		read = readline("Minishell $> ");
+// 		printf("%s\n", read);
+// 	}
+// 	return (0);
+// }

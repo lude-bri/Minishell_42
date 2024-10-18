@@ -37,7 +37,7 @@ TESTS_PATH		= files
 LIBFT_PATH		= $(LIBS_PATH)/libft
 
 ### Files Source
-FILES = main.c
+FILES = 100_main.c
 
 ### Paths
 SRC		= $(addprefix $(SRC_PATH)/, $(FILES))
