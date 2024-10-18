@@ -61,7 +61,6 @@ int	msh_loop(t_msh *msh);
 /* *************** */
 
 //110_init.c
-char	**init_envp(char **envp);
 void	init_struct(t_msh *msh);
 
 /* **************** */
