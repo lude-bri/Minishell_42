@@ -148,6 +148,12 @@ check_ext_func: all		## Check for external functions
 
 ##@ Test Rules 🧪
 
+test:                           ##@ Opens Minishell and Bash
+	tmux split-window -h "bash"
+	tmux split-window -v -t 0 "./minishell"
+	tmux resize-pane -L
+
+
 ##@ Debug Rules 
 
 gdb: all $(NAME) $(TEMP_PATH)			## Debug w/ gdb
