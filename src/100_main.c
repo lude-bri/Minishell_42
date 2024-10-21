@@ -41,6 +41,8 @@ int	msh_loop(t_msh *msh)
 			msh_exit(argv);
 		if (argv[0] && ft_strncmp(argv[0], "pwd", 3) == 0 && ft_strlen(argv[0]) == 3)
 			msh_pwd();
+		if (argv[0] && ft_strncmp(argv[0], "echo", 4) == 0)
+			msh_echo(argv);
 		free(prompt);
 		free_arg(argv);
 	}
