@@ -40,6 +40,9 @@ LIBFT_PATH		= $(LIBS_PATH)/libft
 FILES = 100_main.c
 FILES += 110_init.c
 FILES += 900_free.c
+FILES += tokenization.c
+FILES += pwd.c
+FILES += exit.c
 
 ### Paths
 SRC		= $(addprefix $(SRC_PATH)/, $(FILES))
