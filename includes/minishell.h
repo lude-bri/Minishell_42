@@ -69,5 +69,17 @@ void	init_struct(t_msh *msh);
 //900_free.c
 int	free_array(char **str, int error);
 
+//exit.c
+int		is_num(const char *str);
+void	msh_exit(char **argv);
+
+//tokenization.c
+char	**split_input(const char *input);
+int	count_words(const char *input);
+int	is_whitespace(char c);
+char	*copy_word(const char *input, int start, int end);
+
+//pwd.c
+void	msh_pwd(void);
 
 #endif
