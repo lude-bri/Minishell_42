@@ -26,6 +26,7 @@ int	main(int ac, char **av, char **envp)
 int	msh_loop(t_msh *msh)
 {
 	char	*prompt;
+	char	**argv;
 
 	prompt = NULL;
 	while (1)
@@ -34,7 +35,14 @@ int	msh_loop(t_msh *msh)
 		prompt = readline("Minishell $> ");
 		if (*prompt)
 			add_history(prompt);
+		argv = split_input(prompt);
 		printf("%s\n", prompt);
+		if (argv[0] && ft_strncmp(argv[0], "exit", 4) == 0)
+			msh_exit(argv);
+		if (argv[0] && ft_strncmp(argv[0], "pwd", 3) == 0 && ft_strlen(argv[0]) == 3)
+			msh_pwd();
+		free(prompt);
+		free_arg(argv);
 	}
 	return (0);
 }
