@@ -24,3 +24,16 @@ int	free_array(char **str, int error)
 	free(str);
 	return (error);
 }
+
+void	free_arg(char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (argv[i])
+	{
+		free(argv[i]);
+		i++;
+	}
+	free(argv);
+}
