@@ -67,7 +67,8 @@ void	init_struct(t_msh *msh);
 /* *************** */
 
 //900_free.c
-int	free_array(char **str, int error);
+int		free_array(char **str, int error);
+void	free_arg(char **argv);
 
 //exit.c
 int		is_num(const char *str);
