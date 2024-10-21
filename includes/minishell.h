@@ -83,4 +83,7 @@ char	*copy_word(const char *input, int start, int end);
 //pwd.c
 void	msh_pwd(void);
 
+//echo.c
+void	msh_echo(char **argv);
+
 #endif
