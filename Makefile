@@ -43,6 +43,7 @@ FILES += 900_free.c
 FILES += tokenization.c
 FILES += pwd.c
 FILES += exit.c
+FILES += echo.c
 
 ### Paths
 SRC		= $(addprefix $(SRC_PATH)/, $(FILES))
