@@ -86,4 +86,10 @@ void	msh_pwd(void);
 //echo.c
 void	msh_echo(char **argv);
 
+//cd.c
+void	msh_cd(char **argv);
+
+//export.c
+void msh_export(char **envp);
+
 #endif
