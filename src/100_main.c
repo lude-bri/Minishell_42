@@ -43,6 +43,10 @@ int	msh_loop(t_msh *msh)
 			msh_pwd();
 		if (argv[0] && ft_strncmp(argv[0], "echo", 4) == 0)
 			msh_echo(argv);
+		if (argv[0] && ft_strncmp(argv[0], "cd", 2) == 0)
+			msh_cd(argv);
+		if (argv[0] && ft_strncmp(argv[0], "export", 6) == 0)
+			msh_export(msh->envp);
 		free(prompt);
 		free_arg(argv);
 	}
