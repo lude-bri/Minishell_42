@@ -44,6 +44,8 @@ FILES += tokenization.c
 FILES += pwd.c
 FILES += exit.c
 FILES += echo.c
+FILES += cd.c
+FILES += export.c
 
 ### Paths
 SRC		= $(addprefix $(SRC_PATH)/, $(FILES))
