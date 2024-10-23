@@ -40,7 +40,8 @@ int	msh_loop(t_msh *msh)
 		prompt = readline("Minishell $> ");
 		if (*prompt)
 			add_history(prompt);
-		argv = split_input(prompt);
+		// argv = split_input(prompt);
+		argv = ft_split(prompt, ' ');
 		printf("%s\n", prompt);
 		if (argv[0] && ft_strncmp(argv[0], "exit", 4) == 0)
 			msh_exit(argv);

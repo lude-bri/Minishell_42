@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+// static char	**free_arrays(const char **s, int a);
+
 char	*copy_word(const char *input, int start, int end)
 {
 	int		i;
@@ -53,6 +55,17 @@ int	count_words(const char *input)
 	return (counter);
 }
 
+// static char	**free_arrays(const char **s, int a)
+// {
+// 	while (a > 0)
+// 	{
+// 		a--;
+// 		free((void *)s[a]);
+// 	}
+// 	free(s);
+// 	return (NULL);
+// }
+
 char	**split_input(const char *input)
 {
 	int		number_words;
@@ -77,8 +90,6 @@ char	**split_input(const char *input)
 			i++;
 		if (start < i)
 			argv[j++] = copy_word(input, start, i);
-		if (!argv[j])
-			return (free_arg(argv), NULL);
 	}
 	argv[j] = NULL;
 	return (argv);

@@ -25,6 +25,7 @@ void	msh_export(char **envp)
 		j = 0;
 		if (equal_sign)
 		{
+			ft_printf("declare -x ");
 			while (&envp[i][j] != equal_sign)
 			{
 				write(1, &envp[i][j], 1);

@@ -44,5 +44,6 @@ void	msh_exit(char **argv)
 			exit_status = 255;
 		}
 	}
+	free_arg(argv);
 	exit (exit_status);
 }

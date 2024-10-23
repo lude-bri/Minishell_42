@@ -22,6 +22,7 @@ int	free_array(char **str, int error)
 	while (str[++i])
 		free(str[i]);
 	free(str);
+	printf("here");
 	return (error);
 }
 
@@ -30,10 +31,15 @@ void	free_arg(char **argv)
 	int	i;
 
 	i = 0;
-	while (argv[i])
+	if (**argv)
 	{
-		free(argv[i]);
-		i++;
+		while (argv[i])
+		{
+			free(argv[i]);
+			i++;
+		}
+		free(argv);
 	}
-	free(argv);
+	else
+		free(*argv);
 }
