@@ -22,7 +22,6 @@ int	free_array(char **str, int error)
 	while (str[++i])
 		free(str[i]);
 	free(str);
-	printf("here");
 	return (error);
 }
 
