@@ -77,6 +77,8 @@ char	**split_input(const char *input)
 			i++;
 		if (start < i)
 			argv[j++] = copy_word(input, start, i);
+		if (!argv[j])
+			return (free_arg(argv), NULL);
 	}
 	argv[j] = NULL;
 	return (argv);

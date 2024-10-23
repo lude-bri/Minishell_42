@@ -18,6 +18,11 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
+	//init
+	//msh = malloc(sizeof(t_msh));
+	// if (!msh)
+	// 	ft_putstr_fd("It was not able to open Minishell", 2);
+	//init_msh(msh);
 	msh.envp = envp;
 	msh_loop(&msh);
 	return (free_array(msh.envp, 0));

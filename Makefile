@@ -114,7 +114,7 @@ $(LIBFT_ARC):
 get_libft:
 	@echo "* $(CYA)Getting Libft submodule$(D)]"
 	@if test ! -d "$(LIBFT_PATH)"; then \
-		git clone git@github.com:lude-bri/libft_42_LP.git $(LIBFT_PATH); \
+		git clone https://github.com/lude-bri/libft_42_LP.git $(LIBFT_PATH); \
 		echo "* $(GRN)Libft submodule download$(D): $(_SUCCESS)"; \
 	else \
 		echo "* $(GRN)Libft submodule already exists ✌️"; \
@@ -175,9 +175,35 @@ vgdb: all $(NAME) $(TEMP_PATH)			## Debug w/ valgrind (memcheck) & gdb
 	tmux resize-pane -U 18
 	make get_log
 
-valgrind: all $(NAME) $(TEMP_PATH)			## Debug w/ valgrind (memcheck)
+define	SUP_BODY
+{
+	name
+	Memcheck:Leak
+	fun:*alloc
+	...
+	obj:*/libreadline.so.*
+	...
+}
+{
+	leak readline
+	Memcheck:Leak
+	...
+	fun:readline
+}
+{
+	leak add_history
+	Memcheck:Leak
+	...
+	fun:add_history
+}
+endef
+
+supfile:
+	$(file > sup,$(SUP_BODY))
+
+valgrind: all supfile $(NAME) $(TEMP_PATH)			## Debug w/ valgrind (memcheck)
 	tmux set-option remain-on-exit on
-	tmux split-window -h "valgrind --leak-check=full --show-leak-kinds=all -s ./$(NAME) $(ARG)"
+	tmux split-window -h "valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=sup --tool=memcheck -s ./$(NAME) $(ARG)"
 
 helgrind: all $(NAME) $(TEMP_PATH)			## Debug threads w/ helgrind
 	tmux set-option remain-on-exit on

@@ -38,6 +38,11 @@ typedef struct s_msh
 	t_command	*cmds;
 	char		**envp;
 	char		**path;
+
+	char		*user;
+	char		*home;
+	char		*hostname;
+
 	int			cmd_count;
 	int			exit_status;
 
@@ -60,7 +65,9 @@ int	msh_loop(t_msh *msh);
 /* *************** */
 
 //110_init.c
+void	init_msh(t_msh *msh, char **envp);
 void	init_struct(t_msh *msh);
+char	**init_env(char **envp);
 
 /* **************** */
 /*      900        */
