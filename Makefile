@@ -62,7 +62,8 @@ LIBFT_ARC	= $(LIBFT_PATH)/libft.a
 CC			= cc
 
 CFLAGS		= -Wall -Wextra -Werror
-DFLAGS		= -g -fsanitize=address
+DFLAGS		= -g 
+# -fsanitize=address
 
 INC			= -I $(INCLUDE_PATH)
 
