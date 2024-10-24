@@ -16,7 +16,7 @@ void	msh_cd(char **argv)
 {
 	if (argv[1] == NULL)
 	{
-		ft_printf("cd: missing arument\n");
+		ft_printf("cd: missing argument\n");
 		return ;
 	}
 	if (chdir(argv[1]) != 0)

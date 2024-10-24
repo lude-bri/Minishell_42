@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static char	*get_pwd(t_msh *msh)
+static char	*get_pwd(t_msh *msh, char **envp)
 {
 	char	*new_pwd;
 	char	*pwd;
@@ -20,7 +20,7 @@ static char	*get_pwd(t_msh *msh)
 	int		j = 0;
 	int		i;
 
-	pwd = get_variable("PWD", msh->envp);
+	pwd = get_variable("PWD", envp);
 	new_pwd = ft_calloc(ft_strlen(pwd), sizeof(char));
 	home = msh->home;
 	i = 0;
@@ -50,7 +50,7 @@ char	*build_prompt(t_msh *msh)
 	char	*pwd;
 	char	*prompt;
 
-	pwd = get_pwd(msh);
+	pwd = get_pwd(msh, msh->envp);
 	prompt = msh->prompt;
 	prompt = ft_strjoin(prompt, pwd);
 	prompt = ft_strjoin(prompt, " $>");

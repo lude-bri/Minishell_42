@@ -41,14 +41,14 @@ FILES = 100_main.c
 FILES += 110_init.c
 FILES += 111_init_var.c
 FILES += 120_prompt.c
+FILES += 200_tokenization.c
+FILES += 500_echo.c
+FILES += 510_cd.c
+FILES += 520_pwd.c
+FILES += 530_export.c
+FILES += 550_env.c
+FILES += 560_exit.c
 FILES += 900_free.c
-FILES += tokenization.c
-FILES += pwd.c
-FILES += exit.c
-FILES += echo.c
-FILES += cd.c
-FILES += export.c
-FILES += env.c
 
 ### Paths
 SRC		= $(addprefix $(SRC_PATH)/, $(FILES))

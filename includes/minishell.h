@@ -57,6 +57,7 @@ typedef struct s_msh
 /* **************** */
 /*      100        */
 /* *************** */
+// FIRST FUNCTIONS -> MAIN AND INITs
 
 //100_main.c
 int	main(int ac, char **av, char **envp);
@@ -74,36 +75,77 @@ char	*get_variable(char *v, char **envp);
 char	*build_prompt(t_msh *msh);
 
 /* **************** */
-/*      900        */
+/*      200        */
 /* *************** */
+// TOKENS
 
-//900_free.c
-int		free_array(char **str, int error);
-void	free_arg(char **argv);
-
-//exit.c
-int		is_num(const char *str);
-void	msh_exit(char **argv);
-
-//tokenization.c
+//200_tokenization.c
 char	**split_input(const char *input);
 int	count_words(const char *input);
 int	is_whitespace(char c);
 char	*copy_word(const char *input, int start, int end);
 
-//pwd.c
-void	msh_pwd(void);
+/* **************** */
+/*      300        */
+/* *************** */
+// PARSERS
 
-//echo.c
+/* **************** */
+/*      400        */
+/* *************** */
+// EXECUTE
+
+/* **************** */
+/*      500        */
+/* *************** */
+// BUILT-INS
+
+//500_echo.c
 void	msh_echo(char **argv);
 
-//cd.c
+//510_cd.c
 void	msh_cd(char **argv);
 
-//export.c
+//520_pwd.c
+void	msh_pwd(void);
+
+//530_export.c
 void msh_export(char **envp);
 
-//env.c
+//540_unset.c
+
+//550_env.c
 void	msh_env(char **envp);
+
+//560_exit.c
+int		is_num(const char *str);
+void	msh_exit(char **argv);
+
+/* **************** */
+/*      600        */
+/* *************** */
+// PIPES
+
+/* **************** */
+/*      700        */
+/* *************** */
+// REDIRECTS
+
+/* **************** */
+/*      800        */
+/* *************** */
+// ERROR HANDLERS
+
+
+/* **************** */
+/*      900        */
+/* *************** */
+// FREEs
+
+//900_free.c
+int		free_array(char **str, int error);
+void	free_arg(char **argv);
+
+
 
 #endif

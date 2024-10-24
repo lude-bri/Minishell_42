@@ -1,53 +1,53 @@
-==133779== Memcheck, a memory error detector
-==133779== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==133779== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==133779== Command: ./minishell
-==133779== Parent PID: 60645
-==133779== 
-==133779== (action at startup) vgdb me ... 
-==133779== 
-==133779== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==133779==   /path/to/gdb ./minishell
-==133779== and then give GDB the following command
-==133779==   target remote | /usr/bin/vgdb --pid=133779
-==133779== --pid is optional if only one valgrind process is running
-==133779== 
-==133779== Invalid write of size 1
-==133779==    at 0x4017FC: get_hostname (111_init_var.c:78)
-==133779==    by 0x401710: find_variable (111_init_var.c:52)
-==133779==    by 0x40160D: get_variable (111_init_var.c:25)
-==133779==    by 0x401491: init_msh (110_init.c:21)
-==133779==    by 0x4011F6: main (100_main.c:23)
-==133779==  Address 0x4b27e0c is 6 bytes after a block of size 6 alloc'd
-==133779==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==133779==    by 0x40256D: ft_calloc (ft_calloc.c:30)
-==133779==    by 0x40177E: get_hostname (111_init_var.c:66)
-==133779==    by 0x401710: find_variable (111_init_var.c:52)
-==133779==    by 0x40160D: get_variable (111_init_var.c:25)
-==133779==    by 0x401491: init_msh (110_init.c:21)
-==133779==    by 0x4011F6: main (100_main.c:23)
-==133779== 
-==133779== (action on error) vgdb me ... 
-==133779== 
-==133779== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==133779==   /path/to/gdb ./minishell
-==133779== and then give GDB the following command
-==133779==   target remote | /usr/bin/vgdb --pid=133779
-==133779== --pid is optional if only one valgrind process is running
-==133779== 
-==133779== Continuing ...
-==133779== 
-==133779== HEAP SUMMARY:
-==133779==     in use at exit: 225,351 bytes in 423 blocks
-==133779==   total heap usage: 645 allocs, 222 frees, 248,231 bytes allocated
-==133779== 
-==133779== LEAK SUMMARY:
-==133779==    definitely lost: 0 bytes in 0 blocks
-==133779==    indirectly lost: 0 bytes in 0 blocks
-==133779==      possibly lost: 0 bytes in 0 blocks
-==133779==    still reachable: 225,351 bytes in 423 blocks
-==133779==         suppressed: 0 bytes in 0 blocks
-==133779== Rerun with --leak-check=full to see details of leaked memory
-==133779== 
-==133779== For lists of detected and suppressed errors, rerun with: -s
-==133779== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==168192== Memcheck, a memory error detector
+==168192== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==168192== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==168192== Command: ./minishell
+==168192== Parent PID: 60645
+==168192== 
+==168192== (action at startup) vgdb me ... 
+==168192== 
+==168192== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==168192==   /path/to/gdb ./minishell
+==168192== and then give GDB the following command
+==168192==   target remote | /usr/bin/vgdb --pid=168192
+==168192== --pid is optional if only one valgrind process is running
+==168192== 
+==168192== Invalid read of size 1
+==168192==    at 0x4023A7: ft_strlen (ft_strlen.c:31)
+==168192==    by 0x402875: ft_strjoin (ft_strjoin.c:36)
+==168192==    by 0x4015F7: init_prompt (110_init.c:20)
+==168192==    by 0x4014C0: init_msh (110_init.c:32)
+==168192==    by 0x4011F6: main (100_main.c:23)
+==168192==  Address 0x4b27e06 is 0 bytes after a block of size 6 alloc'd
+==168192==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==168192==    by 0x40275D: ft_calloc (ft_calloc.c:30)
+==168192==    by 0x40181E: get_hostname (111_init_var.c:68)
+==168192==    by 0x4017B0: find_variable (111_init_var.c:54)
+==168192==    by 0x4016AB: get_variable (111_init_var.c:27)
+==168192==    by 0x4014A1: init_msh (110_init.c:30)
+==168192==    by 0x4011F6: main (100_main.c:23)
+==168192== 
+==168192== (action on error) vgdb me ... 
+==168192== 
+==168192== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==168192==   /path/to/gdb ./minishell
+==168192== and then give GDB the following command
+==168192==   target remote | /usr/bin/vgdb --pid=168192
+==168192== --pid is optional if only one valgrind process is running
+==168192== 
+==168192== Continuing ...
+==168192== Invalid read of size 1
+==168192==    at 0x4028ED: ft_strjoin (ft_strjoin.c:44)
+==168192==    by 0x4015F7: init_prompt (110_init.c:20)
+==168192==    by 0x4014C0: init_msh (110_init.c:32)
+==168192==    by 0x4011F6: main (100_main.c:23)
+==168192==  Address 0x4b27e06 is 0 bytes after a block of size 6 alloc'd
+==168192==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==168192==    by 0x40275D: ft_calloc (ft_calloc.c:30)
+==168192==    by 0x40181E: get_hostname (111_init_var.c:68)
+==168192==    by 0x4017B0: find_variable (111_init_var.c:54)
+==168192==    by 0x4016AB: get_variable (111_init_var.c:27)
+==168192==    by 0x4014A1: init_msh (110_init.c:30)
+==168192==    by 0x4011F6: main (100_main.c:23)
+==168192== 
+==168192== (action on error) vgdb me ... 
