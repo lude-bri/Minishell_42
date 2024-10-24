@@ -42,6 +42,7 @@ FILES += 110_init.c
 FILES += 111_init_var.c
 FILES += 120_prompt.c
 FILES += 200_tokenization.c
+FILES += 400_signals.c
 FILES += 500_echo.c
 FILES += 510_cd.c
 FILES += 520_pwd.c
