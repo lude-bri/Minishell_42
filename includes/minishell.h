@@ -113,6 +113,8 @@ void	msh_pwd(void);
 void msh_export(char **envp);
 
 //540_unset.c
+int	is_variable_match(const char *env_var, const char *var_name);
+void	msh_unset(char **argv, char ***envp);
 
 //550_env.c
 void	msh_env(char **envp);
