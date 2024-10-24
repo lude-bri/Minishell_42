@@ -12,31 +12,49 @@
 
 #include "../includes/minishell.h"
 
-int	build_prompt(t_msh *msh)
+static char	*get_pwd(t_msh *msh)
 {
-	//bash prompt is $USER@$HOSTNAME:$PWD
-	//therefore we use 3 variables
-	//$USER
-	//@
-	//$HOSTNAME
-	//:
-	//$PWD (EDIT)
-	char	*user;
+	char	*new_pwd;
+	char	*pwd;
+	char	*home;
+	int		j = 0;
 	int		i;
-	int		j;
 
+	pwd = get_variable("PWD", msh->envp);
+	new_pwd = ft_calloc(ft_strlen(pwd), sizeof(char));
+	home = msh->home;
 	i = 0;
-	user = NULL;
-	if (msh->envp[i])
-		return (0);
-	while (ft_strnstr(msh->envp[i], "USER=", 5) == 0)
+	while (pwd[i] == home[i])
 		i++;
-	j = 0;
-	while (msh->envp[i])
+	new_pwd[j++] = '~';
+	while (pwd[i])
 	{
-		user[j] = msh->envp[i][j];
+		new_pwd[j] = pwd[i];
 		i++;
 		j++;
 	}
-	return (0);
+	free(pwd);
+	return (new_pwd); 
 }
+
+char	*build_prompt(t_msh *msh)
+{
+	//bash prompt is $USER@$SESSION_MANAGER:$PWD
+	//therefore we use 3 variables
+	//$USER
+	//@
+	//$SESSION_MANAGER (EDIT)
+	//:
+	//$PWD (EDIT)
+	
+	char	*pwd;
+	char	*prompt;
+
+	pwd = get_pwd(msh);
+	prompt = msh->prompt;
+	prompt = ft_strjoin(prompt, pwd);
+	prompt = ft_strjoin(prompt, " $>");
+	return (prompt);
+}
+
+

@@ -12,6 +12,15 @@
 
 #include "../includes/minishell.h"
 
+static void	init_prompt(t_msh *msh)
+{
+	char	*prompt;
+
+	prompt = ft_strjoin(msh->user, "@");
+	prompt = ft_strjoin(prompt, msh->hostname);
+	prompt = ft_strjoin(prompt, ":");
+	msh->prompt = prompt;
+}
 void	init_msh(t_msh *msh, char **envp)
 {
 	if (!msh->envp)
@@ -20,6 +29,7 @@ void	init_msh(t_msh *msh, char **envp)
 	msh->user = get_variable("USER", envp);
 	msh->hostname = get_variable("SESSION_MANAGER", envp); 
 	msh->cmds = NULL;
+	init_prompt(msh);
 }
 
 void	init_struct(t_msh *msh)

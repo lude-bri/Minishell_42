@@ -42,6 +42,8 @@ typedef struct s_msh
 	char		*user;
 	char		*home;
 	char		*hostname;
+	char		*pwd;
+	char		*prompt;
 
 	int			cmd_count;
 	int			exit_status;
@@ -60,10 +62,6 @@ typedef struct s_msh
 int	main(int ac, char **av, char **envp);
 int	msh_loop(t_msh *msh);
 
-/* **************** */
-/*      110        */
-/* *************** */
-
 //110_init.c
 void	init_msh(t_msh *msh, char **envp);
 void	init_struct(t_msh *msh);
@@ -71,6 +69,9 @@ char	**init_env(char **envp);
 
 //111_init_var.c
 char	*get_variable(char *v, char **envp);
+
+//120_prompt.c
+char	*build_prompt(t_msh *msh);
 
 /* **************** */
 /*      900        */

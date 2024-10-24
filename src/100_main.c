@@ -34,7 +34,8 @@ int	msh_loop(t_msh *msh)
 	while (1)
 	{
 		init_struct(msh);
-		prompt = readline("Minishell $> ");
+		// prompt = readline("Minishell $> ");
+		prompt = readline(build_prompt(msh)); 
 		if (*prompt)
 			add_history(prompt);
 		argv = split_input(prompt);

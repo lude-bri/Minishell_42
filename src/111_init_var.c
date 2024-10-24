@@ -19,8 +19,10 @@ char	*get_variable(char *v, char **envp)
 {
 	char	*find;
 	char	*hostname;
+	char	*pwd;
 
 	hostname = "SESSION_MANAGER";
+	pwd = "PWD";
 	if (v == hostname)
 		find = find_variable(v, envp, 1);
 	else
