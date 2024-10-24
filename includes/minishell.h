@@ -8,6 +8,7 @@
 
 # include <unistd.h>
 # include <stdio.h>
+# include <signal.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft_42/libft.h"
@@ -94,6 +95,8 @@ char	*copy_word(const char *input, int start, int end);
 /*      400        */
 /* *************** */
 // EXECUTE
+void	setup_signals(void);
+void	sigint_handler(int sig);
 
 /* **************** */
 /*      500        */
