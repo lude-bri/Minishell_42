@@ -16,9 +16,9 @@ void	init_msh(t_msh *msh, char **envp)
 {
 	if (!msh->envp)
 		msh->envp = init_env(envp); //get_envp
-	// msh->home = //get_variable_home
-	// msh->user = 
-	// msh->hostname = 
+	msh->home = get_variable("HOME", envp);
+	msh->user = get_variable("USER", envp);
+	msh->hostname = get_variable("SESSION_MANAGER", envp); 
 	msh->cmds = NULL;
 }
 

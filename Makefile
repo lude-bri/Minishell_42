@@ -39,6 +39,7 @@ LIBFT_PATH		= $(LIBS_PATH)/libft
 ### Files Source
 FILES = 100_main.c
 FILES += 110_init.c
+FILES += 111_init_var.c
 FILES += 900_free.c
 FILES += tokenization.c
 FILES += pwd.c

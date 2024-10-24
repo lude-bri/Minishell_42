@@ -14,7 +14,13 @@
 
 int	build_prompt(t_msh *msh)
 {
-	//bash prompt is $USER@$SESSION_MANAGER:$PWD
+	//bash prompt is $USER@$HOSTNAME:$PWD
+	//therefore we use 3 variables
+	//$USER
+	//@
+	//$HOSTNAME
+	//:
+	//$PWD (EDIT)
 	char	*user;
 	int		i;
 	int		j;

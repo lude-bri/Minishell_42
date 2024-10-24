@@ -69,6 +69,9 @@ void	init_msh(t_msh *msh, char **envp);
 void	init_struct(t_msh *msh);
 char	**init_env(char **envp);
 
+//111_init_var.c
+char	*get_variable(char *v, char **envp);
+
 /* **************** */
 /*      900        */
 /* *************** */

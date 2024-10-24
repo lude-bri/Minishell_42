@@ -21,7 +21,6 @@ int	main(int ac, char **av, char **envp)
 	//init minishell
 	ft_memset(&msh, 0, sizeof(t_msh));
 	init_msh(&msh, envp);
-	// msh.envp = envp;
 	msh_loop(&msh);
 	return (free_array(msh.envp, 0));
 }
@@ -54,6 +53,7 @@ int	msh_loop(t_msh *msh)
 		if (argv[0] && ft_strncmp(argv[0], "env", 3) == 0)
 			msh_env(msh->envp);
 		free(prompt);
+		free(msh->hostname);
 		free_arg(argv);
 	}
 	return (0);
