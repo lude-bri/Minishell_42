@@ -46,6 +46,7 @@ FILES += exit.c
 FILES += echo.c
 FILES += cd.c
 FILES += export.c
+FILES += env.c
 
 ### Paths
 SRC		= $(addprefix $(SRC_PATH)/, $(FILES))
@@ -161,6 +162,13 @@ test:                           ## Opens Minishell and Bash
 	@tmux split-window -v -t 0 "./minishell"
 	@tmux resize-pane -L
 
+sync_shell:			## Test Minishell and Bash with SYNC
+	tmux set-option remain-on-exit on
+	@echo "[$(YEL)Testing with syncshell$(D)]"
+	tmux split-window -h "bash"
+	tmux setw synchronize-panes on
+	clear && ./$(NAME)
+
 ##@ Debug Rules 
 
 gdb: all $(NAME) $(TEMP_PATH)			## Debug w/ gdb
@@ -174,6 +182,8 @@ vgdb: all $(NAME) $(TEMP_PATH)			## Debug w/ valgrind (memcheck) & gdb
 	tmux split-window -v "gdb --tui -x $(TEMP_PATH)/gdb_commands.txt $(NAME)"
 	tmux resize-pane -U 18
 	make get_log
+
+## Suppressions 
 
 define	SUP_BODY
 {

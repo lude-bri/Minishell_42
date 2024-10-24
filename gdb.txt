@@ -1,36 +1,36 @@
-==240730== Memcheck, a memory error detector
-==240730== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==240730== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==240730== Command: ./minishell
-==240730== Parent PID: 237718
-==240730== 
-==240730== (action at startup) vgdb me ... 
-==240730== 
-==240730== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==240730==   /path/to/gdb ./minishell
-==240730== and then give GDB the following command
-==240730==   target remote | /usr/bin/vgdb --pid=240730
-==240730== --pid is optional if only one valgrind process is running
-==240730== 
-==240730== 
-==240730== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==240730==   /path/to/gdb ./minishell
-==240730== and then give GDB the following command
-==240730==   target remote | /usr/bin/vgdb --pid=240730
-==240730== --pid is optional if only one valgrind process is running
-==240730== 
-==240730== 
-==240730== Process terminating with default action of signal 11 (SIGSEGV)
-==240730==  General Protection Fault
-==240730==    at 0x4A65EC2: __pthread_once_slow (pthread_once.c:114)
-==240730==    by 0x4B348C2: __rpc_thread_variables (rpc_thread.c:59)
-==240730==    by 0x4B87C0C: free_mem (in /usr/lib/x86_64-linux-gnu/libc.so.6)
-==240730==    by 0x4B87741: __libc_freeres (in /usr/lib/x86_64-linux-gnu/libc.so.6)
-==240730==    by 0x483F1B2: _vgnU_freeres (in /usr/libexec/valgrind/vgpreload_core-amd64-linux.so)
-==240730==    by 0x5A4047: ???
-==240730==    by 0x4B6AD3: __sanitizer::Die() (in /home/lude-bri/CC/Rank3/Minishell/minishell)
-==240730==    by 0x4A2981: __asan::InitializeShadowMemory() (in /home/lude-bri/CC/Rank3/Minishell/minishell)
-==240730==    by 0x4A1EBC: __asan::AsanInitInternal() (in /home/lude-bri/CC/Rank3/Minishell/minishell)
-==240730==    by 0x40065BD: _dl_init (dl-init.c:102)
-==240730==    by 0x40202C9: ??? (in /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2)
-==240730== (action on fatal signal) vgdb me ... 
+==80046== Memcheck, a memory error detector
+==80046== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==80046== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==80046== Command: ./minishell
+==80046== Parent PID: 60645
+==80046== 
+==80046== (action at startup) vgdb me ... 
+==80046== 
+==80046== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==80046==   /path/to/gdb ./minishell
+==80046== and then give GDB the following command
+==80046==   target remote | /usr/bin/vgdb --pid=80046
+==80046== --pid is optional if only one valgrind process is running
+==80046== 
+==80046== 
+==80046== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==80046==   /path/to/gdb ./minishell
+==80046== and then give GDB the following command
+==80046==   target remote | /usr/bin/vgdb --pid=80046
+==80046== --pid is optional if only one valgrind process is running
+==80046== 
+==80046== 
+==80046== HEAP SUMMARY:
+==80046==     in use at exit: 215,840 bytes in 232 blocks
+==80046==   total heap usage: 460 allocs, 228 frees, 238,809 bytes allocated
+==80046== 
+==80046== LEAK SUMMARY:
+==80046==    definitely lost: 0 bytes in 0 blocks
+==80046==    indirectly lost: 0 bytes in 0 blocks
+==80046==      possibly lost: 0 bytes in 0 blocks
+==80046==    still reachable: 215,840 bytes in 232 blocks
+==80046==         suppressed: 0 bytes in 0 blocks
+==80046== Rerun with --leak-check=full to see details of leaked memory
+==80046== 
+==80046== For lists of detected and suppressed errors, rerun with: -s
+==80046== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

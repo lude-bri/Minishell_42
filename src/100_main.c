@@ -18,12 +18,10 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	//init
-	//msh = malloc(sizeof(t_msh));
-	// if (!msh)
-	// 	ft_putstr_fd("It was not able to open Minishell", 2);
-	//init_msh(msh);
-	msh.envp = envp;
+	//init minishell
+	ft_memset(&msh, 0, sizeof(t_msh));
+	init_msh(&msh, envp);
+	// msh.envp = envp;
 	msh_loop(&msh);
 	return (free_array(msh.envp, 0));
 }
@@ -40,9 +38,9 @@ int	msh_loop(t_msh *msh)
 		prompt = readline("Minishell $> ");
 		if (*prompt)
 			add_history(prompt);
-		// argv = split_input(prompt);
-		argv = ft_split(prompt, ' ');
-		printf("%s\n", prompt);
+		argv = split_input(prompt);
+		//argv = ft_split(prompt, ' ');
+		//printf("%s\n", prompt);
 		if (argv[0] && ft_strncmp(argv[0], "exit", 4) == 0)
 			msh_exit(argv);
 		if (argv[0] && ft_strncmp(argv[0], "pwd", 3) == 0 && ft_strlen(argv[0]) == 3)
@@ -53,6 +51,8 @@ int	msh_loop(t_msh *msh)
 			msh_cd(argv);
 		if (argv[0] && ft_strncmp(argv[0], "export", 6) == 0)
 			msh_export(msh->envp);
+		if (argv[0] && ft_strncmp(argv[0], "env", 3) == 0)
+			msh_env(msh->envp);
 		free(prompt);
 		free_arg(argv);
 	}

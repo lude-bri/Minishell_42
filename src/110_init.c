@@ -14,7 +14,8 @@
 
 void	init_msh(t_msh *msh, char **envp)
 {
-	msh->envp = init_env(envp); //get_envp
+	if (!msh->envp)
+		msh->envp = init_env(envp); //get_envp
 	// msh->home = //get_variable_home
 	// msh->user = 
 	// msh->hostname = 
@@ -43,7 +44,7 @@ char	**init_env(char **envp)
 	while (envp[++i])
 	{
 		env_copy[i] = ft_strdup(envp[i]);
-		if (env_copy)
+		if (!env_copy)
 			return (NULL);
 	}
 	env_copy[i] = NULL;

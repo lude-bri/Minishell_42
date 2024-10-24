@@ -99,4 +99,7 @@ void	msh_cd(char **argv);
 //export.c
 void msh_export(char **envp);
 
+//env.c
+void	msh_env(char **envp);
+
 #endif
