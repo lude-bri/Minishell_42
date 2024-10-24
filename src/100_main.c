@@ -53,6 +53,8 @@ int	msh_loop(t_msh *msh)
 			msh_export(msh->envp);
 		if (argv[0] && ft_strncmp(argv[0], "env", 3) == 0)
 			msh_env(msh->envp);
+		if (argv[0] && ft_strncmp(argv[0], "unset", 5) == 0)
+			msh_unset(argv, &(msh->envp));
 		free(prompt);
 		free(msh->hostname);
 		free_arg(argv);
