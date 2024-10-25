@@ -25,6 +25,7 @@ int	free_array(char **str, int error)
 	return (error);
 }
 
+//need to change this function (seg fault on signals)
 void	free_arg(char **argv)
 {
 	int	i;
