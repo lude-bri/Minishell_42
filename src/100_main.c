@@ -31,10 +31,17 @@ int	msh_loop(t_msh *msh)
 	char	**argv;
 
 	prompt = NULL;
+	setup_signals();
 	while (1)
 	{
 		init_struct(msh);
-		prompt = readline(build_prompt(msh)); 
+		prompt = readline(build_prompt(msh));
+		//End Of Input(EOI) (ctrl-D)
+		if (!prompt)
+		{
+			ft_printf("exit\n");
+			break ;
+		}
 		if (*prompt)
 			add_history(prompt);
 		argv = split_input(prompt);
@@ -52,8 +59,16 @@ int	msh_loop(t_msh *msh)
 			msh_env(msh->envp);
 		if (argv[0] && ft_strcmp(argv[0], "unset") == 0)
 			msh_unset(argv, &(msh->envp));
-		free(prompt);
-		free(msh->hostname);
+		if (prompt)
+		{
+			free(prompt);
+			prompt = NULL;
+		}
+		if (msh->hostname)
+		{
+			free(msh->hostname);
+			msh->hostname = NULL;
+		}
 		free_arg(argv);
 	}
 	return (0);
