@@ -21,6 +21,7 @@ static void	init_prompt(t_msh *msh)
 	prompt = ft_strjoin(prompt, ":");
 	msh->prompt = prompt;
 }
+
 void	init_msh(t_msh *msh, char **envp)
 {
 	if (!msh->envp)

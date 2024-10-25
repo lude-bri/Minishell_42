@@ -34,26 +34,23 @@ int	msh_loop(t_msh *msh)
 	while (1)
 	{
 		init_struct(msh);
-		// prompt = readline("Minishell $> ");
 		prompt = readline(build_prompt(msh)); 
 		if (*prompt)
 			add_history(prompt);
 		argv = split_input(prompt);
-		//argv = ft_split(prompt, ' ');
-		//printf("%s\n", prompt);
-		if (argv[0] && ft_strncmp(argv[0], "exit", 4) == 0)
+		if (argv[0] && ft_strcmp(argv[0], "exit") == 0)
 			msh_exit(argv);
-		if (argv[0] && ft_strncmp(argv[0], "pwd", 3) == 0 && ft_strlen(argv[0]) == 3)
+		if (argv[0] && ft_strcmp(argv[0], "pwd") == 0 && ft_strlen(argv[0]) == 3)
 			msh_pwd();
-		if (argv[0] && ft_strncmp(argv[0], "echo", 4) == 0)
+		if (argv[0] && ft_strcmp(argv[0], "echo") == 0)
 			msh_echo(argv);
-		if (argv[0] && ft_strncmp(argv[0], "cd", 2) == 0)
+		if (argv[0] && ft_strcmp(argv[0], "cd") == 0)
 			msh_cd(argv);
-		if (argv[0] && ft_strncmp(argv[0], "export", 6) == 0)
+		if (argv[0] && ft_strcmp(argv[0], "export") == 0)
 			msh_export(msh->envp);
-		if (argv[0] && ft_strncmp(argv[0], "env", 3) == 0)
+		if (argv[0] && ft_strcmp(argv[0], "env") == 0)
 			msh_env(msh->envp);
-		if (argv[0] && ft_strncmp(argv[0], "unset", 5) == 0)
+		if (argv[0] && ft_strcmp(argv[0], "unset") == 0)
 			msh_unset(argv, &(msh->envp));
 		free(prompt);
 		free(msh->hostname);
