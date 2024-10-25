@@ -28,6 +28,8 @@ void	init_msh(t_msh *msh, char **envp)
 	msh->home = get_variable("HOME", envp);
 	msh->user = get_variable("USER", envp);
 	msh->hostname = get_variable("SESSION_MANAGER", envp); 
+	if (!msh->hostname)
+		msh->hostname = "42";
 	msh->cmds = NULL;
 	init_prompt(msh);
 }

@@ -33,7 +33,7 @@ void	setup_signals(void)
 	sa_int.sa_handler = sigint_handler;
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa_qint, NULL);
+	sigaction(SIGINT, &sa_quit, NULL);
 
 	
 }

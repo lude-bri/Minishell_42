@@ -39,14 +39,6 @@ static char	*get_pwd(t_msh *msh, char **envp)
 
 char	*build_prompt(t_msh *msh)
 {
-	//bash prompt is $USER@$SESSION_MANAGER:$PWD
-	//therefore we use 3 variables
-	//$USER
-	//@
-	//$SESSION_MANAGER (EDIT)
-	//:
-	//$PWD (EDIT)
-	
 	char	*pwd;
 	char	*prompt;
 
