@@ -6,11 +6,16 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:15:51 by mde-agui          #+#    #+#             */
-/*   Updated: 2024/10/24 19:34:07 by mde-agui         ###   ########.fr       */
+/*   Updated: 2024/10/24 23:49:55 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	sigquit_handler(int sig)
+{
+	(void)sig;
+}
 
 void	sigint_handler(int sig)
 {
@@ -33,7 +38,11 @@ void	setup_signals(void)
 	sa_int.sa_handler = sigint_handler;
 	sigemptyset(&sa_int.sa_mask);
 	sa_int.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa_quit, NULL);
+	sigaction(SIGINT, &sa_int, NULL);
 
-	
+	//SIGQUIT (ctrl-\)(It does nothing)
+	sa_quit.sa_handler = sigquit_handler;
+	sigemptyset(&sa_quit.sa_mask);
+	sa_quit.sa_flags = SA_RESTART;
+	sigaction(SIGQUIT, &sa_quit, NULL);
 }
