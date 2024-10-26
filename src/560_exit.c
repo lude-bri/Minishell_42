@@ -45,5 +45,6 @@ void	msh_exit(char **argv)
 		}
 	}
 	free_arg(argv);
+	printf("exit\n");
 	exit (exit_status);
 }
