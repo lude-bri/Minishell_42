@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:03:56 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/18 14:11:14 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/26 14:14:32 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,3 +73,69 @@ int	msh_loop(t_msh *msh)
 	}
 	return (0);
 }
+
+
+//
+//
+// int	msh_loop(t_msh *msh)
+// {
+// 	char	*prompt;
+// 	char	**argv;
+// 	int		elements;
+//
+// 	prompt = NULL;
+// 	while (1)
+// 	{
+// 		setup_signals();
+// 		init_struct(msh);
+// 		elements = parser(msh, prompt);
+// 		if (elements == FAILURE)
+// 			continue ;
+// 		
+//
+// 	}
+// }
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 16:55:08 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/23 16:55:16 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/26 12:49:49 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	*get_variable(char *v, char **envp)
 	char	*find;
 	char	*hostname;
 
-	// hostname = ft_strdup("SESSION_MANAGER");
 	hostname = "SESSION_MANAGER";
 	if (v == hostname)
 		find = find_variable(v, envp, 1);
