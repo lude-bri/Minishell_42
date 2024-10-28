@@ -41,8 +41,9 @@ void	setup_signals(void)
 	sigaction(SIGINT, &sa_int, NULL);
 
 	//SIGQUIT (ctrl-\)(It does nothing)
-	sa_quit.sa_handler = sigquit_handler;
+	signal(SIGQUIT, SIG_IGN);
+	/*sa_quit.sa_handler = sigquit_handler;
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = SA_RESTART;
-	sigaction(SIGQUIT, &sa_quit, NULL);
+	sigaction(SIGQUIT, &sa_quit, NULL);*/
 }
