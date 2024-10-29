@@ -153,8 +153,10 @@ char	*build_prompt(t_msh *msh);
 //200_tokenization.c
 char	**split_input(const char *input);
 char	*handle_single_quotes(const char *input, int *i);
+char	*handle_double_quotes(const char *input, int *i);
 int	count_words(const char *input);
 int	is_whitespace(char c);
+char	*expand_var(const char *input, int *i);
 char	*copy_word(const char *input, int start, int end);
 
 /* **************** */
