@@ -159,7 +159,7 @@ char	*copy_word(const char *input, int start, int end);
 // PARSERS
 
 //300_parser.c
-int		to_parse(char *command);
+int		to_parse(t_msh *msh, char *line);
 
 /* **************** */
 /*      400        */

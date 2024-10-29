@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:03:56 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/29 10:40:42 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/29 10:46:03 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,19 @@ int	msh_loop(t_msh *msh)
 
 int	msh_loop(t_msh *msh)
 {
-	char	*command;
+	char	*line;
 	int		msh_status;
 
 	while (1)
 	{
 		setup_signals();
 		init_struct(msh);
-		command = readline("msh $ ");
-		msh_status = to_parse(command);
+		line = readline("msh $ ");
+		msh_status = to_parse(msh, line);
 		if (msh_status == FAILURE)
 			continue ;
 		if (msh->cmd_count > NO_CMDS)
-			if (!to_execute(command))
+			if (!to_execute(line))
 				break ;
 		free_cmds(msh->cmds, msh);
 	}
