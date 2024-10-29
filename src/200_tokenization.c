@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenization.c                                     :+:      :+:    :+:   */
+/*   200_tokenization.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
+/*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:49:13 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/23 12:49:15 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/29 12:22:46 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char	*copy_word(const char *input, int start, int end)
 		return (NULL);
 	while (start < end)
 		word[i++] = input[start++];
-	word[i] = input[start++];
+	word[i] = '\0';
+	//word[i] = input[start++];
 	return (word);
 }
 
@@ -45,39 +46,76 @@ int	count_words(const char *input)
 	{
 		while (input[i] && is_whitespace(input[i]))
 			i++;
-		if (input[i])
-			counter++;
-		while (input[i] && !is_whitespace(input[i]))
+		if (input[i] == '\'')
+		{
 			i++;
+			while (input[i] && input[i] != '\'')
+				i++;
+			i++;
+			counter++;
+		}
+		else if (input[i] == '"')
+		{
+			i++;
+			while (input[i] && input[i] == '"')
+				i++;
+			i++;
+			counter++;
+		}
+		else if (input[i])
+		{
+			counter++;
+			while (input[i] && input[i] != '\'' && !is_whitespace(input[i]))
+				i++;
+		}
 	}
 	return (counter);
 }
 
+char	*handle_single_quotes(const char *input, int *i)
+{
+	int		start;
+	char	*word;
+
+	start = ++(*i);
+	while (input[*i] && input[*i] != '\'')
+		(*i)++;
+	word = copy_word(input, start, *i);
+	if (input[*i] == '\'')
+		(*i)++;
+	return (word);
+}
+
 char	**split_input(const char *input)
 {
-	int		number_words;
-	char	**argv;
+	t_token	split;
 	int		i;
 	int		j;
-	int		start;
 
-	number_words = count_words(input);
-	argv = (char **)malloc(sizeof(char *) * (number_words + 1));
+	split.number_words = count_words(input);
+	split.argv = (char **)malloc(sizeof(char *) * (split.number_words + 1));
 	i = 0;
 	j = 0;
-	start = 0;
-	if (!argv)
+	split.start = 0;
+	if (!split.argv)
 		return (NULL);
 	while (input[i])
 	{
 		while (input[i] && is_whitespace(input[i]))
 			i++;
-		start = i;
-		while (input[i] && !is_whitespace(input[i]))
-			i++;
-		if (start < i)
-			argv[j++] = copy_word(input, start, i);
+		//handle_single_quotes
+		if (input[i] == '\'')
+			split.argv[j++] = handle_single_quotes(input, &i);
+		//handle_double_quotes
+		//handle the rest
+		else if (input[i] && !is_whitespace(input[i]))
+		{
+			split.start = i;
+			while (input[i] && input[i] != '\'' && !is_whitespace(input[i]))
+				i++;
+			split.argv[j++] = copy_word(input, split.start, i);
+		}
 	}
-	argv[j] = NULL;
-	return (argv);
+	split.argv[j] = NULL;
+	return (split.argv);
 }
