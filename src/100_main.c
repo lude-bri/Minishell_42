@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:03:56 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/29 10:46:03 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/29 11:51:12 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	msh_loop(t_msh *msh)
 		if (*prompt)
 			add_history(prompt);
 		argv = split_input(prompt);
+
 		if (argv[0] && ft_strcmp(argv[0], "exit") == 0)
 			msh_exit(argv, msh);
 		if (argv[0] && ft_strcmp(argv[0], "pwd") == 0 && ft_strlen(argv[0]) == 3)
@@ -68,29 +69,27 @@ int	msh_loop(t_msh *msh)
 	return (0);
 }
 
-int	msh_loop(t_msh *msh)
-{
-	char	*line;
-	int		msh_status;
+// int	msh_loop(t_msh *msh)
+// {
+// 	char	*line;
+// 	int		msh_status;
+//
+// 	while (1)
+// 	{
+// 		setup_signals();
+// 		init_struct(msh);
+// 		line = readline("msh $ ");
+// 		msh_status = to_parse(msh, line);
+// 		if (msh_status == FAILURE)
+// 			continue ;
+// 		if (msh->cmd_count > NO_CMDS)
+// 			if (!to_execute(line))
+// 				break ;
+// 		free_cmds(msh->cmds, msh);
+// 	}
+// 	return (0);
+// }
 
-	while (1)
-	{
-		setup_signals();
-		init_struct(msh);
-		line = readline("msh $ ");
-		msh_status = to_parse(msh, line);
-		if (msh_status == FAILURE)
-			continue ;
-		if (msh->cmd_count > NO_CMDS)
-			if (!to_execute(line))
-				break ;
-		free_cmds(msh->cmds, msh);
-	}
-	return (0);
-}
-
-
-int	to_parse(char *command);
 
 
 
