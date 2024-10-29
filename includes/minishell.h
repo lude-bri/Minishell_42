@@ -88,6 +88,9 @@ typedef struct s_tkn
 	t_token_group	type;
 	char			*name;
 	int				len;
+	char	**argv;
+	int		number_words;
+	int		start;
 	struct s_tkn    *next;
 }					t_tkn;
 
@@ -149,6 +152,7 @@ char	*build_prompt(t_msh *msh);
 
 //200_tokenization.c
 char	**split_input(const char *input);
+char	*handle_single_quotes(const char *input, int *i);
 int	count_words(const char *input);
 int	is_whitespace(char c);
 char	*copy_word(const char *input, int start, int end);
