@@ -88,7 +88,7 @@ char	*handle_single_quotes(const char *input, int *i)
 
 char	**split_input(const char *input)
 {
-	t_token	split;
+	t_tkn	split;
 	int		i;
 	int		j;
 
