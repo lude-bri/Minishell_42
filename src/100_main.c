@@ -77,35 +77,35 @@ int	msh_loop(t_msh *msh)
 	}
 	return (0);
 }
-
-int	msh_loop(t_msh *msh)
-{
-	char	*line;
-	int		msh_status;
-
-	while (1)
-	{
-		setup_signals();
-		init_struct(msh);
-		line = readline("msh $ ");
-		msh_status = to_parse(msh, line);
-		if (msh_status == FAILURE)
-			continue ;
-		if (msh->cmd_count > NO_CMDS)
-			if (!to_execute(line))
-				break ;
-		free_cmds(msh->cmds, msh);
-	}
-	return (0);
-}
-
-
-int	to_parse(char *command);
-
-
-
-
-
+//
+// int	msh_loop(t_msh *msh)
+// {
+// 	char	*line;
+// 	int		msh_status;
+//
+// 	while (1)
+// 	{
+// 		setup_signals();
+// 		init_struct(msh);
+// 		line = readline("msh $ ");
+// 		msh_status = to_parse(msh, line);
+// 		if (msh_status == FAILURE)
+// 			continue ;
+// 		if (msh->cmd_count > NO_CMDS)
+// 			if (!to_execute(line))
+// 				break ;
+// 		free_cmds(msh->cmds, msh);
+// 	}
+// 	return (0);
+// }
+//
+//
+// int	to_parse(char *command);
+//
+//
+//
+//
+//
 
 
 

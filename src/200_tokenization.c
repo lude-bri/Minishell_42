@@ -80,6 +80,8 @@ int	count_words(const char *input)
 			i++;
 			while (input[i] && input[i] != '\'')
 				i++;
+			if (!input[i])
+				break ;
 			i++;
 			counter++;
 		}
@@ -118,12 +120,10 @@ char	*handle_double_quotes(const char *input, int *i)
 	size_t	len;
 	char	*word;
 	char	*expanded;
-	//int		start;
-	
-	word_size = ft_strlen(input) * 2;
+
+	word_size = ft_strlen(input) * 1024;
 	word = (char *)malloc(word_size);
 	word[0] = '\0';
-	//start = ++(*i);
 	while (input[*i] && input[*i] != '"')
 	{
 		if (input[*i] == '$')

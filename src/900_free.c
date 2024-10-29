@@ -1,4 +1,4 @@
-* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   900_free.c                                         :+:      :+:    :+:   */
@@ -44,11 +44,11 @@ void	free_arg(char **argv)
 
 int	free_cmds(t_command *command, t_msh *msh)
 {
-	int		i;
 	char	**av;
 	char	*cmd;
 
 	av = command->av;
 	cmd = command->cmd;
 	msh->cmd_count = 0;
+	return (0);
 }

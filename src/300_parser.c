@@ -12,9 +12,9 @@
 
 #include "../includes/minishell.h"
 
-int	to_parse(char *command)
+int	to_parse(t_msh *msh, char *line)
 {
-	if (!command)
-		return (FAILURE);
+	(void)msh;
+	(void)line;
 	return (0);
 }

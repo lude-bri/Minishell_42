@@ -14,5 +14,6 @@
 
 int	to_execute(char *command)
 {
+	(void)command;
 	return (0);
 }
