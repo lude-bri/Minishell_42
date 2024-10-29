@@ -28,7 +28,7 @@ int	is_num(const char *str)
 	return (1);
 }
 
-void	msh_exit(char **argv)
+void	msh_exit(char **argv, t_msh *msh)
 {
 	int	exit_status;
 
@@ -44,7 +44,8 @@ void	msh_exit(char **argv)
 			exit_status = 255;
 		}
 	}
-	free_arg(argv);
+	free_arg(argv);	
+	free_array(msh->envp, 0);
 	printf("exit\n");
 	exit (exit_status);
 }

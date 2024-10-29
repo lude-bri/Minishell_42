@@ -41,12 +41,13 @@ char	*build_prompt(t_msh *msh)
 {
 	char	*pwd;
 	char	*prompt;
+	char	*tmp;
 
 	pwd = get_pwd(msh, msh->envp);
-	prompt = msh->prompt;
-	prompt = ft_strjoin(prompt, pwd);
-	prompt = ft_strjoin(prompt, " $>");
+	tmp = ft_strjoin(msh->prompt, pwd);
+	prompt = ft_strjoin(tmp, " $>");
+	msh->prompt = prompt;
+	free(tmp);
+	free(pwd);
 	return (prompt);
 }
-
-

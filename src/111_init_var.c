@@ -58,24 +58,29 @@ static char		*get_hostname(char *hostname, char c)
 {
 	int		i;
 	int		j;
+	int		start;
 	char	*trim;
 
 	i = 0;
+	j = 0;
 	while (hostname[i] != '/')
 		i++;
-	trim = ft_calloc((i + 1), sizeof(char));
-	i++;
+	start = i;
+	while (hostname[i++] != c)
+		j++;
+	trim = ft_calloc((j + 1), sizeof(char));
+	start++;
 	j = 0;
-	while (hostname[i])
+	while (hostname[start])
 	{
-		if (hostname[i] != c)
-			trim[j] = hostname[i];
+		if (hostname[start] != c)
+			trim[j] = hostname[start];
 		else
 			break ;
-		i++;
+		start++;
 		j++;
 	}
-	//trim[i] = '\0';
+	trim[j] = '\0';
 	free(hostname);
 	return (trim);
 }

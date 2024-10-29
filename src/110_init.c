@@ -12,27 +12,29 @@
 
 #include "../includes/minishell.h"
 
-static void	init_prompt(t_msh *msh)
-{
-	char	*prompt;
-
-	prompt = ft_strjoin(msh->user, "@");
-	prompt = ft_strjoin(prompt, msh->hostname);
-	prompt = ft_strjoin(prompt, ":");
-	msh->prompt = prompt;
-}
+// static char *init_prompt(t_msh *msh)
+// {
+// 	char	*prompt;
+// 	char	*tmp;
+//
+// 	tmp = ft_strjoin(msh->user, "@");
+// 	prompt = ft_strjoin(tmp, msh->hostname);
+// 	free(tmp);
+// 	tmp = ft_strjoin_free(prompt, ":", 1);
+// 	return (tmp);
+// }
 
 void	init_msh(t_msh *msh, char **envp)
 {
 	if (!msh->envp)
 		msh->envp = init_env(envp); //get_envp
-	msh->home = get_variable("HOME", envp);
-	msh->user = get_variable("USER", envp);
-	msh->hostname = get_variable("SESSION_MANAGER", envp); 
-	if (!msh->hostname)
-		msh->hostname = "42";
+	// msh->home = get_variable("HOME", envp);
+	// msh->user = get_variable("USER", envp);
+	// msh->hostname = get_variable("SESSION_MANAGER", envp); 
+	// if (!msh->hostname)
+	// 	msh->hostname = "42";
 	msh->cmds = NULL;
-	init_prompt(msh);
+	// msh->prompt = init_prompt(msh);
 }
 
 void	init_struct(t_msh *msh)

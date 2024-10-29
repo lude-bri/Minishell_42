@@ -17,12 +17,79 @@
 /*                                  DEFINES                                   */
 /* ************************************************************************** */
 
+//Max
 # define INT_MAX 2147483647 
 # define INT_MIN -2147483647
+
+//Error
+# define INIT_ERROR			"msh: Init Error\n"
+# define ENV_INIT_ERROR		"msh: Env Init Error\n"
+# define ENV_VAR_ERROR		"msh: Env Variable Error\n"
+# define TKN_ERROR			"msh: Token Error\n"
+# define TKNZ_ERROR			"msh: Tokenizer Error\n"
+# define PRS_ERROR			"msh: Parse Error\n"
+# define PRSN_ERROR			"msh: Parsing Error\n"
+# define MALLOC_ERROR		"msh: Malloc Error\n"
+# define CMD_ERROR			"msh: Command not found\n"
+# define ARG_ERROR			"msh: Invalid Arguments\n"
+
+//Semantics
+# define NO_ENV -1
+# define NO_VAR -1
+# define NO_TOKEN 0
+# define NO_PATH 0
+# define NO_CMDS 0
+
+
+/* ************************************************************************** */
+/*                                  ENUMS								  	  */
+/* ************************************************************************** */
+
+//Minishell Status
+typedef enum e_status 
+{
+	FAILURE,
+	SUCCESS
+}   t_status;
+
+//Token Groups
+typedef	enum e_token_group
+{
+	TKN_IN,
+	TKN_OUT,
+	TKN_CMD,
+	TKN_NULL,
+	TKN_BLANK,
+	TKN_PIPE
+}	t_token_group;
+
+//Command Groups
+typedef enum e_cmd_group
+{
+	CMD_EXEC,
+	CMD_ECHO,
+	CMD_CD,
+	CMD_PWD,
+	CMD_EXPORT,
+	CMD_UNSET,
+	CMD_ENV,
+	CMD_CLEAR,
+	CMD_EXIT,
+	CMD_PATH
+}	t_cmd_group;
 
 /* ************************************************************************** */
 /*                                  STRUCTS                                   */
 /* ************************************************************************** */
+
+//struct to deal with tokens
+typedef struct s_tkn 
+{
+	t_token_group	type;
+	char			*name;
+	int				len;
+	struct s_tkn    *next;
+}					t_tkn;
 
 //struct that deals with commands
 typedef struct s_command 
@@ -91,10 +158,18 @@ char	*copy_word(const char *input, int start, int end);
 /* *************** */
 // PARSERS
 
+//300_parser.c
+int		to_parse(char *command);
+
 /* **************** */
 /*      400        */
 /* *************** */
 // EXECUTE
+
+//400_execute.c
+int		to_execute(char *command);
+
+//410_signals.c
 void	setup_signals(void);
 void	sigint_handler(int sig);
 
@@ -124,7 +199,7 @@ void	msh_env(char **envp);
 
 //560_exit.c
 int		is_num(const char *str);
-void	msh_exit(char **argv);
+void	msh_exit(char **argv, t_msh *msh);
 
 /* **************** */
 /*      600        */
@@ -150,7 +225,6 @@ void	msh_exit(char **argv);
 //900_free.c
 int		free_array(char **str, int error);
 void	free_arg(char **argv);
-
-
+int		free_cmds(t_command *command, t_msh *msh);
 
 #endif

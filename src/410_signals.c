@@ -32,7 +32,7 @@ void	sigint_handler(int sig)
 void	setup_signals(void)
 {
 	struct sigaction	sa_int;
-	struct sigaction	sa_quit;
+	// struct sigaction	sa_quit;
 
 	//SIGINT (ctrl-c)
 	sa_int.sa_handler = sigint_handler;

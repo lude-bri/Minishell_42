@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:03:56 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/26 14:14:32 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/29 10:40:42 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	//init minishell
 	ft_memset(&msh, 0, sizeof(t_msh));
 	init_msh(&msh, envp);
 	msh_loop(&msh);
@@ -35,7 +34,7 @@ int	msh_loop(t_msh *msh)
 	while (1)
 	{
 		init_struct(msh);
-		prompt = readline(build_prompt(msh));
+		prompt = readline("msh $ ");
 		//End Of Input(EOI) (ctrl-D)
 		if (!prompt)
 		{
@@ -46,7 +45,7 @@ int	msh_loop(t_msh *msh)
 			add_history(prompt);
 		argv = split_input(prompt);
 		if (argv[0] && ft_strcmp(argv[0], "exit") == 0)
-			msh_exit(argv);
+			msh_exit(argv, msh);
 		if (argv[0] && ft_strcmp(argv[0], "pwd") == 0 && ft_strlen(argv[0]) == 3)
 			msh_pwd();
 		if (argv[0] && ft_strcmp(argv[0], "echo") == 0)
@@ -64,60 +63,34 @@ int	msh_loop(t_msh *msh)
 			free(prompt);
 			prompt = NULL;
 		}
-		if (msh->hostname)
-		{
-			free(msh->hostname);
-			msh->hostname = NULL;
-		}
 		free_arg(argv);
 	}
 	return (0);
 }
 
+int	msh_loop(t_msh *msh)
+{
+	char	*command;
+	int		msh_status;
 
-//
-//
-// int	msh_loop(t_msh *msh)
-// {
-// 	char	*prompt;
-// 	char	**argv;
-// 	int		elements;
-//
-// 	prompt = NULL;
-// 	while (1)
-// 	{
-// 		setup_signals();
-// 		init_struct(msh);
-// 		elements = parser(msh, prompt);
-// 		if (elements == FAILURE)
-// 			continue ;
-// 		
-//
-// 	}
-// }
-//
+	while (1)
+	{
+		setup_signals();
+		init_struct(msh);
+		command = readline("msh $ ");
+		msh_status = to_parse(command);
+		if (msh_status == FAILURE)
+			continue ;
+		if (msh->cmd_count > NO_CMDS)
+			if (!to_execute(command))
+				break ;
+		free_cmds(msh->cmds, msh);
+	}
+	return (0);
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+int	to_parse(char *command);
 
 
 
