@@ -12,12 +12,16 @@
 
 #include "../includes/minishell.h"
 
+<<<<<<< HEAD
 // static int	tokenizer(t_msh *msh, char *line, t_tkn *token);
 
+=======
+>>>>>>> 615ddf9e997ac42fe9de0653e3ef68cf0e0aea97
 int	to_parse(t_msh *msh, char *line)
 {
 	(void)msh;
 	(void)line;
+<<<<<<< HEAD
 	// t_tkn	*tokens;
 	//
 	// tokens = NULL;
@@ -28,6 +32,8 @@ int	to_parse(t_msh *msh, char *line)
 	// if (tokenizer(msh, line, tokens) == FAILURE)
 	// 	return (free_tkns);
 
+=======
+>>>>>>> 615ddf9e997ac42fe9de0653e3ef68cf0e0aea97
 	return (0);
 }
 
