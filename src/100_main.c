@@ -28,6 +28,7 @@ int	msh_loop(t_msh *msh)
 {
 	char	*prompt;
 	char	**argv;
+	int		i; //to test quotes (remember to delete later)
 
 	prompt = NULL;
 	setup_signals();
@@ -44,7 +45,13 @@ int	msh_loop(t_msh *msh)
 		if (*prompt)
 			add_history(prompt);
 		argv = split_input(prompt);
-
+		i = 0;
+		while (argv[i])
+		{
+			ft_printf("Arg number %d: %s\n", i, argv[i]);
+			//free(arv[i]);
+			i++;
+		}
 		if (argv[0] && ft_strcmp(argv[0], "exit") == 0)
 			msh_exit(argv, msh);
 		if (argv[0] && ft_strcmp(argv[0], "pwd") == 0 && ft_strlen(argv[0]) == 3)
