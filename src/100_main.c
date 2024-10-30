@@ -52,11 +52,6 @@ int	msh_loop(t_msh *msh)
 			//free(arv[i]);
 			i++;
 		}
-<<<<<<< HEAD
-=======
-		//argv = ft_split(prompt, ' ');
-		//printf("%s\n", prompt);
->>>>>>> 615ddf9e997ac42fe9de0653e3ef68cf0e0aea97
 		if (argv[0] && ft_strcmp(argv[0], "exit") == 0)
 			msh_exit(argv, msh);
 		if (argv[0] && ft_strcmp(argv[0], "pwd") == 0 && ft_strlen(argv[0]) == 3)
@@ -80,11 +75,7 @@ int	msh_loop(t_msh *msh)
 	}
 	return (0);
 }
-<<<<<<< HEAD
 
-=======
-//
->>>>>>> 615ddf9e997ac42fe9de0653e3ef68cf0e0aea97
 // int	msh_loop(t_msh *msh)
 // {
 // 	char	*line;
@@ -105,36 +96,5 @@ int	msh_loop(t_msh *msh)
 // 	}
 // 	return (0);
 // }
-<<<<<<< HEAD
-
-
-
-
-
-
-=======
-//
-//
-// int	to_parse(char *command);
-//
-//
-//
-//
-//
->>>>>>> 615ddf9e997ac42fe9de0653e3ef68cf0e0aea97
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
