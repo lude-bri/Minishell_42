@@ -26,75 +26,78 @@ int	main(int ac, char **av, char **envp)
 
 int	msh_loop(t_msh *msh)
 {
-	char	*prompt;
-	char	**argv;
-	int		i; //to test quotes (remember to delete later)
+	char	*line;
+	int		msh_status;
 
-	prompt = NULL;
-	setup_signals();
 	while (1)
 	{
+		setup_signals();
 		init_struct(msh);
-		prompt = readline("msh $ ");
-		//End Of Input(EOI) (ctrl-D)
-		if (!prompt)
-		{
-			ft_printf("exit\n");
-			break ;
-		}
-		if (*prompt)
-			add_history(prompt);
-		argv = split_input(prompt);
-		i = 0;
-		while (argv[i])
-		{
-			ft_printf("Arg number %d: %s\n", i, argv[i]);
-			//free(arv[i]);
-			i++;
-		}
-		if (argv[0] && ft_strcmp(argv[0], "exit") == 0)
-			msh_exit(argv, msh);
-		if (argv[0] && ft_strcmp(argv[0], "pwd") == 0 && ft_strlen(argv[0]) == 3)
-			msh_pwd();
-		if (argv[0] && ft_strcmp(argv[0], "echo") == 0)
-			msh_echo(argv);
-		if (argv[0] && ft_strcmp(argv[0], "cd") == 0)
-			msh_cd(argv);
-		if (argv[0] && ft_strcmp(argv[0], "export") == 0)
-			msh_export(msh->envp);
-		if (argv[0] && ft_strcmp(argv[0], "env") == 0)
-			msh_env(msh->envp);
-		if (argv[0] && ft_strcmp(argv[0], "unset") == 0)
-			msh_unset(argv, &(msh->envp));
-		if (prompt)
-		{
-			free(prompt);
-			prompt = NULL;
-		}
-		free_arg(argv);
+		line = readline("msh $ ");
+		msh_status = to_parse(msh, line);
+		if (msh_status == FAILURE)
+			continue ;
+		// if (msh->cmd_count > NO_CMDS)
+		// 	if (!to_execute(line))
+		// 		break ;
+		free_cmds(msh->cmds, msh);
 	}
 	return (0);
 }
 
+
+/////////////////////////////
+///   OLD LOOP FUNCT      ///
+////////////////////////////
+
 // int	msh_loop(t_msh *msh)
 // {
-// 	char	*line;
-// 	int		msh_status;
+// 	char	*prompt;
+// 	char	**argv;
+// 	int		i; //to test quotes (remember to delete later)
 //
+// 	prompt = NULL;
+// 	setup_signals();
 // 	while (1)
 // 	{
-// 		setup_signals();
 // 		init_struct(msh);
-// 		line = readline("msh $ ");
-// 		msh_status = to_parse(msh, line);
-// 		if (msh_status == FAILURE)
-// 			continue ;
-// 		if (msh->cmd_count > NO_CMDS)
-// 			if (!to_execute(line))
-// 				break ;
-// 		free_cmds(msh->cmds, msh);
+// 		prompt = readline("msh $ ");
+// 		//End Of Input(EOI) (ctrl-D)
+// 		if (!prompt)
+// 		{
+// 			ft_printf("exit\n");
+// 			break ;
+// 		}
+// 		if (*prompt)
+// 			add_history(prompt);
+// 		argv = split_input(prompt);
+// 		i = 0;
+// 		while (argv[i])
+// 		{
+// 			ft_printf("Arg number %d: %s\n", i, argv[i]);
+// 			//free(arv[i]);
+// 			i++;
+// 		}
+// 		if (argv[0] && ft_strcmp(argv[0], "exit") == 0)
+// 			msh_exit(argv, msh);
+// 		if (argv[0] && ft_strcmp(argv[0], "pwd") == 0 && ft_strlen(argv[0]) == 3)
+// 			msh_pwd();
+// 		if (argv[0] && ft_strcmp(argv[0], "echo") == 0)
+// 			msh_echo(argv);
+// 		if (argv[0] && ft_strcmp(argv[0], "cd") == 0)
+// 			msh_cd(argv);
+// 		if (argv[0] && ft_strcmp(argv[0], "export") == 0)
+// 			msh_export(msh->envp);
+// 		if (argv[0] && ft_strcmp(argv[0], "env") == 0)
+// 			msh_env(msh->envp);
+// 		if (argv[0] && ft_strcmp(argv[0], "unset") == 0)
+// 			msh_unset(argv, &(msh->envp));
+// 		if (prompt)
+// 		{
+// 			free(prompt);
+// 			prompt = NULL;
+// 		}
+// 		free_arg(argv);
 // 	}
 // 	return (0);
 // }
-
-

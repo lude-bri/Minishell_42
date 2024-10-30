@@ -46,6 +46,7 @@ void	msh_exit(char **argv, t_msh *msh)
 	}
 	free_arg(argv);	
 	free_array(msh->envp, 0);
+	free(msh->cmds);
 	printf("exit\n");
 	exit (exit_status);
 }
