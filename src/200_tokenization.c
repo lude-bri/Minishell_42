@@ -90,6 +90,8 @@ int	count_words(const char *input)
 			i++;
 			while (input[i] && input[i] == '"')
 				i++;
+			if (!input[i])
+				break ;
 			i++;
 			counter++;
 		}
