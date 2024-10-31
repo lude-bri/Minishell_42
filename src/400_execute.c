@@ -6,13 +6,13 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:32:38 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/31 15:56:02 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/31 16:09:07 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	to_execute(char *command)
+int	to_execute(char **command)
 {
 	(void)command;
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:34:09 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/18 14:10:52 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/31 16:21:30 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	init_struct(t_msh *msh)
 {
 	msh->path = NULL;
 	msh->cmd_count = 0;
-	msh->exit_status = 0;
+	// msh->exit_status = 0;
 }
 
 char	**init_env(char **envp)

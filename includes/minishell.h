@@ -185,7 +185,7 @@ int		to_parse(t_msh *msh, char *line);
 // EXECUTE
 
 //400_execute.c
-int		to_execute(char *command);
+int		to_execute(char **command);
 
 //410_signals.c
 void	setup_signals(void);
@@ -217,7 +217,7 @@ void	msh_env(char **envp);
 
 //560_exit.c
 int		is_num(const char *str);
-void	msh_exit(char **argv, t_msh *msh);
+int		msh_exit(char **argv, t_msh *msh);
 
 /* **************** */
 /*      600        */
