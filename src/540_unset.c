@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   540_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
+/*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/26 12:49:07 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/26 12:49:09 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/31 17:10:31 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,16 @@ int	is_variable_match(const char *env_var, const char *var_name)
 	return (ft_strncmp(env_var, var_name, len) == 0 && env_var[len] == '=');
 }
 
-void	msh_unset(char **argv, char ***envp)
+int	msh_unset(char **argv, char ***envp)
 {
 	int	i;
 	int	j;
+	int	found;
 
+	if (!argv || !envp || !*envp)
+		return (1);
 	i = 1;
+	found = 0;
 	while (argv[i])
 	{
 		if (ft_strlen(argv[i]) > 0)
@@ -33,9 +37,9 @@ void	msh_unset(char **argv, char ***envp)
 			j = 0;
 			while ((*envp)[j])
 			{
+				found = 1;
 				if (is_variable_match((*envp)[j], argv[i]))
 				{
-					//free((*envp)[j]);
 					while ((*envp)[j + 1])
 					{
 						(*envp)[j] = (*envp)[j + 1];
@@ -49,4 +53,8 @@ void	msh_unset(char **argv, char ***envp)
 		}
 		i++;
 	}
+	if (found)
+		return (0);
+	else
+		return (1);
 }
