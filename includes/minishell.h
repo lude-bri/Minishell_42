@@ -159,12 +159,12 @@ char	*build_prompt(t_msh *msh);
 // TOKENS
 
 //200_tokenization.c
-char	**split_input(const char *input);
+char	**split_input(const char *input, t_msh *msh);
 char	*handle_single_quotes(const char *input, int *i);
-char	*handle_double_quotes(const char *input, int *i);
+char	*handle_double_quotes(const char *input, int *i, t_msh *msh);
 int	count_words(const char *input);
 int	is_whitespace(char c);
-char	*expand_var(const char *input, int *i);
+char	*expand_var(const char *input, int *i, t_msh *msh);
 char	*copy_word(const char *input, int start, int end);
 
 //210_tkns_type.c
@@ -197,23 +197,23 @@ void	sigint_handler(int sig);
 // BUILT-INS
 
 //500_echo.c
-void	msh_echo(char **argv);
+int	msh_echo(char **argv);
 
 //510_cd.c
-void	msh_cd(char **argv);
+int	msh_cd(char **argv);
 
 //520_pwd.c
-void	msh_pwd(void);
+int	msh_pwd(void);
 
 //530_export.c
-void msh_export(char **envp);
+int msh_export(char **envp);
 
 //540_unset.c
 int	is_variable_match(const char *env_var, const char *var_name);
-void	msh_unset(char **argv, char ***envp);
+int	msh_unset(char **argv, char ***envp);
 
 //550_env.c
-void	msh_env(char **envp);
+int	msh_env(char **envp);
 
 //560_exit.c
 int		is_num(const char *str);
@@ -243,7 +243,7 @@ int		msh_exit(char **argv, t_msh *msh);
 //900_free.c
 int		free_array(char **str, int error);
 void	free_arg(char **argv);
-int		free_cmds(t_command *command, t_msh *msh);
+//int		free_cmds(t_command *command, t_msh *msh);
 void	free_tokens(t_tkn *token);
 
 #endif
