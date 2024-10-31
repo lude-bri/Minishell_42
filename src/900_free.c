@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   900_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
+/*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:53:23 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/31 12:31:29 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/31 17:28:42 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	free_arg(char **argv)
 	argv = NULL;
 }
 
-int	free_cmds(t_command *command, t_msh *msh)
+/* int	free_cmds(t_command *command, t_msh *msh)
 {
 	char	**av;
 	char	*cmd;
@@ -51,7 +51,7 @@ int	free_cmds(t_command *command, t_msh *msh)
 	cmd = command->cmd;
 	msh->cmd_count = 0;
 	return (0);
-}
+} */
 
 void	free_tokens(t_tkn *token)
 {
