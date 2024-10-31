@@ -1,6 +1,7 @@
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# define _GNU_SOURCE
 
 /* ************************************************************************** */
 /*                                  INCLUDES                                  */
