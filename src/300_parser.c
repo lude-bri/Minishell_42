@@ -6,13 +6,11 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:28:36 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/29 12:17:26 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/31 10:52:11 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// static int	tokenizer(t_msh *msh, char *line, t_tkn *token);
 
 int	to_parse(t_msh *msh, char *line)
 {
@@ -27,6 +25,7 @@ int	to_parse(t_msh *msh, char *line)
 	if (!msh->cmds)
 		return (FAILURE);
 	msh->cmds->av = split_input(line);
+	// tokens = tokenizer(msh->cmds->av);
 	i = -1;
 	while (msh->cmds->av[++i])
 		printf("Arg number [%d] -> %s\n", i, msh->cmds->av[i]);
@@ -54,7 +53,3 @@ int	to_parse(t_msh *msh, char *line)
 	return (0);
 }
 
-// static int	tokenizer(t_msh *msh, char *line, t_tkn *token)
-// {
-// 	return (SUCCESS);
-// }

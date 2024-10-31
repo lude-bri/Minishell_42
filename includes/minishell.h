@@ -87,10 +87,10 @@ typedef struct s_tkn
 {
 	t_token_group	type;
 	char			*name;
+	char			**argv;
+	int				number_words;
 	int				len;
-	char	**argv;
-	int		number_words;
-	int		start;
+	int				start;
 	struct s_tkn    *next;
 }					t_tkn;
 

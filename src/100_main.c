@@ -35,8 +35,8 @@ int	msh_loop(t_msh *msh)
 		init_struct(msh);
 		line = readline("msh $ ");
 		msh_status = to_parse(msh, line);
-		if (msh_status == FAILURE)
-			continue ;
+		// if (msh_status == FAILURE)
+		// 	continue ;
 		// if (msh->cmd_count > NO_CMDS)
 		// 	if (!to_execute(line))
 		// 		break ;
