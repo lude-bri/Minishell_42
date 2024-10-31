@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:49:13 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/29 17:32:58 by mde-agui         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:43:29 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,10 +171,10 @@ char	*handle_single_quotes(const char *input, int *i)
 
 char	**split_input(const char *input)
 {
-	t_tkn	split;
-	int		i;
-	int		j;
-	char	*expanded;
+	t_tkn_op	split;
+	int			i;
+	int			j;
+	char		*expanded;
 
 	split.number_words = count_words(input);
 	split.argv = (char **)malloc(sizeof(char *) * (split.number_words + 1));

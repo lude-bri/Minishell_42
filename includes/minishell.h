@@ -60,7 +60,8 @@ typedef	enum e_token_group
 	TKN_CMD,
 	TKN_NULL,
 	TKN_BLANK,
-	TKN_PIPE
+	TKN_PIPE,
+	TKN_HEREDOC
 }	t_token_group;
 
 //Command Groups
@@ -82,15 +83,21 @@ typedef enum e_cmd_group
 /*                                  STRUCTS                                   */
 /* ************************************************************************** */
 
+//struct to deal with operations when tokenizing
+//used in 200_tokenization.c
+typedef struct s_tkn_op 
+{
+	int		number_words;
+	int		start;
+	char	**argv;
+}			t_tkn_op;
+
 //struct to deal with tokens
 typedef struct s_tkn 
 {
 	t_token_group	type;
 	char			*name;
-	char			**argv;
-	int				number_words;
 	int				len;
-	int				start;
 	struct s_tkn    *next;
 }					t_tkn;
 
@@ -232,5 +239,6 @@ void	msh_exit(char **argv, t_msh *msh);
 int		free_array(char **str, int error);
 void	free_arg(char **argv);
 int		free_cmds(t_command *command, t_msh *msh);
+void	free_tokens(t_tkn *token);
 
 #endif

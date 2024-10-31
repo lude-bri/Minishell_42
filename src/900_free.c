@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:53:23 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/29 11:50:14 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/31 12:31:29 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,17 @@ int	free_cmds(t_command *command, t_msh *msh)
 	cmd = command->cmd;
 	msh->cmd_count = 0;
 	return (0);
+}
+
+void	free_tokens(t_tkn *token)
+{
+	t_tkn	*current;
+
+	while (token)
+	{
+		current = token;
+		token = token->next;
+		free(current->name);
+		free(current);
+	}
 }
