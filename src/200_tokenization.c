@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:49:13 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/31 14:52:50 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/31 17:23:56 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // static char	**free_arrays(const char **s, int a);
 
-char	*expand_var(const char *input, int *i)
+char	*expand_var(const char *input, int *i, t_msh *msh)
 {
 	int		len;
 	int		start;
@@ -24,6 +24,14 @@ char	*expand_var(const char *input, int *i)
 
 	len = 0;
 	start = *i + 1;
+	if (input[start] == '?')
+	{
+		printf("Current msh->exit_status before expanding $?: %d\n", msh->exit_status);
+		result = ft_itoa(msh->exit_status);
+		printf("Expanding $?: %s\n", result);
+		*i += 2;
+		return (result); 
+	}
 	while (input[start + len] && (ft_isalnum(input[start + len]) || input[start + len] == '_'))
 		len++;
 	var_name = (char *)malloc(len + 1);
@@ -116,7 +124,7 @@ int	count_words(const char *input)
 // 	return (NULL);
 // }
 
-char	*handle_double_quotes(const char *input, int *i)
+char	*handle_double_quotes(const char *input, int *i, t_msh *msh)
 {
 	size_t	word_size;
 	size_t	len;
@@ -130,7 +138,7 @@ char	*handle_double_quotes(const char *input, int *i)
 	{
 		if (input[*i] == '$')
 		{
-			expanded = expand_var(input, i);
+			expanded = expand_var(input, i, msh);
 			if (ft_strlen(expanded) + ft_strlen(word) >= word_size - 1)
 			{
 				free(expanded);
@@ -169,7 +177,7 @@ char	*handle_single_quotes(const char *input, int *i)
 	return (word);
 }
 
-char	**split_input(const char *input)
+char	**split_input(const char *input, t_msh *msh)
 {
 	t_tkn_op	split;
 	int			i;
@@ -192,11 +200,11 @@ char	**split_input(const char *input)
 		else if (input[i] == '"')
 		{
 			split.start = ++i;
-			split.argv[j++] = handle_double_quotes(input, &i);
+			split.argv[j++] = handle_double_quotes(input, &i, msh);
 		}
 		else if (input[i] == '$')
 		{
-			expanded = expand_var(input, &i);
+			expanded = expand_var(input, &i, msh);
 			if (expanded)
 			{
 				split.argv[j++] = ft_strdup(expanded);
