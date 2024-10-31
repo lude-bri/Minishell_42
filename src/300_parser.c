@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:28:36 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/31 11:08:57 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/31 14:46:37 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	to_parse(t_msh *msh, char *line)
 	if (!msh->cmds)
 		return (FAILURE);
 	msh->cmds->av = split_input(line);
-	//tokens = tokenizer(msh->cmds->av);
+	tokens = tokenizer(msh->cmds->av);
 	i = -1;
 	while (msh->cmds->av[++i])
 		printf("Arg number [%d] -> %s\n", i, msh->cmds->av[i]);

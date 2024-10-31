@@ -96,6 +96,7 @@ typedef struct s_tkn_op
 typedef struct s_tkn 
 {
 	t_token_group	type;
+	t_cmd_group		cmd_type;
 	char			*name;
 	int				len;
 	struct s_tkn    *next;
@@ -165,6 +166,10 @@ int	count_words(const char *input);
 int	is_whitespace(char c);
 char	*expand_var(const char *input, int *i);
 char	*copy_word(const char *input, int start, int end);
+
+//210_tkns_type.c
+t_tkn	*tokenizer(char **av);
+
 
 /* **************** */
 /*      300        */

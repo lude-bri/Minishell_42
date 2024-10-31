@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:50:15 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/31 12:42:02 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/31 15:32:41 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static t_tkn	*tkn_new(char *content);
 static void		assign_tkn(t_tkn *token);
 static void		verify_tkn_cmd(t_tkn *token);
-static void		verify_tkn(t_tkn *token);
 
+//create tokens
 t_tkn	*tokenizer(char **av)
 {
 	int		i;
@@ -33,8 +33,6 @@ t_tkn	*tokenizer(char **av)
 		assign_tkn(new_token);
 		if (new_token->type == TKN_CMD)
 			verify_tkn_cmd(new_token); //classificar o comando especifico token
-		else
-			verify_tkn(new_token);//verificar se nao ha erros associados ao tipo de token
 		if (!token)
 			token = new_token;
 		else
@@ -44,6 +42,7 @@ t_tkn	*tokenizer(char **av)
 	return (token);
 }
 
+//create nodes for linked list -> token
 static t_tkn	*tkn_new(char *content)
 {
 	t_tkn	*node;
@@ -57,6 +56,7 @@ static t_tkn	*tkn_new(char *content)
 	return (node);
 }
 
+//verify and assign the token type
 static void	assign_tkn(t_tkn *token)
 {
 	if (token->name[0] == ' ' || token->name[0] == '\n' || token->name[0] == '\v' 
@@ -79,24 +79,23 @@ static void	assign_tkn(t_tkn *token)
 		token->type = TKN_CMD;
 }
 
+//verify and assign token type commands
 static void	verify_tkn_cmd(t_tkn *token)
 {
-	(void)token;
+	if (token->name && ft_strcmp(token->name, "exit") == 0)
+		token->cmd_type = CMD_EXIT;
+	else if (token->name && ft_strcmp(token->name, "pwd") == 0)
+		token->cmd_type = CMD_PWD;
+	else if (token->name && ft_strcmp(token->name, "echo") == 0)
+		token->cmd_type = CMD_ECHO;
+	else if (token->name && ft_strcmp(token->name, "cd") == 0)
+		token->cmd_type = CMD_CD;
+	else if (token->name && ft_strcmp(token->name, "export") == 0)
+		token->cmd_type = CMD_EXPORT;
+	else if (token->name && ft_strcmp(token->name, "env") == 0)
+		token->cmd_type = CMD_ENV;
+	else if (token->name && ft_strcmp(token->name, "unset") == 0)
+		token->cmd_type = CMD_UNSET;
+	else
+		token->cmd_type = CMD_EXEC;
 }
-
-static void	verify_tkn(t_tkn *token)
-{
-	(void)token;
-}
-
-
-/*
-typedef struct s_tkn 
-{
-	t_token_group	type;
-	char			*name;
-	int				len;
-	struct s_tkn    *next;
-}		t_tkn;
-
-*/
