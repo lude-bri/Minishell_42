@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   560_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
+/*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:48:51 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/31 16:50:04 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/31 19:01:57 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,31 +46,28 @@ int	msh_exit(char **argv, t_msh *msh)
 {
 	if (argv[2])
 	{
-		if (is_num(argv[2]))
-		{
-			printf("msh: exit: too many arguments\n");
-			msh->exit_status = 1;
-		}
+		ft_printf("msh: exit: too many arguments\n");
+		msh->exit_status = 1;
+		return (msh->exit_status);
 	}
-	if (!is_num(argv[2]) && (is_letter(argv[1]) == 0 || is_letter(argv[2]) == 0))
+	if (!argv[1])
 	{
-		printf("msh: exit: numeric arguments required\n");
+		ft_printf("exit\n");
+		free_arg(argv);
+		free_array(msh->envp, 0);
+		free(msh->cmds);
+		exit(msh->exit_status);
+	}
+	if (is_num(argv[1]))
+		msh->exit_status = ft_atoi(argv[1]);
+	else
+	{
+		ft_printf("msh: exit: %s: numeric argument required\n", argv[1]);
 		msh->exit_status = 2;
 	}
-	else if (argv[1] && is_num(argv[1]) == 0)
-	{	
-		if (is_num(argv[1]))
-			msh->exit_status = ft_atoi(argv[1]);
-		else
-		{
-			printf("Minishell: exit: %s:", argv[1]);
-			ft_putstr_fd("numeric argument necessary\n", 2);
-			msh->exit_status = 255;
-		}
-	}
-	free_arg(argv);	
+	ft_printf("exit\n");
+	free_arg(argv);
 	free_array(msh->envp, 0);
 	free(msh->cmds);
-	printf("exit\n");
-	exit (msh->exit_status);
+	exit(msh->exit_status);
 }
