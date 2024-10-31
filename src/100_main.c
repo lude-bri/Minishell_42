@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:03:56 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/29 11:51:12 by luigi            ###   ########.fr       */
+/*   Updated: 2024/10/31 15:58:34 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int	msh_loop(t_msh *msh)
 		init_struct(msh);
 		line = readline("msh $ ");
 		msh_status = to_parse(msh, line);
-		// if (msh_status == FAILURE)
-		// 	continue ;
 		// if (msh->cmd_count > NO_CMDS)
 		// 	if (!to_execute(line))
 		// 		break ;
