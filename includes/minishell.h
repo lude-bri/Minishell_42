@@ -219,7 +219,7 @@ int	msh_env(char **envp);
 
 //560_exit.c
 int		is_num(const char *str);
-int		msh_exit(char **argv, t_msh *msh);
+int		msh_exit(char **argv, t_msh *msh, t_tkn *tokens);
 
 /* **************** */
 /*      600        */

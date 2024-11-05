@@ -14,7 +14,7 @@
 
 static int	exec_bi(t_tkn *tokens, char **command, t_msh *msh);
 static int	exec_exe(t_tkn *tokens, char **command, t_msh *msh);
-static void	execute(char **cmd, char **envp);
+static void	execute(char **cmd, t_msh *msh, t_tkn *tokens);
 static char	*find_path(char *cmd, char **envp);
 
 int	to_execute(char **command, t_msh *msh, t_tkn *tokens)
@@ -37,7 +37,7 @@ static int	exec_bi(t_tkn *tokens, char **command, t_msh *msh)
 	if (tokens->cmd_type == CMD_ECHO)
 		msh_echo(command);
 	if (tokens->cmd_type == CMD_EXIT)
-		msh_exit(command, msh);
+		msh_exit(command, msh, tokens);
 	if (tokens->cmd_type == CMD_UNSET)
 		msh_unset(command, &(msh->envp));
 	if (tokens->cmd_type == CMD_EXPORT)
@@ -55,25 +55,27 @@ static int	exec_exe(t_tkn *tokens, char **command, t_msh *msh)
 	(void)tokens;
 	pid = fork();
 	if (pid == 0)
-		execute(command, msh->envp);
+		execute(command, msh, tokens);
 	waitpid(pid, &status, 0);
 	return (SUCCESS);
 }
 
-static void	execute(char **cmd, char **envp)
+static void	execute(char **cmd, t_msh *msh, t_tkn *tokens)
 {
 	char	*path;
 
-	path = find_path(cmd[0], envp);
+	path = find_path(cmd[0], msh->envp);
 	if (!path)
 	{
-		free_arg(cmd);
-		ft_putstr_fd("command not found\n", 2);
+		ft_putstr_fd("msh: command not found\n", 2);
+		free_msh(msh->cmds, msh, tokens);
+		free_array(msh->envp, 0);
 		exit(0);
 	}
-	if (execve(path, cmd, envp) == -1)
+	if (execve(path, cmd, msh->envp) == -1)
 	{
-		free_arg(cmd);
+		free_msh(msh->cmds, msh, tokens);
+		free_array(msh->envp, 0);
 		exit(127);
 	}
 }

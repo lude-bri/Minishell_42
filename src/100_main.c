@@ -35,6 +35,11 @@ int	msh_loop(t_msh *msh)
 		setup_signals();
 		init_struct(msh);
 		line = readline("msh $ ");
+		if (!line)
+		{
+			ft_printf("exit\n");
+			break ;
+		}
 		tokens = to_parse(msh, line);
 		if (!tokens)
 			continue ;
