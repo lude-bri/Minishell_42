@@ -20,8 +20,8 @@ static char	*find_path(char *cmd, char **envp);
 int	to_execute(char **command, t_msh *msh, t_tkn *tokens)
 {
 	if (tokens->type == TKN_CMD)
-		if (exec_bi(tokens, command, msh))
-			if (!exec_exe(tokens, command, msh))
+		if (exec_bi(tokens, command, msh) == FAILURE)
+			if (exec_exe(tokens, command, msh) != SUCCESS)
 				return (FAILURE);
 	return (SUCCESS);
 }
