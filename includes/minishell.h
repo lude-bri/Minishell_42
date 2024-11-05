@@ -163,8 +163,8 @@ char	*build_prompt(t_msh *msh);
 char	**split_input(const char *input, t_msh *msh);
 char	*handle_single_quotes(const char *input, int *i);
 char	*handle_double_quotes(const char *input, int *i, t_msh *msh);
-int	count_words(const char *input);
-int	is_whitespace(char c);
+int		count_words(const char *input);
+int		is_whitespace(char c);
 char	*expand_var(const char *input, int *i, t_msh *msh);
 char	*copy_word(const char *input, int start, int end);
 
@@ -177,8 +177,8 @@ t_tkn	*tokenizer(char **av);
 /* *************** */
 // PARSERS
 
-//300_parser.c
-int		to_parse(t_msh *msh, char *line);
+//300_parser.c	
+t_tkn	*to_parse(t_msh *msh, char *line);
 
 /* **************** */
 /*      400        */
@@ -186,7 +186,7 @@ int		to_parse(t_msh *msh, char *line);
 // EXECUTE
 
 //400_execute.c
-int		to_execute(char **command);
+int		to_execute(char **command, t_msh *msh, t_tkn *tokens);
 
 //410_signals.c
 void	setup_signals(void);
@@ -244,7 +244,7 @@ int		msh_exit(char **argv, t_msh *msh);
 //900_free.c
 int		free_array(char **str, int error);
 void	free_arg(char **argv);
-//int		free_cmds(t_command *command, t_msh *msh);
+void	free_msh(t_command *command, t_msh *msh, t_tkn *token);
 void	free_tokens(t_tkn *token);
 
 #endif

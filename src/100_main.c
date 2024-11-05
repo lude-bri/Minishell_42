@@ -27,20 +27,21 @@ int	main(int ac, char **av, char **envp)
 int	msh_loop(t_msh *msh)
 {
 	char	*line;
-	int		msh_status;
+	t_tkn	*tokens;
 
+	tokens = NULL;
 	while (1)
 	{
 		setup_signals();
 		init_struct(msh);
 		line = readline("msh $ ");
-		msh_status = to_parse(msh, line);
-		if (msh_status == FAILURE)
+		tokens = to_parse(msh, line);
+		if (!tokens)
 			continue ;
-/* 		if (msh->cmd_count > NO_CMDS)
- 			if (!to_execute(msh->cmds->av))
-				break ; */
-		//free_cmds(msh->cmds, msh);
+		if (msh->cmd_count > NO_CMDS)
+			if (!to_execute(msh->cmds->av, msh, tokens))
+				break ;
+		free_msh(msh->cmds, msh, tokens);
 	}
 	return (0);
 }

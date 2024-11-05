@@ -42,16 +42,12 @@ void	free_arg(char **argv)
 	argv = NULL;
 }
 
-/* int	free_cmds(t_command *command, t_msh *msh)
+void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 {
-	char	**av;
-	char	*cmd;
-
-	av = command->av;
-	cmd = command->cmd;
-	msh->cmd_count = 0;
-	return (0);
-} */
+	free_arg(msh->cmds->av);
+	free_tokens(token);
+	free(command);
+}
 
 void	free_tokens(t_tkn *token)
 {
