@@ -17,11 +17,12 @@ int	to_execute(char **command, t_msh *msh, t_tkn *tokens)
 	int		i;
 
 	i = -1;
+	(void)tokens;
 	while (command[++i])
 		printf("Arg number [%d] -> %s\n", i, command[i]);
 	if (command[0] && ft_strcmp(command[0], "exit") == 0)
 			msh_exit(command, msh);
-	if (command[0] && ft_strcmp(command[0], "pwd") == 0 && ft_strlen(command[0]) == 3)
+	if (command[0] && ft_strcmp(command[0], "pwd") == 0)
 		msh_pwd();
 	if (command[0] && ft_strcmp(command[0], "echo") == 0)
 		msh_echo(command);
