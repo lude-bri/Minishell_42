@@ -10,6 +10,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <signal.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft_42/libft.h"
