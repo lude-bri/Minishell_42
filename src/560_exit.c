@@ -44,7 +44,7 @@ int	is_letter(const char *str)
 
 int	msh_exit(char **argv, t_msh *msh)
 {
-	if (argv[2])
+	if (msh->cmd_count >= 2)
 	{
 		ft_printf("msh: exit: too many arguments\n");
 		msh->exit_status = 1;
