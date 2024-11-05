@@ -46,9 +46,17 @@ int	msh_exit(char **argv, t_msh *msh)
 {
 	if (msh->cmd_count > 2)
 	{
-		ft_printf("msh: exit: too many arguments\n");
-		msh->exit_status = 1;
-		return (msh->exit_status);
+		if (is_letter(argv[1]))
+		{
+			ft_printf("msh: exit: %s: numeric argument required\n", argv[1]);
+			msh->exit_status = 2;
+		}
+		else
+		{
+			ft_printf("msh: exit: too many arguments\n");
+			msh->exit_status = 1;
+			return (msh->exit_status);
+		}
 	}
 	if (!argv[1])
 	{
@@ -60,7 +68,7 @@ int	msh_exit(char **argv, t_msh *msh)
 	}
 	if (is_num(argv[1]))
 		msh->exit_status = ft_atoi(argv[1]);
-	else
+	else if (msh->exit_status != 2)
 	{
 		ft_printf("msh: exit: %s: numeric argument required\n", argv[1]);
 		msh->exit_status = 2;
