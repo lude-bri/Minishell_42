@@ -57,6 +57,7 @@ FILES += 550_env.c
 FILES += 560_exit.c
 FILES += 600_pipes.c
 FILES += 900_free.c
+FILES += 910_close.c
 
 ### Paths
 SRC		= $(addprefix $(SRC_PATH)/, $(FILES))

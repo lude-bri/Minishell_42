@@ -240,7 +240,7 @@ int		msh_exit(char **argv, t_msh *msh, t_tkn *tokens);
 // PIPES
 
 //600_pipes.c
-int		exec_pipe_one(char **command, t_msh *msh, int *fd);
+int		exec_pipe_one(char **command, t_msh *msh, t_tkn *tokens);
 
 
 /* **************** */
@@ -257,12 +257,16 @@ int		exec_pipe_one(char **command, t_msh *msh, int *fd);
 /* **************** */
 /*      900        */
 /* *************** */
-// FREEs
+// FREEs and CLOSEs
 
 //900_free.c
 int		free_array(char **str, int error);
 void	free_arg(char **argv);
 void	free_msh(t_command *command, t_msh *msh, t_tkn *token);
 void	free_tokens(t_tkn *token);
+
+//910_close.c
+void	ft_close(int *fd);
+
 
 #endif
