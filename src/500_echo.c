@@ -18,7 +18,10 @@ int	msh_echo(char **argv)
 	int	newline;
 
 	if (!argv[1])
+	{
 		ft_printf("\n");
+		return (0);
+	}
 	i = 1;
 	newline = 1;
 	if (argv[1] && ft_strncmp(argv[1], "-n", 2) == 0)
