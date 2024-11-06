@@ -67,7 +67,7 @@ static void	execute(char **cmd, t_msh *msh, t_tkn *tokens)
 	path = find_path(cmd[0], msh->envp);
 	if (!path)
 	{
-		ft_putstr_fd("msh: command not found\n", 2);
+		printf("%s : command not found\n", cmd[0]);
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
 		exit(0);
