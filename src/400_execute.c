@@ -30,17 +30,17 @@ static int	exec_bi(t_tkn *tokens, char **command, t_msh *msh)
 {
 	if (tokens->cmd_type == CMD_CD)
 		msh_cd(command);
-	if (tokens->cmd_type == CMD_ENV)
+	else if (tokens->cmd_type == CMD_ENV)
 		msh_env(msh->envp);
-	if (tokens->cmd_type == CMD_PWD)
+	else if (tokens->cmd_type == CMD_PWD)
 		msh_pwd();
-	if (tokens->cmd_type == CMD_ECHO)
+	else if (tokens->cmd_type == CMD_ECHO)
 		msh_echo(command);
-	if (tokens->cmd_type == CMD_EXIT)
+	else if (tokens->cmd_type == CMD_EXIT)
 		msh_exit(command, msh, tokens);
-	if (tokens->cmd_type == CMD_UNSET)
+	else if (tokens->cmd_type == CMD_UNSET)
 		msh_unset(command, &(msh->envp));
-	if (tokens->cmd_type == CMD_EXPORT)
+	else if (tokens->cmd_type == CMD_EXPORT)
 		msh_export(msh->envp);
 	else
 		return (FAILURE);
