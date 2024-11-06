@@ -12,6 +12,22 @@
 
 #include "../includes/minishell.h"
 
+static int	count_pipes(t_tkn *tokens)
+{
+	int		counter;
+	
+	counter = 0;
+	while (tokens)
+	{
+		if (!counter)
+			counter = 1;
+		if (tokens->type == TKN_PIPE)
+			counter++;
+		tokens = tokens->next;
+	}
+	return (counter);
+}
+
 t_tkn	*to_parse(t_msh *msh, char *line)
 {
 	t_tkn	*tokens;
@@ -30,6 +46,7 @@ t_tkn	*to_parse(t_msh *msh, char *line)
 	}
 	msh->cmd_count = ft_matrixlen(msh->cmds->av);
 	tokens = tokenizer(msh->cmds->av);
+	msh->pipe_count = count_pipes(tokens);
 	if (line)
 	{
 		free(line);

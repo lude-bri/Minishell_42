@@ -101,7 +101,9 @@ typedef struct s_tkn
 	t_cmd_group		cmd_type;
 	char			*name;
 	int				len;
-	struct s_tkn    *next;
+	struct s_tkn	*left; //to binary tree
+	struct s_tkn	*right; //to binary tree
+	struct s_tkn    *next; //linked list -> helps w free
 }					t_tkn;
 
 //struct that deals with commands
@@ -127,6 +129,7 @@ typedef struct s_msh
 	char		*prompt;
 
 	int			cmd_count;
+	int			pipe_count;
 	int			exit_status;
 
 }				t_msh;
@@ -188,14 +191,20 @@ t_tkn	*to_parse(t_msh *msh, char *line);
 
 //400_execute.c
 int		to_execute(char **command, t_msh *msh, t_tkn *tokens);
-int	exec_bi(t_tkn *tokens, char **command, t_msh *msh);
-int	exec_exe(t_tkn *tokens, char **command, t_msh *msh);
+int		exec_bi(t_tkn *tokens, char **command, t_msh *msh);
+int		exec_exe(t_tkn *tokens, char **command, t_msh *msh);
 void	execute(char **cmd, t_msh *msh, t_tkn *tokens);
 char	*find_path(char *cmd, char **envp);
 
 //410_signals.c
 void	setup_signals(void);
 void	sigint_handler(int sig);
+
+//420_exec_one.c
+int		exec_one(char **command, t_msh *msh, t_tkn *tokens);
+
+//430_exec_more.c
+int	exec_more(char **command, t_msh *msh, t_tkn *tokens);
 
 /* **************** */
 /*      500        */

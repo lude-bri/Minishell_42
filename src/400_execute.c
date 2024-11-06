@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:32:38 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/31 16:09:07 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/06 11:57:23 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,16 @@
 
 int	to_execute(char **command, t_msh *msh, t_tkn *tokens)
 {
-	if (tokens->type == TKN_CMD)
-		if (exec_bi(tokens, command, msh) == FAILURE)
-			if (exec_exe(tokens, command, msh) != SUCCESS)
-				return (FAILURE);
+	if (msh->pipe_count == 1)
+	{
+		if (exec_one(command, msh, tokens) != SUCCESS)
+			return (FAILURE);
+	}
+	else
+	{
+		if (exec_more(command, msh, tokens) != SUCCESS)
+			return (FAILURE);
+	}
 	return (SUCCESS);
 }
 
