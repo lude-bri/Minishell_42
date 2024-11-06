@@ -12,6 +12,7 @@
 
 #include "../includes/minishell.h"
 
+static void increment_shlvl(char **envp);
 // static char *init_prompt(t_msh *msh)
 // {
 // 	char	*prompt;
@@ -35,6 +36,7 @@ void	init_msh(t_msh *msh, char **envp)
 	// 	msh->hostname = "42";
 	msh->cmds = NULL;
 	// msh->prompt = init_prompt(msh);
+	increment_shlvl(msh->envp);
 }
 
 void	init_struct(t_msh *msh)
@@ -64,4 +66,31 @@ char	**init_env(char **envp)
 	}
 	env_copy[i] = NULL;
 	return (env_copy);
+}
+
+static void increment_shlvl(char **envp)
+{
+    int		i;
+    int		shlvl_value;
+    char	*new_shlvl;
+    char	*shlvl_str;
+
+	i = 0;
+    while (envp[i])
+    {
+        if (ft_strnstr(envp[i], "SHLVL=", 6))
+        {
+            shlvl_value = ft_atoi(envp[i] + 6);
+            shlvl_value++;
+            shlvl_str = ft_itoa(shlvl_value);
+            new_shlvl = ft_strjoin("SHLVL=", shlvl_str);
+            free(envp[i]);
+            envp[i] = new_shlvl;
+            free(shlvl_str);
+            return;
+        }
+        i++;
+    }
+    envp[i] = ft_strdup("SHLVL=1");
+    envp[i + 1] = NULL;
 }
