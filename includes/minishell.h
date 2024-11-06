@@ -188,6 +188,10 @@ t_tkn	*to_parse(t_msh *msh, char *line);
 
 //400_execute.c
 int		to_execute(char **command, t_msh *msh, t_tkn *tokens);
+int	exec_bi(t_tkn *tokens, char **command, t_msh *msh);
+int	exec_exe(t_tkn *tokens, char **command, t_msh *msh);
+void	execute(char **cmd, t_msh *msh, t_tkn *tokens);
+char	*find_path(char *cmd, char **envp);
 
 //410_signals.c
 void	setup_signals(void);

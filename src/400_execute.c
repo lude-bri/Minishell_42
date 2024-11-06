@@ -12,11 +12,6 @@
 
 #include "../includes/minishell.h"
 
-static int	exec_bi(t_tkn *tokens, char **command, t_msh *msh);
-static int	exec_exe(t_tkn *tokens, char **command, t_msh *msh);
-static void	execute(char **cmd, t_msh *msh, t_tkn *tokens);
-static char	*find_path(char *cmd, char **envp);
-
 int	to_execute(char **command, t_msh *msh, t_tkn *tokens)
 {
 	if (tokens->type == TKN_CMD)
@@ -26,7 +21,7 @@ int	to_execute(char **command, t_msh *msh, t_tkn *tokens)
 	return (SUCCESS);
 }
 
-static int	exec_bi(t_tkn *tokens, char **command, t_msh *msh)
+int	exec_bi(t_tkn *tokens, char **command, t_msh *msh)
 {
 	if (tokens->cmd_type == CMD_CD)
 		msh_cd(command);
@@ -47,7 +42,7 @@ static int	exec_bi(t_tkn *tokens, char **command, t_msh *msh)
 	return (SUCCESS);
 }
 
-static int	exec_exe(t_tkn *tokens, char **command, t_msh *msh)
+int	exec_exe(t_tkn *tokens, char **command, t_msh *msh)
 {
 	int		pid;
 	int		status;
@@ -60,7 +55,7 @@ static int	exec_exe(t_tkn *tokens, char **command, t_msh *msh)
 	return (SUCCESS);
 }
 
-static void	execute(char **cmd, t_msh *msh, t_tkn *tokens)
+void	execute(char **cmd, t_msh *msh, t_tkn *tokens)
 {
 	char	*path;
 
@@ -80,7 +75,7 @@ static void	execute(char **cmd, t_msh *msh, t_tkn *tokens)
 	}
 }
 
-static char *find_path(char *cmd, char **envp)
+char *find_path(char *cmd, char **envp)
 {
     char **full_path;
     char *half_path;
