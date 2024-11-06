@@ -55,6 +55,7 @@ FILES += 530_export.c
 FILES += 540_unset.c
 FILES += 550_env.c
 FILES += 560_exit.c
+FILES += 600_pipes.c
 FILES += 900_free.c
 
 ### Paths

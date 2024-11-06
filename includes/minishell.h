@@ -144,8 +144,8 @@ typedef struct s_msh
 // FIRST FUNCTIONS -> MAIN AND INITs
 
 //100_main.c
-int	main(int ac, char **av, char **envp);
-int	msh_loop(t_msh *msh);
+int		main(int ac, char **av, char **envp);
+int		msh_loop(t_msh *msh);
 
 //110_init.c
 void	init_msh(t_msh *msh, char **envp);
@@ -204,7 +204,7 @@ void	sigint_handler(int sig);
 int		exec_one(char **command, t_msh *msh, t_tkn *tokens);
 
 //430_exec_more.c
-int	exec_more(char **command, t_msh *msh, t_tkn *tokens);
+int		exec_more(char **command, t_msh *msh, t_tkn *tokens);
 
 /* **************** */
 /*      500        */
@@ -212,23 +212,23 @@ int	exec_more(char **command, t_msh *msh, t_tkn *tokens);
 // BUILT-INS
 
 //500_echo.c
-int	msh_echo(char **argv);
+int		msh_echo(char **argv);
 
 //510_cd.c
-int	msh_cd(char **argv);
+int		msh_cd(char **argv);
 
 //520_pwd.c
-int	msh_pwd(void);
+int		msh_pwd(void);
 
 //530_export.c
-int msh_export(char **envp);
+int		msh_export(char **envp);
 
 //540_unset.c
-int	is_variable_match(const char *env_var, const char *var_name);
-int	msh_unset(char **argv, char ***envp);
+int		is_variable_match(const char *env_var, const char *var_name);
+int		msh_unset(char **argv, char ***envp);
 
 //550_env.c
-int	msh_env(char **envp);
+int		msh_env(char **envp);
 
 //560_exit.c
 int		is_num(const char *str);
@@ -238,6 +238,10 @@ int		msh_exit(char **argv, t_msh *msh, t_tkn *tokens);
 /*      600        */
 /* *************** */
 // PIPES
+
+//600_pipes.c
+int		exec_pipe_one(char **command, t_msh *msh, int *fd);
+
 
 /* **************** */
 /*      700        */
