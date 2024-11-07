@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:50:15 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/31 15:32:41 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/07 14:16:27 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static t_tkn	*tkn_new(char *content)
 	node->name = ft_strdup(content);
 	node->type = 0;
 	node->next = NULL;
-	node->down= NULL;
 	node->left = NULL;
 	node->right = NULL;
 	return (node);
