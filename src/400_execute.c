@@ -14,6 +14,7 @@
 
 int	to_execute(char **command, t_msh *msh, t_tkn *tokens)
 {
+	msh->tree_head = create_bin_tree(tokens);
 	if (msh->pipe_count == 1)
 	{
 		if (exec_one(command, msh, tokens) != SUCCESS)

@@ -43,7 +43,7 @@ int	msh_loop(t_msh *msh)
 		tokens = to_parse(msh, line);
 		if (!tokens)
 			continue ;
-		msh->tree_head = create_bin_tree(tokens);
+		// msh->tree_head = create_bin_tree(tokens);
 		if (msh->cmd_count > NO_CMDS)
 			if (!to_execute(msh->cmds->av, msh, tokens))
 				break ;
