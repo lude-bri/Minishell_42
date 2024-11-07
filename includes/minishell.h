@@ -103,7 +103,6 @@ typedef struct s_tkn
 	int				len;
 	struct s_tkn	*left; //to binary tree
 	struct s_tkn	*right; //to binary tree
-	struct s_tkn	*down; //to binary tree
 	struct s_tkn    *next; //linked list -> helps w free
 }					t_tkn;
 

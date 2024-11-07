@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:32:38 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/06 11:57:23 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/07 12:45:44 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	execute(char **cmd, t_msh *msh, t_tkn *tokens)
 	}
 	if (execve(path, cmd, msh->envp) == -1)
 	{
+		perror(path);
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
 		exit(127);
