@@ -103,6 +103,7 @@ typedef struct s_tkn
 	int				len;
 	struct s_tkn	*left; //to binary tree
 	struct s_tkn	*right; //to binary tree
+	struct s_tkn	*down; //to binary tree
 	struct s_tkn    *next; //linked list -> helps w free
 }					t_tkn;
 
@@ -119,6 +120,7 @@ typedef struct s_command
 typedef struct s_msh
 {
 	t_command	*cmds;
+	t_tkn		*tree_head; //binary tree head to execute
 	char		**envp;
 	char		**path;
 
@@ -183,6 +185,10 @@ t_tkn	*tokenizer(char **av);
 
 //300_parser.c	
 t_tkn	*to_parse(t_msh *msh, char *line);
+
+//310_bi_tree.c
+t_tkn	*create_bin_tree(t_tkn *tokens);
+
 
 /* **************** */
 /*      400        */

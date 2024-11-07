@@ -36,6 +36,7 @@ void	init_msh(t_msh *msh, char **envp)
 	// if (!msh->hostname)
 	// 	msh->hostname = "42";
 	msh->cmds = NULL;
+	msh->tree_head = NULL;
 	// msh->prompt = init_prompt(msh);
 	increment_shlvl(msh->envp);
 }
