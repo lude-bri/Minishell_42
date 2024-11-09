@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:53:23 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/31 17:28:42 by mde-agui         ###   ########.fr       */
+/*   Updated: 2024/11/09 14:02:40 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,12 @@ void	free_arg(char **argv)
 
 void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 {
-	free_arg(msh->cmds->av);
-	free_tokens(token);
-	free(command);
+	if (msh->cmds->av)
+		free_arg(msh->cmds->av);
+	if (token)
+		free_tokens(token);
+	if (command)
+		free(command);
 }
 
 void	free_tokens(t_tkn *token)
