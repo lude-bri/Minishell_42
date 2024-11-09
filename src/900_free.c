@@ -46,6 +46,8 @@ void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 {
 	if (msh->cmds->av)
 		free_arg(msh->cmds->av);
+	if (msh->envp)
+		free_arg(msh->envp);
 	if (token)
 		free_tokens(token);
 	if (command)
