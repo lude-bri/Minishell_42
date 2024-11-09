@@ -68,36 +68,6 @@ static int	exec_pipe(t_msh *msh, t_tkn *tokens)
 	return (SUCCESS);
 }
 
-
-// static int	exec_pipe(t_msh *msh, t_tkn *tokens)
-// {
-// 	int		fd[2];
-// 	pid_t	pid_left;
-// 	pid_t	pid_right;
-// 	int		status;
-//
-// 	if (pipe(fd) < 0)
-// 		return (FAILURE);
-// 	pid_left = fork();
-// 	if (pid_left == -1)
-// 		ft_close(fd);
-// 	else if (pid_left == 0)
-// 		apply_pipe(tokens->left, msh, fd, 1);
-// 	printf("here");
-// 	pid_right = fork();
-// 	if (pid_right == -1)
-// 		ft_close(fd);
-// 	else if (pid_right == 0)
-// 		apply_pipe(tokens->right, msh, fd, 0);
-// 	close(fd[0]);
-// 	close(fd[1]);
-// 	free_msh(NULL, msh, tokens);
-// 	waitpid(pid_left, &status, 0);
-// 	waitpid(pid_right, &status, 0);
-// 	// treat_pipes(tokens, status);
-// 	return (SUCCESS);
-// }
-
 int	exec_more(t_msh *msh, t_tkn *tokens)
 {
 	if (tokens->type == TKN_PIPE)
