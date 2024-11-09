@@ -45,7 +45,7 @@ int	msh_loop(t_msh *msh)
 			continue ;
 		// msh->tree_head = create_bin_tree(tokens);
 		if (msh->cmd_count > NO_CMDS)
-			if (!to_execute(msh->cmds->av, msh, tokens))
+			if (!to_execute(msh, tokens))
 				break ;
 		free_msh(msh->cmds, msh, tokens);
 	}

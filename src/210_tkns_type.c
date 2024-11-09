@@ -52,6 +52,7 @@ static t_tkn	*tkn_new(char *content)
 		return (0);
 	node->name = ft_strdup(content);
 	node->type = 0;
+	node->cmdargs = NULL;
 	node->next = NULL;
 	node->left = NULL;
 	node->right = NULL;

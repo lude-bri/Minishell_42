@@ -100,6 +100,7 @@ typedef struct s_tkn
 	t_token_group	type;
 	t_cmd_group		cmd_type;
 	char			*name;
+	char			**cmdargs; // need to create
 	int				len;
 	struct s_tkn	*left; //to binary tree
 	struct s_tkn	*right; //to binary tree
@@ -195,21 +196,24 @@ t_tkn	*create_bin_tree(t_tkn *tokens);
 // EXECUTE
 
 //400_execute.c
-int		to_execute(char **command, t_msh *msh, t_tkn *tokens);
-int		exec_bi(t_tkn *tokens, char **command, t_msh *msh);
-int		exec_exe(t_tkn *tokens, char **command, t_msh *msh);
-void	execute(char **cmd, t_msh *msh, t_tkn *tokens);
+int		to_execute(t_msh *msh, t_tkn *tokens);
+int		exec_bi(t_tkn *tokens, t_msh *msh);
+int		exec_exe(t_tkn *tokens, t_msh *msh);
+void	execute(t_msh *msh, t_tkn *tokens);
 char	*find_path(char *cmd, char **envp);
+
+//401_build_args.c
+char	**build_args(t_tkn *tokens);
 
 //410_signals.c
 void	setup_signals(void);
 void	sigint_handler(int sig);
 
 //420_exec_one.c
-int		exec_one(char **command, t_msh *msh, t_tkn *tokens);
+int		exec_one(t_msh *msh, t_tkn *tokens);
 
 //430_exec_more.c
-int		exec_more(char **command, t_msh *msh, t_tkn *tokens);
+int		exec_more(t_msh *msh, t_tkn *tokens);
 
 /* **************** */
 /*      500        */

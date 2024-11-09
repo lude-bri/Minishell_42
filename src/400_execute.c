@@ -6,42 +6,43 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:32:38 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/07 14:17:45 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/09 12:52:18 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	to_execute(char **command, t_msh *msh, t_tkn *tokens)
+int	to_execute(t_msh *msh, t_tkn *tokens)
 {
 	msh->tree_head = create_bin_tree(tokens);
-	if (msh->pipe_count == 1)
+	tokens->cmdargs = msh->cmds->av;
+	if (msh->tree_head->type != TKN_PIPE)
 	{
-		if (exec_one(command, msh, tokens) != SUCCESS)
+		if (exec_one(msh, tokens) != SUCCESS)
 			return (FAILURE);
 	}
 	else
 	{
-		if (exec_more(command, msh, tokens) != SUCCESS)
+		if (exec_more(msh, msh->tree_head) != SUCCESS)
 			return (FAILURE);
 	}
 	return (SUCCESS);
 }
 
-int	exec_bi(t_tkn *tokens, char **command, t_msh *msh)
+int	exec_bi(t_tkn *tokens, t_msh *msh)
 {
 	if (tokens->cmd_type == CMD_CD)
-		msh_cd(command);
+		msh_cd(tokens->cmdargs);
 	else if (tokens->cmd_type == CMD_ENV)
 		msh_env(msh->envp);
 	else if (tokens->cmd_type == CMD_PWD)
 		msh_pwd();
 	else if (tokens->cmd_type == CMD_ECHO)
-		msh_echo(command);
+		msh_echo(tokens->cmdargs);
 	else if (tokens->cmd_type == CMD_EXIT)
-		msh_exit(command, msh, tokens);
+		msh_exit(tokens->cmdargs, msh, tokens);
 	else if (tokens->cmd_type == CMD_UNSET)
-		msh_unset(command, &(msh->envp));
+		msh_unset(tokens->cmdargs, &(msh->envp));
 	else if (tokens->cmd_type == CMD_EXPORT)
 		msh_export(msh->envp);
 	else
@@ -49,35 +50,38 @@ int	exec_bi(t_tkn *tokens, char **command, t_msh *msh)
 	return (SUCCESS);
 }
 
-int	exec_exe(t_tkn *tokens, char **command, t_msh *msh)
+int	exec_exe(t_tkn *tokens, t_msh *msh)
 {
 	int		pid;
 	int		status;
 
-	(void)tokens;
 	pid = fork();
 	if (pid == 0)
-		execute(command, msh, tokens);
+		execute(msh, tokens);
 	waitpid(pid, &status, 0);
 	return (SUCCESS);
 }
 
-void	execute(char **cmd, t_msh *msh, t_tkn *tokens)
+void	execute(t_msh *msh, t_tkn *tokens)
 {
 	char	*path;
+	char	**args;
 
-	path = find_path(cmd[0], msh->envp);
+	path = find_path(tokens->name, msh->envp);
+	args = build_args(tokens);
 	if (!path)
 	{
-		printf("%s : command not found\n", cmd[0]);
+		printf("%s: command not found\n", tokens->cmdargs[0]);
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
+		free_arg(args);
 		exit(0);
 	}
-	if (execve(path, cmd, msh->envp) == -1)
+	if (execve(path, args, msh->envp) == -1)
 	{
 		perror(path);
 		free(path);
+		free_arg(args);
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
 		exit(127);

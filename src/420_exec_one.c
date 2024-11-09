@@ -12,11 +12,11 @@
 
 #include "../includes/minishell.h"
 
-int	exec_one(char **command, t_msh *msh, t_tkn *tokens)
+int	exec_one(t_msh *msh, t_tkn *tokens)
 {
 	if (tokens->type == TKN_CMD)
-		if (exec_bi(tokens, command, msh) == FAILURE)
-			if (exec_exe(tokens, command, msh) != SUCCESS)
+		if (exec_bi(tokens, msh) == FAILURE)
+			if (exec_exe(tokens, msh) != SUCCESS)
 				return (FAILURE);
 	return (SUCCESS);
 }

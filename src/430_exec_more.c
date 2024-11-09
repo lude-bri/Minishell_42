@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:57:51 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/06 12:37:07 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/09 13:36:23 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	apply_pipe(t_tkn *dir, t_msh *msh, int *fd,
 	close(fd[1]);
 }
 
-static int	exec_pipe(char **command, t_msh *msh, t_tkn *tokens)
+static int	exec_pipe(t_msh *msh, t_tkn *tokens)
 {
 	int		fd[2];
 	pid_t	pid_left;
@@ -40,14 +40,17 @@ static int	exec_pipe(char **command, t_msh *msh, t_tkn *tokens)
 		ft_close(fd);
 	else if (pid_left == 0)
 	{
-		apply_pipe(msh->tree_head->left, msh, fd, 1);
-		exec_more(command, msh, tokens);
+		apply_pipe(tokens->left, msh, fd, 1);
+		exec_more(msh, tokens->left);
 	}
 	pid_right = fork();
 	if (pid_right == -1)
 		ft_close(fd);
 	else if (pid_right == 0)
-		apply_pipe(msh->tree_head->right, msh, fd, 0);
+	{
+		apply_pipe(tokens->right, msh, fd, 0);
+		exec_more(msh, tokens->right);
+	}
 	close(fd[0]);
 	close(fd[1]);
 	free_msh(NULL, msh, tokens);
@@ -56,16 +59,17 @@ static int	exec_pipe(char **command, t_msh *msh, t_tkn *tokens)
 	return (SUCCESS);
 }
 
-int	exec_more(char **command, t_msh *msh, t_tkn *tokens)
+int	exec_more(t_msh *msh, t_tkn *tokens)
 {
-	if (msh->tree_head->type == TKN_PIPE)
+	if (tokens->type == TKN_PIPE)
 	{
-		if (exec_pipe(command, msh, tokens) != SUCCESS)
-			return (FAILURE);
+		// printf("exec_pipe activated\n");
+		if (exec_pipe(msh, tokens) != SUCCESS)
+		 	return (FAILURE);
 	}
 	else
 	{
-		if (exec_exe(tokens, command, msh) != SUCCESS)
+		if (exec_exe(tokens, msh) != SUCCESS)
 			return (FAILURE);
 	}
 	return (SUCCESS);

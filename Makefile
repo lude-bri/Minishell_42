@@ -46,6 +46,7 @@ FILES += 210_tkns_type.c
 FILES += 300_parser.c
 FILES += 310_bi_tree.c
 FILES += 400_execute.c
+FILES += 401_build_args.c
 FILES += 410_signals.c
 FILES += 420_exec_one.c
 FILES += 430_exec_more.c
@@ -76,7 +77,7 @@ CC			= cc
 
 CFLAGS		= -Wall -Wextra -Werror
 DFLAGS		= -g 
-# -fsanitize=address
+# DFLAGS		+= -fsanitize=address -fsanitize=leak
 
 INC			= -I $(INCLUDE_PATH)
 
