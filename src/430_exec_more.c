@@ -33,8 +33,6 @@
 static void	apply_pipe(t_tkn *dir, t_msh *msh, int *fd,
 		int multipurp_fd)
 {
-	(void)dir;
-	(void)msh;
 	if (dup2(fd[multipurp_fd], multipurp_fd) == -1)
 	{
 		close(fd[0]);
@@ -42,6 +40,7 @@ static void	apply_pipe(t_tkn *dir, t_msh *msh, int *fd,
 	}
 	close(fd[0]);
 	close(fd[1]);
+	exec_more(msh, dir);
 }
 
 static int	exec_pipe(t_msh *msh, t_tkn *tokens)
@@ -57,19 +56,13 @@ static int	exec_pipe(t_msh *msh, t_tkn *tokens)
 	if (pid_left == -1)
 		ft_close(fd);
 	else if (pid_left == 0)
-	{
 		apply_pipe(tokens->left, msh, fd, 1);
-		exec_more(msh, tokens->left);
-	}
 	printf("here");
 	pid_right = fork();
 	if (pid_right == -1)
 		ft_close(fd);
 	else if (pid_right == 0)
-	{
 		apply_pipe(tokens->right, msh, fd, 0);
-		exec_more(msh, tokens->right);
-	}
 	close(fd[0]);
 	close(fd[1]);
 	free_msh(NULL, msh, tokens);
