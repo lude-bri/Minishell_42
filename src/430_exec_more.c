@@ -12,24 +12,24 @@
 
 #include "../includes/minishell.h"
 
-static void	free_everything_exit(t_tkn *tokens, int exit_code)
-{
-	free_tokens(tokens);
-	exit(exit_code);
-}
-
-static void	treat_pipes(t_tkn *tokens, int status)
-{
-	if (WIFEXITED(status))
-		free_everything_exit(tokens, WEXITSTATUS(status));
-	else if (WIFSIGNALED(status))
-	{
-		if (WTERMSIG(status) == SIGINT)
-			write(2, "\n", 1);
-		free_everything_exit(tokens, 128 + WTERMSIG(status));
-	}
-}
-
+// static void	free_everything_exit(t_tkn *tokens, int exit_code)
+// {
+// 	free_tokens(tokens);
+// 	exit(exit_code);
+// }
+//
+// static void	treat_pipes(t_tkn *tokens, int status)
+// {
+// 	if (WIFEXITED(status))
+// 		free_everything_exit(tokens, WEXITSTATUS(status));
+// 	else if (WIFSIGNALED(status))
+// 	{
+// 		if (WTERMSIG(status) == SIGINT)
+// 			write(2, "\n", 1);
+// 		free_everything_exit(tokens, 128 + WTERMSIG(status));
+// 	}
+// }
+//
 static void	apply_pipe(t_tkn *dir, t_msh *msh, int *fd,
 		int multipurp_fd)
 {
@@ -75,7 +75,7 @@ static int	exec_pipe(t_msh *msh, t_tkn *tokens)
 	free_msh(NULL, msh, tokens);
 	waitpid(pid_left, &status, 0);
 	waitpid(pid_right, &status, 0);
-	treat_pipes(tokens, status);
+	// treat_pipes(tokens, status);
 	return (SUCCESS);
 }
 
