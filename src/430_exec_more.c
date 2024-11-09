@@ -19,7 +19,7 @@ static void	apply_pipe(t_tkn *dir, t_msh *msh, int *fd,
 	{
 		close(fd[0]);
 		close(fd[1]);
-		free_msh(NULL, msh, dir);
+		// free_tokens(dir);
 		exit(127);
 	}
 	close(fd[0]);
@@ -46,7 +46,7 @@ static int	exec_pipe(t_msh *msh, t_tkn *tokens)
 	{
 		close(fd[0]);
 		apply_pipe(tokens->left, msh, fd, 1);
-		free_msh(msh->cmds, msh, tokens);
+		// free_msh(msh->cmds, msh, tokens);
 		exit(EXIT_SUCCESS);
 	}
 	pid_right = fork();
@@ -61,7 +61,7 @@ static int	exec_pipe(t_msh *msh, t_tkn *tokens)
 	{
 		close(fd[1]);
 		apply_pipe(tokens->right, msh, fd, 0);
-		free_msh(msh->cmds, msh, tokens);
+		// free_msh(msh->cmds, msh, tokens);
 		exit(EXIT_SUCCESS);
 	}
 	close(fd[0]);
