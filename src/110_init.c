@@ -39,7 +39,6 @@ void	init_struct(t_msh *msh)
 {
 	msh->path = NULL;
 	msh->cmd_count = 0;
-	// msh->exit_status = 0;
 }
 
 char	**init_env(char **envp)
