@@ -54,9 +54,7 @@ static int	exec_pipe(t_msh *msh, t_tkn *tokens)
 	pid_right = fork();
 	if (pid_right == -1)
 	{
-		perror("fork failed");
-		close(fd[0]);
-		close(fd[1]);
+		ft_close(fd);
 		return (FAILURE);
 	}
 	else if (pid_right == 0)
