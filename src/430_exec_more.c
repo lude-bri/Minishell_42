@@ -46,6 +46,7 @@ static int	exec_pipe(t_msh *msh, t_tkn *tokens)
 	{
 		close(fd[0]);
 		apply_pipe(tokens->left, msh, fd, 1);
+		free_arg(msh->envp);
 		free_msh(msh->cmds, msh, tokens);
 		exit(EXIT_SUCCESS);
 	}
@@ -61,6 +62,7 @@ static int	exec_pipe(t_msh *msh, t_tkn *tokens)
 	{
 		close(fd[1]);
 		apply_pipe(tokens->right, msh, fd, 0);
+		free_arg(msh->envp);
 		free_msh(msh->cmds, msh, tokens);
 		exit(EXIT_SUCCESS);
 	}
