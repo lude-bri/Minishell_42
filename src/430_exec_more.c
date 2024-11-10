@@ -47,7 +47,7 @@ static int	exec_pipe(t_msh *msh, t_tkn *tokens)
 		close(fd[0]);
 		apply_pipe(tokens->left, msh, fd, 1);
 		free_arg(msh->envp);
-		free_msh(msh->cmds, msh, tokens);
+		free_msh(msh->cmds, msh, tokens->left);
 		exit(EXIT_SUCCESS);
 	}
 	pid_right = fork();
@@ -63,7 +63,7 @@ static int	exec_pipe(t_msh *msh, t_tkn *tokens)
 		close(fd[1]);
 		apply_pipe(tokens->right, msh, fd, 0);
 		free_arg(msh->envp);
-		free_msh(msh->cmds, msh, tokens);
+		free_msh(msh->cmds, msh, tokens->right);
 		exit(EXIT_SUCCESS);
 	}
 	close(fd[0]);
