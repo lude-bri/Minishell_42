@@ -14,18 +14,6 @@
 
 static void increment_shlvl(char **envp);
 
-// static char *init_prompt(t_msh *msh)
-// {
-// 	char	*prompt;
-// 	char	*tmp;
-//
-// 	tmp = ft_strjoin(msh->user, "@");
-// 	prompt = ft_strjoin(tmp, msh->hostname);
-// 	free(tmp);
-// 	tmp = ft_strjoin_free(prompt, ":", 1);
-// 	return (tmp);
-// }
-
 void	init_msh(t_msh *msh, char **envp)
 {
 	if (!msh->envp)
