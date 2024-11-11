@@ -17,13 +17,11 @@ static void	apply_pipe(t_tkn *dir, t_msh *msh, int *fd,
 {
 	if (dup2(fd[multipurp_fd], multipurp_fd) == -1)
 	{
-		close(fd[0]);
-		close(fd[1]);
+		ft_close(fd);
 		free_tokens(dir);
 		exit(127);
 	}
-	close(fd[0]);
-	close(fd[1]);
+	ft_close(fd);
 	exec_more(msh, dir);
 }
 
@@ -64,8 +62,7 @@ static int	exec_pipe(t_msh *msh, t_tkn *tokens)
 		free_msh(msh->cmds, msh, tokens->left);
 		exit(EXIT_SUCCESS);
 	}
-	close(fd[0]);
-	close(fd[1]);
+	ft_close(fd);	
 	waitpid(pid_left, &status, 0);
 	waitpid(pid_right, &status, 0);
 	return (SUCCESS);
