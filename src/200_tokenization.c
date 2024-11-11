@@ -26,9 +26,9 @@ char	*expand_var(const char *input, int *i, t_msh *msh)
 	start = *i + 1;
 	if (input[start] == '?')
 	{
-		printf("Current msh->exit_status before expanding $?: %d\n", msh->exit_status);
+		// printf("Current msh->exit_status before expanding $?: %d\n", msh->exit_status);
 		result = ft_itoa(msh->exit_status);
-		printf("Expanding $?: %s\n", result);
+		// printf("Expanding $?: %s\n", result);
 		*i += 2;
 		return (result); 
 	}
