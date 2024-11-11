@@ -28,10 +28,12 @@ static int	count_pipes(t_tkn *tokens)
 	return (counter);
 }
 
-t_tkn	*to_parse(t_msh *msh, char *line)
+t_tkn	*to_parse(t_msh *msh)
 {
 	t_tkn	*tokens;
+	char	*line;
 
+	line = build_prompt(msh);
 	if (!line)
 		return (NULL);
 	add_history(line);

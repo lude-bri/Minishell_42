@@ -183,7 +183,7 @@ t_tkn	*tokenizer(char **av);
 // PARSERS
 
 //300_parser.c	
-t_tkn	*to_parse(t_msh *msh, char *line);
+t_tkn	*to_parse(t_msh *msh);
 
 //310_bi_tree.c
 t_tkn	*create_bin_tree(t_tkn *tokens);

@@ -121,27 +121,3 @@ char *find_path(char *cmd, char **envp)
     }
     return (free_arg(full_path), NULL);
 }
-
-
-/////////////////////////////////
-////         OLD EXEC        ////
-/////////////////////////////////
-
-	// i = -1;
-	// while (command[++i])
-	// 	printf("Arg number [%d] -> %s\n", i, command[i]);
-	// if (command[0] && ft_strcmp(command[0], "exit") == 0)
-	// 		msh_exit(command, msh);
-	// if (command[0] && ft_strcmp(command[0], "pwd") == 0)
-	// 	msh_pwd();
-	// if (command[0] && ft_strcmp(command[0], "echo") == 0)
-	// 	msh_echo(command);
-	// if (command[0] && ft_strcmp(command[0], "cd") == 0)
-	// 	msh_cd(command);
-	// if (command[0] && ft_strcmp(command[0], "export") == 0)
-	// 	msh_export(msh->envp);
-	// if (command[0] && ft_strcmp(command[0], "env") == 0)
-	// 	msh_env(msh->envp);
-	// if (command[0] && ft_strcmp(command[0], "unset") == 0)
-	// 	msh_unset(command, &(msh->envp));
-	// return (SUCCESS);
