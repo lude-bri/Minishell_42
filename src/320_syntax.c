@@ -20,7 +20,7 @@ int	syntax_check(t_msh *msh, t_tkn *tokens)
 		msh->exit_status = 2;
 		return (FAILURE);
 	}
-	else if (tokens->type == TKN_IN)
+	else if (tokens->type == TKN_IN || tokens->type == TKN_OUT)
 	{	
 		printf("msh: syntax error near unexpected token `newline'\n");
 		msh->exit_status = 2;

@@ -25,6 +25,7 @@ void	init_msh(t_msh *msh, char **envp)
 
 void	init_struct(t_msh *msh)
 {
+	// ft_bzero(msh, sizeof(t_msh));
 	msh->path = NULL;
 	msh->cmd_count = 0;
 }
