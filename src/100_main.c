@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:03:56 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/07 10:41:52 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/11 11:36:40 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	msh_loop(t_msh *msh)
 	{
 		setup_signals();
 		init_struct(msh);
-		line = readline("msh $ ");
+		line = readline("msh$ ");
 		if (!line)
 		{
 			ft_printf("exit\n");

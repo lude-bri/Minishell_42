@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:28:36 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/31 17:29:48 by mde-agui         ###   ########.fr       */
+/*   Updated: 2024/11/11 11:43:50 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,11 @@ t_tkn	*to_parse(t_msh *msh, char *line)
 		return (NULL);
 	msh->cmds->av = split_input(line, msh);
 	if (!msh->cmds->av)
-	{
-		//free_cmds(msh->cmds, 0);
 		return (NULL);
-	}
 	msh->cmd_count = ft_matrixlen(msh->cmds->av);
 	tokens = tokenizer(msh->cmds->av);
+	if (syntax_check(msh, tokens) == FAILURE)
+		return (NULL);
 	msh->pipe_count = count_pipes(tokens);
 	if (line)
 	{

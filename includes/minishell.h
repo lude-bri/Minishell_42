@@ -177,7 +177,6 @@ char	*copy_word(const char *input, int start, int end);
 //210_tkns_type.c
 t_tkn	*tokenizer(char **av);
 
-
 /* **************** */
 /*      300        */
 /* *************** */
@@ -189,6 +188,8 @@ t_tkn	*to_parse(t_msh *msh, char *line);
 //310_bi_tree.c
 t_tkn	*create_bin_tree(t_tkn *tokens);
 
+//320_syntax_check.c
+int	syntax_check(t_msh *msh, t_tkn *tokens);
 
 /* **************** */
 /*      400        */
