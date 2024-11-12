@@ -13,9 +13,9 @@
 #include "../includes/minishell.h"
 
 static void	apply_pipe(t_tkn *dir, t_msh *msh, int *fd,
-		int multipurp_fd)
+		int multi_fd)
 {
-	if (dup2(fd[multipurp_fd], multipurp_fd) == -1)
+	if (dup2(fd[multi_fd], multi_fd) == -1)
 	{
 		ft_close(fd);
 		free_arg(msh->envp);
