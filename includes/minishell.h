@@ -231,7 +231,8 @@ int		msh_cd(char **argv);
 int		msh_pwd(void);
 
 //530_export.c
-int		msh_export(char **envp);
+int	msh_export_no_var(char **envp);
+int	msh_export(char ***envp, const char *new_var);
 
 //540_unset.c
 int		is_variable_match(const char *env_var, const char *var_name);
