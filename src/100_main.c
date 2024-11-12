@@ -38,7 +38,7 @@ int	msh_loop(t_msh *msh)
 			continue ;
 		if (msh->cmd_count > NO_CMDS)
 			if (!to_execute(msh, tokens))
-				break ;
+				break;
 		free_msh(msh->cmds, msh, tokens);
 	}
 	return (0);
