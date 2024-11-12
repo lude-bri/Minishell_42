@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   400_execute.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
+/*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:32:38 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/09 14:11:22 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/12 17:37:09 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,12 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 	else if (tokens->cmd_type == CMD_UNSET)
 		msh_unset(tokens->cmdargs, &(msh->envp));
 	else if (tokens->cmd_type == CMD_EXPORT)
-		msh_export(msh->envp);
+	{
+		if (msh->cmds->av[1])
+			msh_export(&(msh->envp), msh->cmds->av[1]);
+		else
+			msh_export_no_var(msh->envp);
+	}
 	else
 		return (FAILURE);
 	return (SUCCESS);
