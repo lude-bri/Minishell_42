@@ -20,7 +20,7 @@ static void	apply_pipe(t_tkn *dir, t_msh *msh, int *fd,
 		ft_close(fd);
 		free_arg(msh->envp);
 		free_arg(msh->cmds->av);
-		free_tokens(dir);
+		free_tokens(dir->left);
 		exit(127);
 	}
 	ft_close(fd);
@@ -56,7 +56,7 @@ static int	exec_pipe(t_msh *msh, t_tkn *tokens)
 		ft_close(fd);
 		return (FAILURE);
 	}
-	else if (pid_right == 0)
+	else if (pid_right == 1)
 	{
 		close(fd[1]);
 		apply_pipe(tokens->right, msh, fd, 0);
@@ -75,7 +75,7 @@ int	exec_more(t_msh *msh, t_tkn *tokens)
 	if (tokens->type == TKN_PIPE)
 	{
 		if (exec_pipe(msh, tokens) != SUCCESS)
-		 	return (FAILURE);
+			return (FAILURE);
 	}
 	else
 	{

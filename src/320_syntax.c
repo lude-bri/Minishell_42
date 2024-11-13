@@ -12,19 +12,35 @@
 
 #include "../includes/minishell.h"
 
+static int	syntax_check_pipes(t_msh *msh, t_tkn *tokens)
+{
+	if (tokens->type == TKN_PIPE)
+		printf("msh: syntax error near unexpected token `%s'\n", tokens->name);
+	else if (tokens->type == TKN_PIPE && tokens->next->type == TKN_PIPE)
+		printf("msh: syntax error near unexpected token `%s'\n", tokens->name);
+	else if ((tokens->type == TKN_PIPE && tokens->next->type == TKN_PIPE 
+			&& tokens->next->type == TKN_PIPE) || msh->pipe_count > 7)	
+		printf("msh: syntax error near unexpected token `||'\n");
+	else if (tokens->type != TKN_CMD && tokens->next->type == TKN_PIPE)	
+		printf("msh: syntax error near unexpected token `%s'\n", tokens->name);
+	msh->exit_status = 2;
+	return (FAILURE);
+}
+
+static int	syntax_check_redirs(t_msh *msh, t_tkn *tokens)
+{
+	(void)tokens;
+	printf("msh: syntax error near unexpected token `newline'\n");
+	msh->exit_status = 2;
+	return (FAILURE);
+}
+
+
 int	syntax_check(t_msh *msh, t_tkn *tokens)
 {
 	if (tokens->type == TKN_PIPE)
-	{
-		printf("msh: syntax error near unexpected token `%s'\n", tokens->name);
-		msh->exit_status = 2;
-		return (FAILURE);
-	}
+		syntax_check_pipes(msh, tokens);
 	else if (tokens->type == TKN_IN || tokens->type == TKN_OUT)
-	{
-		printf("msh: syntax error near unexpected token `newline'\n");
-		msh->exit_status = 2;
-		return (FAILURE);
-	}
+		syntax_check_redirs(msh, tokens);
 	return (SUCCESS);
 }

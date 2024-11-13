@@ -16,6 +16,7 @@ int	free_array(char **str, int error)
 {
 	int		i;
 
+	// perror(__func__);
 	if (!str)
 		return (error);
 	i = -1;
@@ -30,6 +31,8 @@ void	free_arg(char **argv)
 	int	i;
 
 	i = 0;
+	
+	// perror(__func__);
 	if (!argv)
 		return ;
 	while (argv[i])
@@ -44,6 +47,7 @@ void	free_arg(char **argv)
 
 void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 {
+	// perror(__func__);
 	if (msh->cmds->av)
 		free_arg(msh->cmds->av);
 	if (token)
@@ -55,12 +59,14 @@ void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 void	free_tokens(t_tkn *token)
 {
 	t_tkn	*current;
-
+	
+	// perror(__func__);
 	while (token)
 	{
 		current = token;
 		token = token->next;
 		free(current->name);
+		current->name = NULL;
 		free(current);
 	}
 }
