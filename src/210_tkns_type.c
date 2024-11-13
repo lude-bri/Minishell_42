@@ -47,6 +47,8 @@ void vector_push(Vector *vector, t_tkn *element)
 	int		i;
 	t_tkn	**new_buffer;
 
+	if (vector->buffer == NULL)
+		init_vector(vector, 100);
 	if (vector->count == vector->size)
 	{
 		vector->size = vector->size * 2 + 1;
