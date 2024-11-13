@@ -40,7 +40,7 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 	else if (tokens->cmd_type == CMD_ECHO)
 		msh_echo(tokens->cmdargs);
 	else if (tokens->cmd_type == CMD_EXIT)
-		msh_exit(tokens->cmdargs, msh, tokens);
+		msh_exit(tokens->cmdargs, msh);
 	else if (tokens->cmd_type == CMD_UNSET)
 		msh_unset(tokens->cmdargs, &(msh->envp));
 	else if (tokens->cmd_type == CMD_EXPORT)

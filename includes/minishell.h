@@ -85,6 +85,7 @@ typedef enum e_cmd_group
 /*                                  STRUCTS                                   */
 /* ************************************************************************** */
 
+
 //struct to deal with operations when tokenizing
 //used in 200_tokenization.c
 typedef struct s_tkn_op 
@@ -102,6 +103,7 @@ typedef struct s_tkn
 	char			*name;
 	char			**cmdargs; // need to create
 	int				len;
+	struct s_tkn	*tokens;
 	struct s_tkn	*left; //to binary tree
 	struct s_tkn	*right; //to binary tree
 	struct s_tkn    *next; //linked list -> helps w free
@@ -114,6 +116,13 @@ typedef struct s_command
 	char	**av; //argument values
 	char	*cmd; //command
 }			t_command;
+
+typedef struct Vector
+{
+	int		count;
+	int		size;
+	t_tkn	**buffer;
+}			Vector;
 
 //main struct to deal with the hole minishell system
 //it's called msh because its a MiniSHell
@@ -133,6 +142,7 @@ typedef struct s_msh
 	int			cmd_count;
 	int			pipe_count;
 	int			exit_status;
+	Vector		tokens;
 
 }				t_msh;
 
@@ -175,7 +185,7 @@ char	*expand_var(const char *input, int *i, t_msh *msh);
 char	*copy_word(const char *input, int start, int end);
 
 //210_tkns_type.c
-t_tkn	*tokenizer(char **av);
+t_tkn	*tokenizer(t_msh *msh, char **av);
 
 /* **************** */
 /*      300        */
@@ -231,8 +241,8 @@ int		msh_cd(char **argv);
 int		msh_pwd(void);
 
 //530_export.c
-int	msh_export_no_var(char **envp);
-int	msh_export(char ***envp, const char *new_var);
+int		msh_export_no_var(char **envp);
+int		msh_export(char ***envp, const char *new_var);
 
 //540_unset.c
 int		is_variable_match(const char *env_var, const char *var_name);
@@ -243,7 +253,7 @@ int		msh_env(char **envp);
 
 //560_exit.c
 int		is_num(const char *str);
-int		msh_exit(char **argv, t_msh *msh, t_tkn *tokens);
+int		msh_exit(char **argv, t_msh *msh);
 
 /* **************** */
 /*      600        */
@@ -279,5 +289,7 @@ void	free_tokens(t_tkn *token);
 //910_close.c
 void	ft_close(int *fd);
 
+void	init_vector(Vector *vector, size_t size);
+void	free_vector(Vector *vector);
 
 #endif

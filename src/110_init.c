@@ -20,12 +20,12 @@ void	init_msh(t_msh *msh, char **envp)
 		msh->envp = init_env(envp); //get_envp
 	msh->cmds = NULL;
 	msh->tree_head = NULL;
+	init_vector(&msh->tokens, 100);
 	increment_shlvl(msh->envp);
 }
 
 void	init_struct(t_msh *msh)
 {
-	// ft_bzero(msh, sizeof(t_msh));
 	msh->path = NULL;
 	msh->cmd_count = 0;
 }

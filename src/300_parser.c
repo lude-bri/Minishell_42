@@ -44,7 +44,7 @@ t_tkn	*to_parse(t_msh *msh)
 	if (!msh->cmds->av)
 		return (NULL);
 	msh->cmd_count = ft_matrixlen(msh->cmds->av);
-	tokens = tokenizer(msh->cmds->av);
+	tokens = tokenizer(msh, msh->cmds->av);
 	if (syntax_check(msh, tokens) == FAILURE)
 		return (NULL);
 	msh->pipe_count = count_pipes(tokens);

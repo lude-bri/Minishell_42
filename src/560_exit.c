@@ -42,7 +42,7 @@ int	is_letter(const char *str)
 	return (1);
 }
 
-int	msh_exit(char **argv, t_msh *msh, t_tkn *tokens)
+int	msh_exit(char **argv, t_msh *msh)
 {
 	if (msh->cmd_count > 2)
 	{
@@ -64,7 +64,8 @@ int	msh_exit(char **argv, t_msh *msh, t_tkn *tokens)
 		free_arg(argv);
 		free_array(msh->envp, 0);
 		free(msh->cmds);
-		free_tokens(tokens);
+		free_vector(&msh->tokens);
+		// free_tokens(tokens);
 		exit(msh->exit_status);
 	}
 	if (is_num(argv[1]))
@@ -78,6 +79,6 @@ int	msh_exit(char **argv, t_msh *msh, t_tkn *tokens)
 	free_arg(argv);
 	free_array(msh->envp, 0);
 	free(msh->cmds);
-	free_tokens(tokens);
+	free_vector(&msh->tokens);
 	exit(msh->exit_status);
 }

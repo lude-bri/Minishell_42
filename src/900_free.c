@@ -12,6 +12,21 @@
 
 #include "../includes/minishell.h"
 
+extern void	free_tkns(void);
+
+// static int	token_len(t_tkn *tokens)
+// {
+// 	int	i;
+//
+// 	i = 0;
+// 	while (tokens)
+// 	{
+// 		i++;
+// 		tokens = tokens->next;
+// 	}
+// 	return (i);
+// }
+//
 int	free_array(char **str, int error)
 {
 	int		i;
@@ -51,22 +66,40 @@ void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 	if (msh->cmds->av)
 		free_arg(msh->cmds->av);
 	if (token)
-		free_tokens(token);
+		free_vector(&msh->tokens);
+		// free_tokens(token);
+		// free_tkns();
 	if (command)
 		free(command);
 }
 
 void	free_tokens(t_tkn *token)
 {
-	t_tkn	*current;
-	
-	// perror(__func__);
+	// int		i;
+	// int		len;
+	// t_tkn	*tmp;
+	//
+	// i = 0;
+	// len = token_len(token);
+	// while (len >= i)
+	// {
+	// 	tmp = token->next;
+	// 	free(token->name);
+	// 	free(token);
+	// 	token = tmp;
+	// 	i++;
+	// }
+
+	t_tkn	*tmp;
+	int		counter = 0;
+
 	while (token)
 	{
-		current = token;
-		token = token->next;
-		free(current->name);
-		current->name = NULL;
-		free(current);
+		tmp = token->next;
+		free(token->name);
+		free(token);
+		counter += 1;
+		token = tmp;
 	}
+	printf("%i\n", counter);
 }

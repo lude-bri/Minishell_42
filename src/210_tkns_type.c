@@ -12,12 +12,62 @@
 
 #include "../includes/minishell.h"
 
-static t_tkn	*tkn_new(char *content);
+static t_tkn	*tkn_new(t_msh *msh, char *content);
 static void		assign_tkn(t_tkn *token);
 static void		verify_tkn_cmd(t_tkn *token);
 
+void init_vector(Vector *vector, size_t size)
+{
+	vector->count = 0;
+	vector->size = size;
+	vector->buffer = malloc(sizeof(t_tkn *) * size);
+}
+
+void free_vector(Vector *vector)
+{
+	int		index;
+	t_tkn	*element;
+
+	index = 0;
+	while (index < vector->count)
+	{
+		element = vector->buffer[index];
+		free(element->name);
+		free(element);
+		index++;
+	}
+	free(vector->buffer);
+	vector->buffer = NULL;
+	vector->count = 0;
+	vector->size = 0;
+}
+
+void vector_push(Vector *vector, t_tkn *element)
+{
+	int		i;
+	t_tkn	**new_buffer;
+
+	if (vector->count == vector->size)
+	{
+		vector->size = vector->size * 2 + 1;
+		new_buffer= malloc(sizeof(t_tkn *) * vector->size);
+		if (!new_buffer)
+			return ;
+		i = 0;
+		while (i < vector->count)
+		{
+			new_buffer[i] = vector->buffer[i];
+			i++;
+		}
+		free(vector->buffer);
+		vector->buffer = new_buffer;
+	}
+	vector->buffer[vector->count] = element;
+	vector->count++;
+}
+
 //create tokens
-t_tkn	*tokenizer(char **av)
+t_tkn	*tokenizer(t_msh *msh, char **av)
 {
 	int		i;
 	t_tkn	*new_token;
@@ -29,7 +79,7 @@ t_tkn	*tokenizer(char **av)
 	current = NULL;
 	while (av[++i])
 	{
-		new_token = tkn_new(av[i]);
+		new_token = tkn_new(msh, av[i]);
 		assign_tkn(new_token);
 		if (new_token->type == TKN_CMD)
 			verify_tkn_cmd(new_token); //classificar o comando especifico token
@@ -43,11 +93,11 @@ t_tkn	*tokenizer(char **av)
 }
 
 //create nodes for linked list -> token
-static t_tkn	*tkn_new(char *content)
+static t_tkn	*tkn_new(t_msh *msh, char *content)
 {
 	t_tkn	*node;
 
-	node = ft_calloc(1, sizeof(t_tkn));
+	node = malloc(sizeof(t_tkn));
 	if (!node)
 		return (0);
 	node->name = ft_strdup(content);
@@ -56,6 +106,7 @@ static t_tkn	*tkn_new(char *content)
 	node->next = NULL;
 	node->left = NULL;
 	node->right = NULL;
+	vector_push(&msh->tokens, node);
 	return (node);
 }
 
