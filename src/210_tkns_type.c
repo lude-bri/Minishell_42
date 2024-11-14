@@ -16,31 +16,31 @@ static t_tkn	*tkn_new(t_msh *msh, char *content);
 static void		assign_tkn(t_tkn *token);
 static void		verify_tkn_cmd(t_tkn *token);
 
-void init_vector(t_vector *vector, size_t size)
-{
-	vector->count = 0;
-	vector->size = size;
-	vector->buffer = malloc(sizeof(t_tkn *) * size);
-}
+// void init_vector(t_vector *vector, size_t size)
+// {
+// 	vector->count = 0;
+// 	vector->size = size;
+// 	vector->buffer = malloc(sizeof(t_tkn *) * size);
+// }
 
-void free_vector(t_vector *vector)
-{
-	int		index;
-	t_tkn	*element;
-
-	index = 0;
-	while (index < vector->count)
-	{
-		element = vector->buffer[index];
-		free(element->name);
-		free(element);
-		index++;
-	}
-	free(vector->buffer);
-	vector->buffer = NULL;
-	vector->count = 0;
-	vector->size = 0;
-}
+// void free_vector(t_vector *vector)
+// {
+// 	int		index;
+// 	t_tkn	*element;
+//
+// 	index = 0;
+// 	while (index < vector->count)
+// 	{
+// 		element = vector->buffer[index];
+// 		free(element->name);
+// 		free(element);
+// 		index++;
+// 	}
+// 	free(vector->buffer);
+// 	vector->buffer = NULL;
+// 	vector->count = 0;
+// 	vector->size = 0;
+// }
 
 void vector_push(t_vector *vector, t_tkn *element)
 {

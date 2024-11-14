@@ -30,6 +30,13 @@ void	init_struct(t_msh *msh)
 	msh->cmd_count = 0;
 }
 
+void	init_vector(t_vector *vector, size_t size)
+{
+	vector->count = 0;
+	vector->size = size;
+	vector->buffer = malloc(sizeof(t_tkn *) * size);
+}
+
 char	**init_env(char **envp)
 {
 	char	**env_copy;

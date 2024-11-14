@@ -12,26 +12,29 @@
 
 #include "../includes/minishell.h"
 
-extern void	free_tkns(void);
+void	free_vector(t_vector *vector)
+{
+	int		i;
+	t_tkn	*token;
 
-// static int	token_len(t_tkn *tokens)
-// {
-// 	int	i;
-//
-// 	i = 0;
-// 	while (tokens)
-// 	{
-// 		i++;
-// 		tokens = tokens->next;
-// 	}
-// 	return (i);
-// }
-//
+	i = 0;
+	while (i < vector->count)
+	{
+		token = vector->buffer[i];
+		free(token->name);
+		free(token);
+		i++;
+	}
+	free(vector->buffer);
+	vector->buffer = NULL;
+	vector->count = 0;
+	vector->size = 0;
+}
+
 int	free_array(char **str, int error)
 {
 	int		i;
 
-	// perror(__func__);
 	if (!str)
 		return (error);
 	i = -1;
@@ -47,7 +50,6 @@ void	free_arg(char **argv)
 
 	i = 0;
 	
-	// perror(__func__);
 	if (!argv)
 		return ;
 	while (argv[i])
@@ -62,44 +64,10 @@ void	free_arg(char **argv)
 
 void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 {
-	// perror(__func__);
 	if (msh->cmds->av)
 		free_arg(msh->cmds->av);
 	if (token)
 		free_vector(&msh->tokens);
-		// free_tokens(token);
-		// free_tkns();
 	if (command)
 		free(command);
-}
-
-void	free_tokens(t_tkn *token)
-{
-	// int		i;
-	// int		len;
-	// t_tkn	*tmp;
-	//
-	// i = 0;
-	// len = token_len(token);
-	// while (len >= i)
-	// {
-	// 	tmp = token->next;
-	// 	free(token->name);
-	// 	free(token);
-	// 	token = tmp;
-	// 	i++;
-	// }
-
-	t_tkn	*tmp;
-	int		counter = 0;
-
-	while (token)
-	{
-		tmp = token->next;
-		free(token->name);
-		free(token);
-		counter += 1;
-		token = tmp;
-	}
-	printf("%i\n", counter);
 }
