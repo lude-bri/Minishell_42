@@ -205,7 +205,10 @@ t_tkn	*to_parse(t_msh *msh);
 t_tkn	*create_bin_tree(t_tkn *tokens);
 
 //320_syntax_check.c
-int	syntax_check(t_msh *msh, t_tkn *tokens);
+int		syntax_check(t_msh *msh, t_tkn *tokens);
+int		syntax_check_redirs(t_msh *msh, t_tkn *tokens);
+int		syntax_check_pipes(t_msh *msh, t_tkn *tokens);
+
 
 /* **************** */
 /*      400        */
@@ -239,6 +242,7 @@ int		exec_more(t_msh *msh, t_tkn *tokens);
 
 //500_echo.c
 int		msh_echo(char **argv);
+// int		msh_echo(t_msh *msh, t_tkn *tokens);
 
 //510_cd.c
 int		msh_cd(char **argv);

@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:32:38 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/12 17:37:09 by mde-agui         ###   ########.fr       */
+/*   Updated: 2024/11/14 11:31:11 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 		msh_pwd();
 	else if (tokens->cmd_type == CMD_ECHO)
 		msh_echo(tokens->cmdargs);
+		// msh_echo(msh, tokens);
 	else if (tokens->cmd_type == CMD_EXIT)
 		msh_exit(tokens->cmdargs, msh);
 	else if (tokens->cmd_type == CMD_UNSET)
