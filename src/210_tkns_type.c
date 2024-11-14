@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:50:15 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/14 10:33:41 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/14 10:37:21 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_tkn	*tokenizer(t_msh *msh, char **av)
 		new_token = tkn_new(msh, av[i]);
 		assign_tkn(new_token);
 		if (new_token->type == TKN_CMD)
-			verify_tkn_cmd(new_token); //classificar o comando especifico token
+			verify_tkn_cmd(new_token);
 		if (!token)
 			token = new_token;
 		else
@@ -63,9 +63,10 @@ static t_tkn	*tkn_new(t_msh *msh, char *content)
 //verify and assign the token type
 static void	assign_tkn(t_tkn *token)
 {
-	if (token->name[0] == ' ' || token->name[0] == '\n' || token->name[0] == '\v' 
-			|| token->name[0] == '\t' || token->name[0] == '\r'
-			|| token->name[0] == '\f')
+	if (token->name[0] == ' ' || token->name[0] == '\n'
+		|| token->name[0] == '\v'
+		|| token->name[0] == '\t' || token->name[0] == '\r'
+		|| token->name[0] == '\f')
 		token->type = TKN_BLANK;
 	else if (token->name[0] == '\0')
 		token->type = TKN_NULL;
@@ -155,4 +156,3 @@ static void	verify_tkn_cmd(t_tkn *token)
 // 	vector->buffer[vector->count] = element;
 // 	vector->count++;
 // }
-

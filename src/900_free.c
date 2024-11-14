@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:53:23 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/09 14:02:40 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/14 10:35:59 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	free_arg(char **argv)
 	int	i;
 
 	i = 0;
-	
 	if (!argv)
 		return ;
 	while (argv[i])
