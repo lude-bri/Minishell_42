@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:34:09 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/31 16:21:30 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/14 10:39:42 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void increment_shlvl(char **envp);
 void	init_msh(t_msh *msh, char **envp)
 {
 	if (!msh->envp)
-		msh->envp = init_env(envp); //get_envp
+		msh->envp = init_env(envp);
 	msh->cmds = NULL;
 	msh->tree_head = NULL;
 	init_vector(&msh->tokens, 100);
