@@ -117,12 +117,13 @@ typedef struct s_command
 	char	*cmd; //command
 }			t_command;
 
-typedef struct Vector
+//struct to realloc and deal with tokens
+typedef struct s_vector
 {
 	int		count;
 	int		size;
 	t_tkn	**buffer;
-}			Vector;
+}			t_vector;	
 
 //main struct to deal with the hole minishell system
 //it's called msh because its a MiniSHell
@@ -142,7 +143,7 @@ typedef struct s_msh
 	int			cmd_count;
 	int			pipe_count;
 	int			exit_status;
-	Vector		tokens;
+	t_vector	tokens;
 
 }				t_msh;
 
@@ -289,7 +290,7 @@ void	free_tokens(t_tkn *token);
 //910_close.c
 void	ft_close(int *fd);
 
-void	init_vector(Vector *vector, size_t size);
-void	free_vector(Vector *vector);
+void	init_vector(t_vector *vector, size_t size);
+void	free_vector(t_vector *vector);
 
 #endif
