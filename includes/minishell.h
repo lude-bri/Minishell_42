@@ -267,8 +267,8 @@ int		msh_exit(char **argv, t_msh *msh);
 // PIPES
 
 //600_pipes.c
-int		exec_pipe_one(char **command, t_msh *msh, t_tkn *tokens);
-
+int		exec_pipe(t_msh *msh, t_tkn *tokens);
+void	apply_pipe(t_tkn *dir, t_msh *msh, int *fd, int multi_fd);
 
 /* **************** */
 /*      700        */
