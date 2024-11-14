@@ -163,6 +163,7 @@ int		msh_loop(t_msh *msh);
 //110_init.c
 void	init_msh(t_msh *msh, char **envp);
 void	init_struct(t_msh *msh);
+void	init_vector(t_vector *vector, size_t size);
 char	**init_env(char **envp);
 
 //111_init_var.c
@@ -187,6 +188,10 @@ char	*copy_word(const char *input, int start, int end);
 
 //210_tkns_type.c
 t_tkn	*tokenizer(t_msh *msh, char **av);
+
+//220_vectors.c
+void	vector_push(t_vector *vector, t_tkn *token);
+
 
 /* **************** */
 /*      300        */
@@ -285,12 +290,10 @@ int		exec_pipe_one(char **command, t_msh *msh, t_tkn *tokens);
 int		free_array(char **str, int error);
 void	free_arg(char **argv);
 void	free_msh(t_command *command, t_msh *msh, t_tkn *token);
-void	free_tokens(t_tkn *token);
+void	free_vector(t_vector *vector);
 
 //910_close.c
 void	ft_close(int *fd);
 
-void	init_vector(t_vector *vector, size_t size);
-void	free_vector(t_vector *vector);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 10:50:15 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/07 14:16:27 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/14 10:27:39 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,32 +41,32 @@ static void		verify_tkn_cmd(t_tkn *token);
 // 	vector->count = 0;
 // 	vector->size = 0;
 // }
-
-void vector_push(t_vector *vector, t_tkn *element)
-{
-	int		i;
-	t_tkn	**new_buffer;
-
-	if (vector->buffer == NULL)
-		init_vector(vector, 100);
-	if (vector->count == vector->size)
-	{
-		vector->size = vector->size * 2 + 1;
-		new_buffer= malloc(sizeof(t_tkn *) * vector->size);
-		if (!new_buffer)
-			return ;
-		i = 0;
-		while (i < vector->count)
-		{
-			new_buffer[i] = vector->buffer[i];
-			i++;
-		}
-		free(vector->buffer);
-		vector->buffer = new_buffer;
-	}
-	vector->buffer[vector->count] = element;
-	vector->count++;
-}
+//
+// void vector_push(t_vector *vector, t_tkn *element)
+// {
+// 	int		i;
+// 	t_tkn	**new_buffer;
+//
+// 	if (vector->buffer == NULL)
+// 		init_vector(vector, 100);
+// 	if (vector->count == vector->size)
+// 	{
+// 		vector->size = vector->size * 2 + 1;
+// 		new_buffer= malloc(sizeof(t_tkn *) * vector->size);
+// 		if (!new_buffer)
+// 			return ;
+// 		i = 0;
+// 		while (i < vector->count)
+// 		{
+// 			new_buffer[i] = vector->buffer[i];
+// 			i++;
+// 		}
+// 		free(vector->buffer);
+// 		vector->buffer = new_buffer;
+// 	}
+// 	vector->buffer[vector->count] = element;
+// 	vector->count++;
+// }
 
 //create tokens
 t_tkn	*tokenizer(t_msh *msh, char **av)

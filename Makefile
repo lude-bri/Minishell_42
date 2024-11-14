@@ -43,6 +43,7 @@ FILES += 111_init_var.c
 FILES += 120_prompt.c
 FILES += 200_tokenization.c
 FILES += 210_tkns_type.c
+FILES += 220_vectors.c
 FILES += 300_parser.c
 FILES += 310_bi_tree.c
 FILES += 320_syntax.c
