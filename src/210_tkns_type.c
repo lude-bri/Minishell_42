@@ -75,7 +75,7 @@ static void	assign_tkn(t_tkn *token)
 	else if (token->name[0] == '>')
 		token->type = TKN_OUT;
 	else if (token->name[0] == '>' && token->name[1] == '>')
-		token->type = TKN_OUT;	
+		token->type = TKN_APPEND;	
 	else if (token->name[0] == '<' && token->name[1] == '<')
 		token->type = TKN_HEREDOC;
 	else if (token->name[0] == '<')

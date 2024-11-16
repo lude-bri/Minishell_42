@@ -8,6 +8,7 @@
 /* ************************************************************************** */
 
 # include <unistd.h>
+# include <fcntl.h>
 # include <stdio.h>
 # include <signal.h>
 # include <sys/wait.h>
@@ -58,6 +59,7 @@ typedef enum e_status
 typedef	enum e_token_group
 {
 	TKN_IN,
+	TKN_APPEND,
 	TKN_OUT,
 	TKN_CMD,
 	TKN_NULL,
