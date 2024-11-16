@@ -60,6 +60,7 @@ FILES += 540_unset.c
 FILES += 550_env.c
 FILES += 560_exit.c
 FILES += 600_pipes.c
+FILES += 700_redirs.c
 FILES += 900_free.c
 FILES += 910_close.c
 

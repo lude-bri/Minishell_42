@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:32:38 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/14 11:31:11 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/16 10:17:44 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ int	exec_exe(t_tkn *tokens, t_msh *msh)
 
 	pid = fork();
 	if (pid == 0)
+	{
+		exec_redirs(tokens, msh);
 		execute(msh, tokens);
+	}
 	waitpid(pid, &status, 0);
 	return (SUCCESS);
 }

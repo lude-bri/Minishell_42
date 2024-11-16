@@ -279,6 +279,9 @@ void	apply_pipe(t_tkn *dir, t_msh *msh, int *fd, int multi_fd);
 /* *************** */
 // REDIRECTS
 
+//700_redirs.c
+void	exec_redirs(t_tkn *tokens, t_msh *msh);
+
 /* **************** */
 /*      800        */
 /* *************** */
