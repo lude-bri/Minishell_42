@@ -19,9 +19,14 @@ int	msh_cd(char **argv)
 		printf("cd: missing argument\n");
 		return (1);
 	}
+	else if (argv[2])
+	{
+		printf("msh: cd: too many arguments\n");
+		return (1);
+	}
 	if (chdir(argv[1]) != 0)
 	{
-		perror("cd error\n");
+		perror("msh: cd");
 		return (1);
 	}
 	return (0);
