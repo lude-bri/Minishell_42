@@ -64,8 +64,8 @@ int	exec_exe(t_tkn *tokens, t_msh *msh)
 	pid = fork();
 	if (pid == 0)
 	{
-		exec_redirs(tokens, msh);
-		execute(msh, tokens);
+		if (exec_redirs(tokens, msh) == FAILURE)
+			execute(msh, tokens);
 	}
 	waitpid(pid, &status, 0);
 	return (SUCCESS);

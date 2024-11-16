@@ -12,15 +12,23 @@
 
 #include "../includes/minishell.h"
 
-void	exec_redirs(t_tkn *tokens, t_msh *msh)
+int	exec_redirs(t_tkn *tokens, t_msh *msh)
 {
 	(void)msh;
-	printf("redirec activated\n");
+	//printf("redirec activated\n");
 	while (tokens)
 	{
 		if (tokens->type == TKN_IN || tokens->type == TKN_OUT)
+		{
 			printf("redirect found\n");
+			return (SUCCESS);
+		}
+		else if (tokens->type == TKN_HEREDOC)
+		{
+			printf("heredoc found\n");
+			return (SUCCESS);
+		}
 		tokens = tokens->next;
 	}
-	return ;
+	return (FAILURE);
 }
