@@ -56,20 +56,38 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 	return (SUCCESS);
 }
 
-int	exec_exe(t_tkn *tokens, t_msh *msh)
-{
-	int		pid;
-	int		status;
 
-	pid = fork();
-	if (pid == 0)
-	{
-		exec_redirs(tokens, msh);
-		execute(msh, tokens);
-	}
-	waitpid(pid, &status, 0);
-	return (SUCCESS);
+//testing redirections
+int exec_exe(t_tkn *tokens, t_msh *msh)
+{
+    int pid;
+    int status;
+
+    pid = fork();
+    if (pid == 0)
+    {
+        exec_redirs(tokens, msh);
+        execute(msh, tokens);
+    }
+    waitpid(pid, &status, 0);
+    return (SUCCESS);
 }
+
+
+// int	exec_exe(t_tkn *tokens, t_msh *msh)
+// {
+// 	int		pid;
+// 	int		status;
+//
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		exec_redirs(tokens, msh);
+// 		execute(msh, tokens);
+// 	}
+// 	waitpid(pid, &status, 0);
+// 	return (SUCCESS);
+// }
 
 void	execute(t_msh *msh, t_tkn *tokens)
 {

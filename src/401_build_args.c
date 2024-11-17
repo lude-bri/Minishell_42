@@ -46,7 +46,9 @@ char	**build_args(t_tkn *tokens)
 	i = 0;
 	while (tokens)
 	{
-		if (tokens->type == TKN_PIPE)
+		if (tokens->type == TKN_PIPE || tokens->type == TKN_IN
+			|| tokens->type == TKN_OUT || tokens->type == TKN_APPEND
+			|| tokens->type == TKN_HEREDOC)
 			break ;
 		args[i] = ft_strdup(tokens->name);
 		if (!args[i])
@@ -66,3 +68,37 @@ char	**build_args(t_tkn *tokens)
 	args[i] = NULL;
 	return (args);
 }
+
+//JUST TESTING BUILD ARGS WITH REDIRECTIONS
+// char **build_args(t_tkn *tokens)
+// {
+//     int count = 0;
+//     t_tkn *current = tokens;
+//     char **args;
+//
+//     while (current)
+//     {
+//         if (current->type != TKN_IN && current->type != TKN_OUT &&
+//             current->type != TKN_APPEND && current->type != TKN_HEREDOC)
+//         {
+//             count++;
+//         }
+//         current = current->next;
+//     }
+//     args = malloc(sizeof(char *) * (count + 1));
+//     if (!args)
+//         return (NULL);
+//     count = 0;
+//     current = tokens;
+//     while (current)
+//     {
+//         if (current->type != TKN_IN && current->type != TKN_OUT &&
+//             current->type != TKN_APPEND && current->type != TKN_HEREDOC)
+//         {
+//             args[count++] = ft_strdup(current->name);
+//         }
+//         current = current->next;
+//     }
+//     args[count] = NULL; // Null-terminate the array
+//     return args;
+// }
