@@ -62,7 +62,7 @@ static void redirs(t_tkn *tokens, t_msh *msh)
         close(fd);
     }
 	//heredoc (<<)
-	else if (tokens->type == TKN_HEREDOC)
+	if (tokens->type == TKN_HEREDOC)
         heredoc_handler(tokens, msh);
 }
 

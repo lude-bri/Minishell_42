@@ -39,7 +39,8 @@ int	syntax_check(t_msh *msh, t_tkn *tokens)
 {
 	if (tokens->type == TKN_PIPE)
 		syntax_check_pipes(msh, tokens);
-	else if (tokens->type == TKN_IN || tokens->type == TKN_OUT)
+	else if ((tokens->type == TKN_IN || tokens->type == TKN_OUT)
+		&& tokens->next == NULL)
 		syntax_check_redirs(msh, tokens);
 	return (SUCCESS);
 }
