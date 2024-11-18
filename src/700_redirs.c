@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 09:09:40 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/18 09:39:51 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/18 10:44:16 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ static void redirs(t_tkn *tokens, t_msh *msh)
 
 int	exec_redirs(t_tkn *tokens, t_msh *msh)
 {
+	int		fd_in;
+	int		fd_out;
+
+	fd_in = dup(STDIN_FILENO);
+	fd_out = dup(STDOUT_FILENO);
 	while (tokens)
 	{
 		if (tokens->type == TKN_HEREDOC)
@@ -45,5 +50,9 @@ int	exec_redirs(t_tkn *tokens, t_msh *msh)
 		}
 		tokens = tokens->next;
 	}
+	dup2(fd_in, STDIN_FILENO);
+	dup2(fd_out, STDOUT_FILENO);
+	close(fd_in);
+	close(fd_out);
 	return (SUCCESS);
 }

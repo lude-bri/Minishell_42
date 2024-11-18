@@ -1,3 +1,13 @@
-hello > out
-[?2004hmsh$ [?2004l
-exit
+example
+gdb.txt
+includes
+lib
+Makefile
+minishell
+minishell_tester
+out
+out1
+outfile
+README.md
+src
+sup
