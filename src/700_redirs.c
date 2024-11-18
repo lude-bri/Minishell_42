@@ -27,11 +27,11 @@ static void redirs(t_tkn *tokens, t_msh *msh)
 
 int	exec_redirs(t_tkn *tokens, t_msh *msh)
 {
-	int		fd_in;
-	int		fd_out;
-
-	fd_in = dup(STDIN_FILENO);
-	fd_out = dup(STDOUT_FILENO);
+	// int		fd_in;
+	// int		fd_out;
+	//
+	// fd_in = dup(STDIN_FILENO);
+	// fd_out = dup(STDOUT_FILENO);
 	while (tokens)
 	{
 		if (tokens->type == TKN_HEREDOC)
@@ -39,20 +39,16 @@ int	exec_redirs(t_tkn *tokens, t_msh *msh)
 			heredoc(tokens, msh);
 			return (SUCCESS);
 		}
-		if (tokens->type == TKN_IN || tokens->type == TKN_OUT)
+		if (tokens->type == TKN_IN || tokens->type == TKN_OUT
+			|| tokens->type == TKN_APPEND)
 		{
-			while (tokens->type == TKN_IN || tokens->type == TKN_OUT)
-			{
-				redirs(tokens, msh);
-				tokens = tokens->next;
-			}
-			return (SUCCESS);
+			redirs(tokens, msh);
 		}
 		tokens = tokens->next;
 	}
-	dup2(fd_in, STDIN_FILENO);
-	dup2(fd_out, STDOUT_FILENO);
-	close(fd_in);
-	close(fd_out);
+	// dup2(fd_in, STDIN_FILENO);
+	// dup2(fd_out, STDOUT_FILENO);
+	// close(fd_in);
+	// close(fd_out);
 	return (SUCCESS);
 }

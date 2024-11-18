@@ -16,7 +16,8 @@ void	redir_append(t_tkn *tokens, t_msh *msh)
 {
 	int		fd;
 
-	fd = open(tokens->name, O_CREAT | O_APPEND, 0664);
+	tokens = tokens->next;
+	fd = open(tokens->name, O_WRONLY | O_CREAT | O_APPEND, 0664);
 	if (fd < 0)
 	{
 		perror(tokens->name);
