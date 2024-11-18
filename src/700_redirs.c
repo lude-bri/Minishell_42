@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 09:09:40 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/18 08:16:07 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/18 09:39:51 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ int	exec_redirs(t_tkn *tokens, t_msh *msh)
 		}
 		if (tokens->type == TKN_IN || tokens->type == TKN_OUT)
 		{
-			redirs(tokens, msh);
+			while (tokens->type == TKN_IN || tokens->type == TKN_OUT)
+			{
+				redirs(tokens, msh);
+				tokens = tokens->next;
+			}
 			return (SUCCESS);
 		}
 		tokens = tokens->next;

@@ -1,12 +1,3 @@
-example
-gdb.txt
-includes
-lib
-Makefile
-minishell
-minishell_tester
-out
-outfile_2
-README.md
-src
-sup
+hello > out
+[?2004hmsh$ [?2004l
+exit

@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:32:38 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/16 10:17:44 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/18 09:50:39 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	to_execute(t_msh *msh, t_tkn *tokens)
 
 int	exec_bi(t_tkn *tokens, t_msh *msh)
 {
+	exec_redirs(tokens, msh);
 	if (tokens->cmd_type == CMD_CD)
 		msh_cd(tokens->cmdargs);
 	else if (tokens->cmd_type == CMD_ENV)

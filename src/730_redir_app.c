@@ -6,7 +6,7 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 08:03:26 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/18 08:08:44 by luigi            ###   ########.fr       */
+/*   Updated: 2024/11/18 09:11:40 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	redir_append(t_tkn *tokens, t_msh *msh)
 {
 	int		fd;
 
-	fd = open(tokens->name, O_WRONLY | O_CREAT | O_APPEND, 0664);
+	fd = open(tokens->name, O_CREAT | O_APPEND, 0664);
 	if (fd < 0)
 	{
 		perror(tokens->name);
