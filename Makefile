@@ -61,6 +61,10 @@ FILES += 550_env.c
 FILES += 560_exit.c
 FILES += 600_pipes.c
 FILES += 700_redirs.c
+FILES += 710_redir_in.c
+FILES += 720_redir_out.c
+FILES += 730_redir_app.c
+FILES += 740_heredoc.c
 FILES += 900_free.c
 FILES += 910_close.c
 

@@ -284,6 +284,20 @@ void	apply_pipe(t_tkn *dir, t_msh *msh, int *fd, int multi_fd);
 //700_redirs.c
 int	exec_redirs(t_tkn *tokens, t_msh *msh);
 
+//710_redir_in.c
+void	redir_in(t_tkn *tokens, t_msh *msh);
+
+//720_redir_out.c
+void	redir_out(t_tkn *tokens, t_msh *msh);
+
+//730_redir_app.c
+void	redir_append(t_tkn *tokens, t_msh *msh);
+
+//740_heredoc.c
+void	heredoc(t_tkn *tokens, t_msh *msh);
+
+
+
 /* **************** */
 /*      800        */
 /* *************** */
