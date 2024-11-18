@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+static int	exec_redirs_bi(t_tkn *tokens, t_msh *msh);
+
 int	to_execute(t_msh *msh, t_tkn *tokens)
 {
 	msh->tree_head = create_bin_tree(tokens);
@@ -31,7 +33,7 @@ int	to_execute(t_msh *msh, t_tkn *tokens)
 
 int	exec_bi(t_tkn *tokens, t_msh *msh)
 {
-
+	exec_redirs_bi(tokens, msh);
 	if (tokens->cmd_type == CMD_CD)
 		msh_cd(tokens->cmdargs);
 	else if (tokens->cmd_type == CMD_ENV)
@@ -57,6 +59,33 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 	return (SUCCESS);
 }
 
+static int	exec_redirs_bi(t_tkn *tokens, t_msh *msh)
+{
+	int		fd_in;
+	int		fd_out;
+
+	fd_in = dup(STDIN_FILENO);
+	fd_out = dup(STDOUT_FILENO);
+	while (tokens)
+	{
+		if (tokens->type == TKN_HEREDOC)
+		{
+			heredoc(tokens, msh);
+			return (SUCCESS);
+		}
+		if (tokens->type == TKN_IN || tokens->type == TKN_OUT
+			|| tokens->type == TKN_APPEND)
+		{
+			redirs(tokens, msh);
+		}
+		tokens = tokens->next;
+	}
+	dup2(fd_in, STDIN_FILENO);
+	dup2(fd_out, STDOUT_FILENO);
+	close(fd_in);
+	close(fd_out);
+	return (SUCCESS);
+}
 
 //testing redirections
 int exec_exe(t_tkn *tokens, t_msh *msh)

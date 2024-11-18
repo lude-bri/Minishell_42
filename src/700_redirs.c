@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static void redirs(t_tkn *tokens, t_msh *msh)
+void	redirs(t_tkn *tokens, t_msh *msh)
 {
 	t_tkn	*tkn_exec;
 
@@ -27,11 +27,6 @@ static void redirs(t_tkn *tokens, t_msh *msh)
 
 int	exec_redirs(t_tkn *tokens, t_msh *msh)
 {
-	// int		fd_in;
-	// int		fd_out;
-	//
-	// fd_in = dup(STDIN_FILENO);
-	// fd_out = dup(STDOUT_FILENO);
 	while (tokens)
 	{
 		if (tokens->type == TKN_HEREDOC)
@@ -46,9 +41,5 @@ int	exec_redirs(t_tkn *tokens, t_msh *msh)
 		}
 		tokens = tokens->next;
 	}
-	// dup2(fd_in, STDIN_FILENO);
-	// dup2(fd_out, STDOUT_FILENO);
-	// close(fd_in);
-	// close(fd_out);
 	return (SUCCESS);
 }
