@@ -111,5 +111,3 @@ int	exec_redirs(t_tkn *tokens, t_msh *msh)
 	}
 	return (SUCCESS);
 }
-
-
