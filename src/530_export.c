@@ -27,10 +27,12 @@ int	msh_export_no_var(char **envp)
 		j = 0;
 		if (equal_sign)
 		{
-			ft_printf("declare -x ");
+			// ft_printf("declare -x ");
+			write(STDOUT_FILENO, "declare -x ", ft_strlen("declare -x "));
 			while (&envp[i][j] != equal_sign)
 			{
-				if (write(1, &envp[i][j], 1) == -1)
+				// if (write(1, &envp[i][j], 1) == -1)
+				if (write(STDOUT_FILENO, &envp[i][j], 1) == -1)
 					return (1);
 				j++;
 			}
