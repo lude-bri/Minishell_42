@@ -50,5 +50,8 @@ int	exec_one(t_msh *msh, t_tkn *tokens)
 		else
 			exec_exe(tokens, msh);
 	}
+	else if ((tokens->type == TKN_IN || tokens->type == TKN_OUT)
+		&& tokens->next->type == TKN_CMD)
+		printf("redir in the beginning found\n");
 	return (SUCCESS);
 }

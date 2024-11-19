@@ -104,6 +104,12 @@ int exec_exe(t_tkn *tokens, t_msh *msh)
     int pid;
     int status;
 
+	if (ft_strcmp(tokens->name, "sudo") == 0)
+	{
+		printf("msh: permission denied: sudo\n");
+		msh->exit_status = 126;
+		return (SUCCESS);
+	}
     pid = fork();
     if (pid == 0)
     {
