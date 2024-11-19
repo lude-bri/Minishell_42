@@ -19,7 +19,9 @@ int	msh_pwd(void)
 	cwd = getcwd(NULL, 0);
 	if (cwd != NULL)
 	{
-		ft_printf("%s\n", cwd);
+		// Usa write para garantir que respeita o descritor atual de stdout
+		write(STDOUT_FILENO, cwd, ft_strlen(cwd));
+		write(STDOUT_FILENO, "\n", 1);
 		free(cwd);
 		return (1);
 	}
@@ -30,3 +32,24 @@ int	msh_pwd(void)
 	}
 	return (0);
 }
+
+
+
+// int	msh_pwd(void)
+// {
+// 	char	*cwd;
+//
+// 	cwd = getcwd(NULL, 0);
+// 	if (cwd != NULL)
+// 	{
+// 		ft_printf("%s\n", cwd);
+// 		free(cwd);
+// 		return (1);
+// 	}
+// 	else
+// 	{
+// 		perror("pwd");
+// 		return (1);
+// 	}
+// 	return (0);
+// }
