@@ -16,7 +16,7 @@ char	*build_prompt(t_msh *msh)
 {
 	char	*line;
 
-	line = readline("msh$ ");
+	line = readline("\001\033[1;32m\002msh$ \001\033[0m\002");
 	if (!line)
 	{
 		printf("exit\n");
