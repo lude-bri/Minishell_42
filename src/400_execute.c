@@ -36,7 +36,6 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 	int		fd_in;
 	int		fd_out;
 
-	// Salva os descritores padrão
 	fd_in = dup(STDIN_FILENO);
 	fd_out = dup(STDOUT_FILENO);
 	exec_redirs(tokens, msh);
@@ -61,52 +60,13 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 			msh_export_no_var(msh->envp);
 	}
 	// else
-	// 	return (FAILURE);	
+	// 	return (FAILURE);
 	dup2(fd_in, STDIN_FILENO);
 	dup2(fd_out, STDOUT_FILENO);
-
-	// Fecha os descritores duplicados
 	close(fd_in);
 	close(fd_out);
-
-
 	return (SUCCESS);
 }
-
-// static int	exec_redirs_bi(t_tkn *tokens, t_msh *msh)
-// {
-// 	int		fd_in;
-// 	int		fd_out;
-//
-// 	// Salva os descritores padrão
-// 	fd_in = dup(STDIN_FILENO);
-// 	fd_out = dup(STDOUT_FILENO);
-//
-// 	while (tokens)
-// 	{
-// 		if (tokens->type == TKN_HEREDOC)
-// 		{
-// 			heredoc(tokens, msh);
-// 			return (SUCCESS);
-// 		}
-// 		if (tokens->type == TKN_IN || tokens->type == TKN_OUT || tokens->type == TKN_APPEND)
-// 		{
-// 			redirs(tokens, msh);
-// 		}
-// 		tokens = tokens->next;
-// 	}
-//
-// 	// Restaura os descritores padrão
-// 	dup2(fd_in, STDIN_FILENO);
-// 	dup2(fd_out, STDOUT_FILENO);
-//
-// 	// Fecha os descritores duplicados
-// 	close(fd_in);
-// 	close(fd_out);
-//
-// 	return (SUCCESS);
-// }
-
 
 // static int	exec_redirs_bi(t_tkn *tokens, t_msh *msh)
 // {
@@ -151,22 +111,6 @@ int exec_exe(t_tkn *tokens, t_msh *msh)
     waitpid(pid, &status, 0);
     return (SUCCESS);
 }
-
-
-// int	exec_exe(t_tkn *tokens, t_msh *msh)
-// {
-// 	int		pid;
-// 	int		status;
-//
-// 	pid = fork();
-// 	if (pid == 0)
-// 	{
-// 		exec_redirs(tokens, msh);
-// 		execute(msh, tokens);
-// 	}
-// 	waitpid(pid, &status, 0);
-// 	return (SUCCESS);
-// }
 
 void	execute(t_msh *msh, t_tkn *tokens)
 {
