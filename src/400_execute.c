@@ -54,7 +54,9 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 		msh_unset(tokens->cmdargs, &(msh->envp));
 	else if (tokens->cmd_type == CMD_EXPORT)
 	{
-		if (msh->cmds->av[1] && (ft_strcmp(msh->cmds->av[1], ">") != 0))
+		if (msh->cmds->av[1] 
+			&& ((ft_strcmp(msh->cmds->av[1], ">") != 0)
+			&& (ft_strcmp(msh->cmds->av[1], ">>") != 0)))
 			msh_export(&(msh->envp), msh->cmds->av[1]);
 		else
 			msh_export_no_var(msh->envp);
