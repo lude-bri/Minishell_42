@@ -14,7 +14,7 @@
 
 static int	verify_pipe(t_tkn *tokens)
 {
-	if (tokens->next == NULL)
+	if (!tokens->next || tokens->len <= 2)
 		return (FAILURE);
 	return (SUCCESS);
 }

@@ -16,6 +16,19 @@ static t_tkn	*tkn_new(t_msh *msh, char *content);
 static void		assign_tkn(t_tkn *token);
 static void		verify_tkn_cmd(t_tkn *token);
 
+static int	token_len(t_tkn *tokens)
+{
+	int		i;
+
+	i = 0;
+	while (tokens)
+	{
+		i++;
+		tokens = tokens->next;
+	}
+	return (i);
+}
+
 //create tokens
 t_tkn	*tokenizer(t_msh *msh, char **av)
 {
@@ -39,6 +52,7 @@ t_tkn	*tokenizer(t_msh *msh, char **av)
 			current->next = new_token;
 		current = new_token;
 	}
+	token->len = token_len(token);
 	return (token);
 }
 
