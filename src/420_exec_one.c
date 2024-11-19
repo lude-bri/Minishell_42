@@ -34,6 +34,8 @@ static int	is_bi(t_tkn *tokens)
 
 int	exec_one(t_msh *msh, t_tkn *tokens)
 {
+	char	*path;
+
 	if (tokens->type == TKN_CMD)
 	{
 		if (is_bi(tokens) == SUCCESS)
@@ -44,7 +46,19 @@ int	exec_one(t_msh *msh, t_tkn *tokens)
 	else if ((tokens->type == TKN_IN || tokens->type == TKN_OUT))
 	{
 		if (tokens->next != NULL)
+		{
 			printf("redir in the beginning found\n");
+			path = find_path(tokens->next->name, msh->envp);
+			if (!path)
+			{	
+				return (SUCCESS);
+			}
+			else
+			{
+				redirs(tokens, msh);
+				exec_one(msh, tokens->next);
+			}
+		}
 	}
 	return (SUCCESS);
 }
