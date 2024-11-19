@@ -12,6 +12,13 @@
 
 #include "../includes/minishell.h"
 
+static int	verify_pipe(t_tkn *tokens)
+{
+	if (tokens->next == NULL)
+		return (FAILURE);
+	return (SUCCESS);
+}
+
 void	apply_pipe(t_tkn *dir, t_msh *msh, int *fd,
 		int multi_fd)
 {
@@ -33,6 +40,8 @@ int	exec_pipe(t_msh *msh, t_tkn *tokens)
 	pid_t	pid_right;
 	int		status;
 
+	if (verify_pipe(tokens) == FAILURE)
+		return (SUCCESS);
 	if (pipe(fd) < 0)
 		return (FAILURE);
 	pid_left = fork();

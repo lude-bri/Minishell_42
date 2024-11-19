@@ -32,15 +32,6 @@ static int	is_bi(t_tkn *tokens)
 		return (FAILURE);
 }
 
-// int	exec_one(t_msh *msh, t_tkn *tokens)
-// {
-// 	if (tokens->type == TKN_CMD)
-// 		if (exec_bi(tokens, msh) == FAILURE)
-// 			if (exec_exe(tokens, msh) != SUCCESS)
-// 				return (FAILURE);
-// 	return (SUCCESS);
-// }
-
 int	exec_one(t_msh *msh, t_tkn *tokens)
 {
 	if (tokens->type == TKN_CMD)
@@ -50,8 +41,19 @@ int	exec_one(t_msh *msh, t_tkn *tokens)
 		else
 			exec_exe(tokens, msh);
 	}
-	else if ((tokens->type == TKN_IN || tokens->type == TKN_OUT)
-		&& tokens->next->type == TKN_CMD)
-		printf("redir in the beginning found\n");
+	else if ((tokens->type == TKN_IN || tokens->type == TKN_OUT))
+	{
+		if (tokens->next != NULL)
+			printf("redir in the beginning found\n");
+	}
 	return (SUCCESS);
 }
+
+// int	exec_one(t_msh *msh, t_tkn *tokens)
+// {
+// 	if (tokens->type == TKN_CMD)
+// 		if (exec_bi(tokens, msh) == FAILURE)
+// 			if (exec_exe(tokens, msh) != SUCCESS)
+// 				return (FAILURE);
+// 	return (SUCCESS);
+// }
