@@ -19,7 +19,6 @@ int	msh_pwd(void)
 	cwd = getcwd(NULL, 0);
 	if (cwd != NULL)
 	{
-		// Usa write para garantir que respeita o descritor atual de stdout
 		write(STDOUT_FILENO, cwd, ft_strlen(cwd));
 		write(STDOUT_FILENO, "\n", 1);
 		free(cwd);

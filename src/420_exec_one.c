@@ -12,6 +12,14 @@
 
 #include "../includes/minishell.h"
 
+static void	restruct_cl(t_tkn *tokens, t_msh *msh)
+{
+	//function to restructure the command line
+	//organize command "redir" file
+	(void)tokens;
+	(void)msh;
+}
+
 static int	is_bi(t_tkn *tokens)
 {
 	if (tokens->cmd_type == CMD_CD)
@@ -55,6 +63,7 @@ int	exec_one(t_msh *msh, t_tkn *tokens)
 			}
 			else
 			{
+				restruct_cl(tokens, msh);
 				redirs(tokens, msh);
 				exec_one(msh, tokens->next);
 			}
