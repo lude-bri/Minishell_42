@@ -18,6 +18,7 @@ static void	restruct_cl(t_tkn *tokens, t_msh *msh)
 	//organize command "redir" file
 	(void)tokens;
 	(void)msh;
+	printf("restruct redir\n");
 }
 
 static int	is_bi(t_tkn *tokens)
@@ -58,12 +59,12 @@ int	exec_one(t_msh *msh, t_tkn *tokens)
 			printf("redir in the beginning found\n");
 			path = find_path(tokens->next->name, msh->envp);
 			if (!path)
-			{	
+			{
+				restruct_cl(tokens, msh);
 				return (SUCCESS);
 			}
 			else
 			{
-				restruct_cl(tokens, msh);
 				redirs(tokens, msh);
 				exec_one(msh, tokens->next);
 			}

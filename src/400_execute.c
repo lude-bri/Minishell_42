@@ -59,8 +59,6 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 		else
 			msh_export_no_var(msh->envp);
 	}
-	// else
-	// 	return (FAILURE);
 	dup2(fd_in, STDIN_FILENO);
 	dup2(fd_out, STDOUT_FILENO);
 	close(fd_in);
