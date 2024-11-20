@@ -14,11 +14,15 @@
 
 static void	restruct_cl(t_tkn *tokens, t_msh *msh)
 {
+	int		fd;
 	//function to restructure the command line
 	//organize command "redir" file
 	(void)tokens;
 	(void)msh;
 	printf("restruct redir\n");
+	fd = open(tokens->next->name, O_RDONLY);
+	if (fd < 0)
+		perror(tokens->next->name);
 }
 
 static int	is_bi(t_tkn *tokens)
@@ -44,6 +48,7 @@ static int	is_bi(t_tkn *tokens)
 int	exec_one(t_msh *msh, t_tkn *tokens)
 {
 	char	*path;
+	int		fd;
 
 	if (tokens->type == TKN_CMD)
 	{
@@ -61,12 +66,17 @@ int	exec_one(t_msh *msh, t_tkn *tokens)
 			if (!path)
 			{
 				restruct_cl(tokens, msh);
+				// redirs(tokens, msh);
+				// exec_one(msh, tokens->next);
 				return (SUCCESS);
 			}
 			else
 			{
-				redirs(tokens, msh);
-				exec_one(msh, tokens->next);
+				fd = open(tokens->next->name, O_RDONLY);
+				if (fd < 0)
+					perror(tokens->next->name);
+				// redirs(tokens, msh);
+				// exec_one(msh, tokens->next);
 			}
 		}
 	}
