@@ -149,6 +149,24 @@ typedef struct s_msh
 
 }				t_msh;
 
+//struct for export, there were too many variables needed
+typedef struct s_exp
+{
+	size_t	len;
+	size_t	prefix_len;
+	char	*equal_sign;
+	char	*add_sign;
+	char	*remove_sign;
+	char	*var;
+	char	*new_entry;
+	char	*updated_value;
+	char	*existing_value;
+	char	*to_add;
+	char	*to_remove;
+	char	*found;
+	char	**new_envp;
+}				t_exp;
+
 /* ************************************************************************** */
 /*                                 FUNCTIONS                                  */
 /* ************************************************************************** */
@@ -253,8 +271,12 @@ int		msh_cd(char **argv);
 int		msh_pwd(void);
 
 //530_export.c
-int		msh_export_no_var(char **envp);
-int		msh_export(char ***envp, const char *new_var);
+int	sort_envp(char **envp)
+int	msh_export_no_var(char **envp);
+int	add_new_variable(char ***envp, t_exp *exp, const char *new_var)
+int	update_existing_variable(char ***envp, t_exp *exp)
+int	parse_variable(const char *new_var, t_exp *exp)
+int	msh_export(char ***envp, const char *new_var);
 
 //540_unset.c
 int		is_variable_match(const char *env_var, const char *var_name);
