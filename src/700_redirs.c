@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+static void	redirs_2(t_tkn *tokens, t_msh *msh);
+
 static void	flags_check(t_tkn *tokens)
 {
 	if (ft_strchr(tokens->next->next->name, '-') != 0)
@@ -38,6 +40,39 @@ void	redirs(t_tkn *tokens, t_msh *msh)
 		redir_append(tkn_exec, msh);
 }
 
+static void	redirs_2(t_tkn *tokens, t_msh *msh)
+{
+	char	**arg;
+	int			i;
+
+	i = 0;
+	arg = NULL;
+	(void)msh;
+	while (tokens)
+	{
+		if (tokens->type == TKN_PIPE)
+			break ;
+		if (tokens->type == TKN_IN || tokens->type == TKN_OUT 
+			|| tokens->type == TKN_APPEND)
+		{
+			if (tokens->next != NULL)
+			{
+				if (tokens->next->type == TKN_PIPE)
+					break;
+				else
+					tokens->next->type = TKN_REDIR_ARG;
+			}
+		}
+		if (tokens->type == TKN_CMD && tokens->type != TKN_REDIR_ARG)
+		{
+			arg[i] = ft_strdup(tokens->name);
+			i++;
+		}
+		tokens = tokens->next;
+	}
+}
+
+
 int	exec_redirs(t_tkn *tokens, t_msh *msh)
 {
 	while (tokens)
@@ -50,7 +85,8 @@ int	exec_redirs(t_tkn *tokens, t_msh *msh)
 		if (tokens->type == TKN_IN || tokens->type == TKN_OUT
 			|| tokens->type == TKN_APPEND)
 		{
-			redirs(tokens, msh);
+			// redirs(tokens, msh);
+			redirs_2(tokens, msh);
 		}
 		tokens = tokens->next;
 	}

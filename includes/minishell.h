@@ -61,6 +61,7 @@ typedef	enum e_token_group
 	TKN_IN,
 	TKN_APPEND,
 	TKN_OUT,
+	TKN_REDIR_ARG,
 	TKN_CMD,
 	TKN_NULL,
 	TKN_BLANK,
@@ -271,11 +272,11 @@ int		msh_cd(char **argv);
 int		msh_pwd(void);
 
 //530_export.c
-int	sort_envp(char **envp)
+int	sort_envp(char **envp);
 int	msh_export_no_var(char **envp);
-int	add_new_variable(char ***envp, t_exp *exp, const char *new_var)
-int	update_existing_variable(char ***envp, t_exp *exp)
-int	parse_variable(const char *new_var, t_exp *exp)
+int	add_new_variable(char ***envp, t_exp *exp, const char *new_var);
+int	update_existing_variable(char ***envp, t_exp *exp);
+int	parse_variable(const char *new_var, t_exp *exp);
 int	msh_export(char ***envp, const char *new_var);
 
 //540_unset.c

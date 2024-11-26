@@ -40,12 +40,12 @@ t_tkn	*to_parse(t_msh *msh)
 	msh->cmds = ft_calloc(1, sizeof(t_command));
 	if (!msh->cmds)
 		return (NULL);
-	msh->cmds->av = split_input(line, msh);
+	msh->cmds->av = split_input(line, msh); //necessario revisar!!
 	if (!msh->cmds->av)
 		return (NULL);
 	msh->cmd_count = ft_matrixlen(msh->cmds->av);
 	tokens = tokenizer(msh, msh->cmds->av);
-	if (syntax_check(msh, tokens) == FAILURE)
+	if (syntax_check(msh, tokens) == FAILURE) //meter no inicio de tudo
 		return (NULL);
 	msh->pipe_count = count_pipes(tokens);
 	if (line)

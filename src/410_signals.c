@@ -24,7 +24,7 @@ void	sigint_handler(int sig)
 	//Prepares readline to receive a new prompt 
 	rl_on_new_line();
 	//Clears the input
-	// rl_replace_line("", 0);
+	rl_replace_line("", 0);
 	//Redisplays the prompt
 	rl_redisplay();
 }

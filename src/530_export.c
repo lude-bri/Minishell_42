@@ -98,7 +98,6 @@ int	add_new_variable(char ***envp, t_exp *exp, const char *new_var)
 	return (0);
 }
 
-
 int	update_existing_variable(char ***envp, t_exp *exp)
 {
 	int i;
@@ -114,7 +113,7 @@ int	update_existing_variable(char ***envp, t_exp *exp)
 			{
 				exp->to_add = exp->add_sign + 2;
 				exp->updated_value = malloc(ft_strlen(exp->existing_value) +
-					t_strlen(exp->to_add) + 1);
+					ft_strlen(exp->to_add) + 1);
 				if (!exp->updated_value)
 					return (free(exp->var), 1);
 				ft_strlcpy(exp->updated_value, exp->existing_value, ft_strlen(exp->existing_value) + 1);
