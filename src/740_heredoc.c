@@ -12,11 +12,21 @@
 
 #include "../includes/minishell.h"
 
+static void	check_heredoc(t_tkn *tokens, t_msh *msh)
+{
+	(void)msh;
+	if (tokens->type == TKN_HEREDOC)
+		printf("heredoc in the beginning\n");
+	else
+		printf("not heredoc in the beginning\n");
+}
+
 void	heredoc(t_tkn *tokens, t_msh *msh, char *arg)
 {
 	int		pipe_fd[2];
 	char	*line;
 
+	check_heredoc(tokens, msh);
 	if (pipe(pipe_fd) < 0)
 	{
 		perror("pipe");

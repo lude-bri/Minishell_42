@@ -57,30 +57,16 @@ int	exec_one(t_msh *msh, t_tkn *tokens)
 		else
 			exec_exe(tokens, msh);
 	}
-	else if ((tokens->type == TKN_IN || tokens->type == TKN_OUT))
+	else if ((tokens->type == TKN_IN || tokens->type == TKN_OUT
+		|| tokens->type == TKN_APPEND || tokens->type == TKN_HEREDOC))
 	{
-		if (tokens->next != NULL)
-		{
-			// redirs_2(tokens, msh);
-			exec_exe(tokens, msh);
-			// printf("redir in the beginning found\n");
-			// path = find_path(tokens->next->name, msh->envp);
-			// if (!path)
-			// {
-			// 	restruct_cl(tokens, msh);
-			// 	// redirs(tokens, msh);
-			// 	// exec_one(msh, tokens->next);
-			// 	return (SUCCESS);
-			// }
-			// else
-			// {
-			// 	fd = open(tokens->next->name, O_RDONLY);
-			// 	if (fd < 0)
-			// 		perror(tokens->next->name);
-			// 	// redirs(tokens, msh);
-			// 	// exec_one(msh, tokens->next);
-			// }
+		if (tokens->type == TKN_HEREDOC)
+		{	
+			heredoc(tokens, msh, tokens->next->name);
+			return (SUCCESS);
 		}
+		if (tokens->next != NULL)
+			exec_exe(tokens, msh);
 	}
 	return (SUCCESS);
 }

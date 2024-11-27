@@ -80,7 +80,6 @@ void	redirs_2(t_tkn *tokens, t_msh *msh)
 	}
 	msh->cmds->av = arg;
 	msh->flag_redir = true;
-	// execute(msh, tokens);
 }
 
 int	exec_redirs(t_tkn *tokens, t_msh *msh)

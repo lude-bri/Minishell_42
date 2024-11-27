@@ -41,7 +41,7 @@ t_tkn	*to_parse(t_msh *msh)
 	if (!msh->cmds)
 		return (NULL);
 	msh->cmds->av = split_input(line, msh); //necessario revisar!!
-	if (!msh->cmds->av)
+	if (!msh->cmds->av || !*msh->cmds->av)
 		return (NULL);
 	msh->cmd_count = ft_matrixlen(msh->cmds->av);
 	tokens = tokenizer(msh, msh->cmds->av);
