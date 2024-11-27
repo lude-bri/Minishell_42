@@ -16,6 +16,11 @@ int	exec_more(t_msh *msh, t_tkn *tokens)
 {
 	if (tokens->type == TKN_PIPE)
 	{
+		if (ft_strcmp(tokens->name, "|") != 0)
+		{
+			syntax_check(msh, tokens);
+			return (SUCCESS);
+		}
 		if (exec_pipe(msh, tokens) != SUCCESS)
 		 	return (FAILURE);
 	}
