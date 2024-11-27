@@ -104,6 +104,16 @@ void	execute(t_msh *msh, t_tkn *tokens)
 		free_arg(args);
 		exit(0);
 	}
+	if (msh->flag_redir == true)
+		if (execve(path, msh->cmds->av, msh->envp) == -1)
+		{
+			perror(path);
+			free(path);
+			free_arg(args);
+			free_msh(msh->cmds, msh, tokens);
+			free_array(msh->envp, 0);
+			exit(127);
+		}
 	if (execve(path, args, msh->envp) == -1)
 	{
 		perror(path);

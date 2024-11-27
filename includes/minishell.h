@@ -12,6 +12,7 @@
 # include <stdio.h>
 # include <signal.h>
 # include <sys/wait.h>
+# include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft_42/libft.h"
@@ -146,6 +147,7 @@ typedef struct s_msh
 	int			cmd_count;
 	int			pipe_count;
 	int			exit_status;
+	bool		flag_redir;
 	t_vector	tokens;
 
 }				t_msh;
@@ -318,7 +320,7 @@ void	redir_out(t_tkn *tokens, t_msh *msh);
 void	redir_append(t_tkn *tokens, t_msh *msh);
 
 //740_heredoc.c
-void	heredoc(t_tkn *tokens, t_msh *msh);
+void	heredoc(t_tkn *tokens, t_msh *msh, char *arg);
 
 
 

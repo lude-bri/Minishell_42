@@ -40,14 +40,16 @@ void	redirs(t_tkn *tokens, t_msh *msh)
 		redir_append(tkn_exec, msh);
 }
 
+//o que estiver imediatamante apos os redirs vai ser um
+//TKN_REDIR_ARG, e tudo a seguir disso vai ser guardado
+//em um char** para ser enviado para o execve
 static void	redirs_2(t_tkn *tokens, t_msh *msh)
 {
 	char	**arg;
 	int			i;
 
 	i = 0;
-	arg = NULL;
-	(void)msh;
+	arg = malloc(sizeof(char *) * 100);
 	while (tokens)
 	{
 		if (tokens->type == TKN_PIPE)
@@ -55,6 +57,12 @@ static void	redirs_2(t_tkn *tokens, t_msh *msh)
 		if (tokens->type == TKN_IN || tokens->type == TKN_OUT 
 			|| tokens->type == TKN_APPEND)
 		{
+			if (tokens->type == TKN_IN)
+				redir_in(tokens, msh);
+			else if (tokens->type == TKN_OUT)
+				redir_out(tokens, msh);
+			else if (tokens->type == TKN_APPEND)
+				redir_append(tokens, msh);
 			if (tokens->next != NULL)
 			{
 				if (tokens->next->type == TKN_PIPE)
@@ -70,25 +78,30 @@ static void	redirs_2(t_tkn *tokens, t_msh *msh)
 		}
 		tokens = tokens->next;
 	}
+	msh->cmds->av = arg;
+	msh->flag_redir = true;
+	// execute(msh, tokens);
 }
-
 
 int	exec_redirs(t_tkn *tokens, t_msh *msh)
 {
-	while (tokens)
+	t_tkn	*tkn;
+
+	tkn = tokens;
+	while (tkn)
 	{
-		if (tokens->type == TKN_HEREDOC)
+		if (tkn->type == TKN_HEREDOC)
 		{
-			heredoc(tokens, msh);
+			heredoc(tokens, msh, tkn->next->name);
 			return (SUCCESS);
 		}
-		if (tokens->type == TKN_IN || tokens->type == TKN_OUT
-			|| tokens->type == TKN_APPEND)
+		if (tkn->type == TKN_IN || tkn->type == TKN_OUT
+			|| tkn->type == TKN_APPEND)
 		{
 			// redirs(tokens, msh);
 			redirs_2(tokens, msh);
 		}
-		tokens = tokens->next;
+		tkn = tkn->next;
 	}
 	return (SUCCESS);
 }

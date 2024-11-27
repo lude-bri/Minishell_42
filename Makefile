@@ -193,7 +193,7 @@ sync_shell:			## Test Minishell and Bash with SYNC
 
 gdb: all $(NAME) $(TEMP_PATH)			## Debug w/ gdb
 	tmux split-window -h "gdb --tui --args ./$(NAME)"
-	tmux resize-pane -L 18
+	tmux resize-pane -L 35 
 	# make get_log
 
 vgdb: all $(NAME) $(TEMP_PATH)			## Debug w/ valgrind (memcheck) & gdb

@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void	heredoc(t_tkn *tokens, t_msh *msh)
+void	heredoc(t_tkn *tokens, t_msh *msh, char *arg)
 {
 	int		pipe_fd[2];
 	char	*line;
@@ -26,7 +26,7 @@ void	heredoc(t_tkn *tokens, t_msh *msh)
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || ft_strcmp(line, tokens->next->name) == 0)
+		if (!line || ft_strcmp(line, arg) == 0)
 			break ;
 		write(pipe_fd[1], line, ft_strlen(line));
 		write(pipe_fd[1], "\n", 1);
