@@ -89,11 +89,38 @@ int exec_exe(t_tkn *tokens, t_msh *msh)
     return (SUCCESS);
 }
 
+static void	exec_special(t_tkn *tokens, t_msh *msh)
+{
+	char	*path;
+
+	path = find_path(msh->cmds->av[0], msh->envp);
+	if (!path)
+	{
+		printf("%s: command not found\n", tokens->cmdargs[0]);
+		free_msh(msh->cmds, msh, tokens);
+		free_array(msh->envp, 0);
+		free_arg(msh->cmds->av);
+		exit(0);
+	}
+	if (msh->flag_redir == true)
+		if (execve(path, msh->cmds->av, msh->envp) == -1)
+		{
+			perror(path);
+			free(path);
+			free_arg(msh->cmds->av);
+			free_msh(msh->cmds, msh, tokens);
+			free_array(msh->envp, 0);
+			exit(127);
+		}
+}
+
 void	execute(t_msh *msh, t_tkn *tokens)
 {
 	char	*path;
 	char	**args;
 
+	if (msh->flag_redir == true)
+		exec_special(tokens, msh);
 	path = find_path(tokens->name, msh->envp);
 	args = build_args(tokens);
 	if (!path)
@@ -104,16 +131,6 @@ void	execute(t_msh *msh, t_tkn *tokens)
 		free_arg(args);
 		exit(0);
 	}
-	if (msh->flag_redir == true)
-		if (execve(path, msh->cmds->av, msh->envp) == -1)
-		{
-			perror(path);
-			free(path);
-			free_arg(args);
-			free_msh(msh->cmds, msh, tokens);
-			free_array(msh->envp, 0);
-			exit(127);
-		}
 	if (execve(path, args, msh->envp) == -1)
 	{
 		perror(path);

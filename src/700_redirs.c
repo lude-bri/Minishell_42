@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static void	redirs_2(t_tkn *tokens, t_msh *msh);
+// static void	redirs_2(t_tkn *tokens, t_msh *msh);
 
 static void	flags_check(t_tkn *tokens)
 {
@@ -43,7 +43,7 @@ void	redirs(t_tkn *tokens, t_msh *msh)
 //o que estiver imediatamante apos os redirs vai ser um
 //TKN_REDIR_ARG, e tudo a seguir disso vai ser guardado
 //em um char** para ser enviado para o execve
-static void	redirs_2(t_tkn *tokens, t_msh *msh)
+void	redirs_2(t_tkn *tokens, t_msh *msh)
 {
 	char	**arg;
 	int			i;
