@@ -91,7 +91,7 @@ int	exec_redirs(t_tkn *tokens, t_msh *msh)
 	{
 		if (tkn->type == TKN_HEREDOC)
 		{
-			heredoc(tokens, msh, tkn->next->name);
+			heredoc(tokens, msh, tkn->next->name, 0);
 			return (SUCCESS);
 		}
 		if (tkn->type == TKN_IN || tkn->type == TKN_OUT

@@ -62,7 +62,7 @@ int	exec_one(t_msh *msh, t_tkn *tokens)
 	{
 		if (tokens->type == TKN_HEREDOC)
 		{	
-			heredoc(tokens, msh, tokens->next->name);
+			heredoc(tokens, msh, tokens->next->name, 1);
 			return (SUCCESS);
 		}
 		if (tokens->next != NULL)

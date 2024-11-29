@@ -35,7 +35,7 @@ static void	handle_signal(int sig)
 	}
 }
 
-void	heredoc(t_tkn *tokens, t_msh *msh, char *arg)
+void	heredoc(t_tkn *tokens, t_msh *msh, char *arg, int flag)
 {
 	int		pipe_fd[2];
 	char	*line = NULL;
@@ -75,7 +75,8 @@ void	heredoc(t_tkn *tokens, t_msh *msh, char *arg)
 
 	free(line); // Libera a linha caso tenha sido alocada
 	close(pipe_fd[1]);
-	dup2(pipe_fd[0], STDIN_FILENO);
+	if (flag == 0) //if heredoc is in the beginning, dont dup2
+		dup2(pipe_fd[0], STDIN_FILENO);
 	close(pipe_fd[0]);
 
 	// Restaurar sinais originais
