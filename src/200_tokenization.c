@@ -200,7 +200,9 @@ char	**split_input(const char *input, t_msh *msh)
 		else if (input[i] == '"')
 		{
 			split.start = ++i;
-			split.argv[j++] = handle_double_quotes(input, &i, msh);
+			if ((ft_strncmp(input, "|", 1) == 0) || (ft_strncmp(input, ">", 1) == 0)
+				|| (ft_strncmp(input, "<", 1) == 0))
+				split.argv[j++] = handle_double_quotes(input, &i, msh);
 		}
 		else if (input[i] == '$')
 		{

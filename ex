@@ -1,3 +1,4 @@
+ex
 example
 gdb.txt
 includes
@@ -10,3 +11,4 @@ out
 README.md
 src
 sup
+wc
