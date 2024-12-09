@@ -61,6 +61,20 @@
 // 	return (0);
 // }
 
+static int	is_delimiter(char *argv)
+{
+	if (ft_strncmp(argv, "<", 1) == 0)
+		return (SUCCESS);
+	else if (ft_strncmp(argv, ">", 1) == 0)
+		return (SUCCESS);
+	else if (ft_strncmp(argv, "|", 1) == 0)
+		return (SUCCESS);
+	else if (ft_strncmp(argv, ">>", 1) == 0)
+		return (SUCCESS);
+	return (FAILURE);
+}
+
+
 int	msh_echo(char **argv)
 {
 	int	i;
@@ -80,6 +94,8 @@ int	msh_echo(char **argv)
 	}
 	while (argv[i])
 	{
+		if (is_delimiter(argv[i]) == SUCCESS)
+			break ;
 		ft_printf("%s", argv[i]);
 		if (argv[i + 1])
 			ft_printf(" ");
