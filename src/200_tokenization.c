@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:49:13 by luigi             #+#    #+#             */
-/*   Updated: 2024/12/09 15:51:21 by mde-agui         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:43:26 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,17 @@ char	*copy_word(const char *input, int start, int end)
 	int		len;
 	char	*word;
 
-	i = 0;
 	len = end - start;
-	word = (char *)malloc(sizeof(char) * (len + 1));
+	word = malloc(sizeof(char) * (len + 1));
 	if (!word)
 		return (NULL);
-	while (start < end)
-		word[i++] = input[start++];
-	word[i] = '\0';
-	//word[i] = input[start++];
+	i = 0;
+	while (i < len)
+	{
+		word[i] = input[start + i];
+		i++;
+	}
+	word[len] = '\0';
 	return (word);
 }
 
@@ -83,7 +85,7 @@ int	count_words(const char *input)
 	{
 		while (input[i] && is_whitespace(input[i]))
 			i++;
-		if (input[i] == '\'')
+		if (input[i] == '\'' || input[i] == '"')
 		{
 			i++;
 			while (input[i] && input[i] != '\'')
@@ -92,6 +94,11 @@ int	count_words(const char *input)
 				break ;
 			i++;
 			counter++;
+		}
+		else if (input[i] == '|')
+		{
+			counter++;
+			i++;
 		}
 		else if (input[i] == '"')
 		{
@@ -106,7 +113,7 @@ int	count_words(const char *input)
 		else if (input[i])
 		{
 			counter++;
-			while (input[i] && input[i] != '\'' && !is_whitespace(input[i]))
+			while (input[i] && input[i] != '\'' && input[i] != '"' && input[i] != '|' && !is_whitespace(input[i]))
 				i++;
 		}
 	}
@@ -185,6 +192,7 @@ char	**split_input(const char *input, t_msh *msh)
 	char		*expanded;
 
 	split.number_words = count_words(input);
+	printf("Token count: %d\n", split.number_words);
 	split.argv = (char **)malloc(sizeof(char *) * (split.number_words + 1));
 	i = 0;
 	j = 0;
@@ -200,9 +208,7 @@ char	**split_input(const char *input, t_msh *msh)
 		else if (input[i] == '"')
 		{
 			split.start = ++i;
-			if ((ft_strncmp(input, "|", 1) == 0) || (ft_strncmp(input, ">", 1) == 0)
-				|| (ft_strncmp(input, "<", 1) == 0))
-				split.argv[j++] = handle_double_quotes(input, &i, msh);
+			split.argv[j++] = handle_double_quotes(input, &i, msh);
 		}
 		else if (input[i] == '$')
 		{
@@ -224,8 +230,23 @@ char	**split_input(const char *input, t_msh *msh)
 			while (input[i] && input[i] != '\'' && input[i] != '"' && input[i] != '|' && !is_whitespace(input[i]))
 				i++;
 			split.argv[j++] = copy_word(input, split.start, i);
+		}	
+		if (!split.argv[j - 1])
+		{
+			printf("Error: Memory allocation failed for token %d\n", j - 1);
+			while (--j >= 0)
+				free(split.argv[j]);
+			free(split.argv);
+			return (NULL);
 		}
 	}
 	split.argv[j] = NULL;
+	i = 0;
+	while (i < j)
+	{
+		printf("Token %d: %s\n", i, split.argv[i]);
+		i++;
+	}
 	return (split.argv);
 }
+
