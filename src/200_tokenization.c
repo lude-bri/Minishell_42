@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:49:13 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/31 17:23:56 by mde-agui         ###   ########.fr       */
+/*   Updated: 2024/12/09 15:51:21 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,10 +213,15 @@ char	**split_input(const char *input, t_msh *msh)
 				free(expanded);	
 			}
 		}
+		else if (input[i] == '|')
+		{
+			split.argv[j++] = ft_strdup("|");
+			i++;
+		}
 		else if (input[i] && !is_whitespace(input[i]))
 		{
 			split.start = i;
-			while (input[i] && input[i] != '\'' && !is_whitespace(input[i]))
+			while (input[i] && input[i] != '\'' && input[i] != '"' && input[i] != '|' && !is_whitespace(input[i]))
 				i++;
 			split.argv[j++] = copy_word(input, split.start, i);
 		}
