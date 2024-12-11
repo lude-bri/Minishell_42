@@ -143,6 +143,7 @@ typedef struct s_msh
 	char		*hostname;
 	char		*pwd;
 	char		*prompt;
+	char		*line;
 
 	int			cmd_count;
 	int			pipe_count;
@@ -264,7 +265,8 @@ int		exec_more(t_msh *msh, t_tkn *tokens);
 // BUILT-INS
 
 //500_echo.c
-int		msh_echo(char **argv);
+// int		msh_echo(char **argv);
+int		msh_echo(char **argv, t_msh *msh);
 // int		msh_echo(t_msh *msh, t_tkn *tokens);
 
 //510_cd.c

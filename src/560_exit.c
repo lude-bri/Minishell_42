@@ -64,8 +64,8 @@ int	msh_exit(char **argv, t_msh *msh)
 		free_arg(argv);
 		free_array(msh->envp, 0);
 		free(msh->cmds);
+		free(msh->line);
 		free_vector(&msh->tokens);
-		// free_tokens(tokens);
 		exit(msh->exit_status);
 	}
 	if (is_num(argv[1]))
@@ -79,6 +79,7 @@ int	msh_exit(char **argv, t_msh *msh)
 	free_arg(argv);
 	free_array(msh->envp, 0);
 	free(msh->cmds);
+	free(msh->line);
 	free_vector(&msh->tokens);
 	exit(msh->exit_status);
 }

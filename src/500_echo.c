@@ -74,11 +74,29 @@ static int	is_delimiter(char *argv)
 	return (FAILURE);
 }
 
-
-int	msh_echo(char **argv)
+static int	verify_whitespaces(char *line)
 {
-	int	i;
-	int	newline;
+	int		i;
+
+	if (ft_strncmp("echo ", line, 5) == 0)
+	{
+		i = 5;
+		while (line[i])
+		{
+			if (is_whitespace(line[i]))
+				return (SUCCESS);
+			i++;
+		}
+		return (FAILURE);
+	}
+	return (FAILURE);
+}
+
+int	msh_echo(char **argv, t_msh *msh)
+{
+	int		i;
+	int		newline;
+	int		space;
 
 	if (!argv[1])
 	{
@@ -92,16 +110,21 @@ int	msh_echo(char **argv)
 		newline = 0;
 		i = 2;
 	}
+	if (verify_whitespaces(msh->line) == SUCCESS)
+		space = 1;
+	else
+		space = 0;
 	while (argv[i])
 	{
 		if (is_delimiter(argv[i]) == SUCCESS)
 			break ;
 		ft_printf("%s", argv[i]);
-		if (argv[i + 1])
+		if (argv[i + 1] && space == 1)
 			ft_printf(" ");
 		i++;
 	}
 	if (newline)
 		ft_printf("\n");
+	// free(msh->line);
 	return (0);
 }

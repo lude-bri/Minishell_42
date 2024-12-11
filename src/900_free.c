@@ -65,6 +65,8 @@ void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 {
 	if (msh->cmds->av)
 		free_arg(msh->cmds->av);
+	if (msh->line)
+		free(msh->line);
 	if (token)
 		free_vector(&msh->tokens);
 	if (command)

@@ -88,7 +88,7 @@ int	count_words(const char *input)
 		if (input[i] == '\'' || input[i] == '"')
 		{
 			i++;
-			while (input[i] && input[i] != '\'')
+			while (input[i] && (input[i] != '\'' && input[i] != '"'))
 				i++;
 			if (!input[i])
 				break ;
@@ -96,6 +96,11 @@ int	count_words(const char *input)
 			counter++;
 		}
 		else if (input[i] == '|')
+		{
+			counter++;
+			i++;
+		}
+		else if (input[i] == '>' || input[i] == '<')
 		{
 			counter++;
 			i++;
@@ -113,7 +118,8 @@ int	count_words(const char *input)
 		else if (input[i])
 		{
 			counter++;
-			while (input[i] && input[i] != '\'' && input[i] != '"' && input[i] != '|' && !is_whitespace(input[i]))
+			while (input[i] && input[i] != '\'' && input[i] != '"' && input[i] != '|'
+				&& input[i] != '<' && input[i] != '>' && !is_whitespace(input[i]))
 				i++;
 		}
 	}
@@ -208,7 +214,9 @@ char	**split_input(const char *input, t_msh *msh)
 		else if (input[i] == '"')
 		{
 			split.start = ++i;
-			split.argv[j++] = handle_double_quotes(input, &i, msh);
+			if ((ft_strncmp(input, "|", 1) == 0) || (ft_strncmp(input, ">", 1) == 0)
+				|| (ft_strncmp(input, "<", 1) == 0) || ft_strncmp(input, "<<", 2) == 0)
+				split.argv[j++] = handle_double_quotes(input, &i, msh);
 		}
 		else if (input[i] == '$')
 		{
@@ -221,13 +229,17 @@ char	**split_input(const char *input, t_msh *msh)
 		}
 		else if (input[i] == '|')
 		{
-			split.argv[j++] = ft_strdup("|");
+			if (input[i - 1] == '"' || input[i + 1] == '"')
+				split.argv[j++] = ft_strdup("\"|\"");
+			else
+				split.argv[j++] = ft_strdup("|");
 			i++;
 		}
 		else if (input[i] && !is_whitespace(input[i]))
 		{
 			split.start = i;
-			while (input[i] && input[i] != '\'' && input[i] != '"' && input[i] != '|' && !is_whitespace(input[i]))
+			while (input[i] && input[i] != '\'' && input[i] != '"' && input[i] != '|' && input[i] != '>' 
+				&& input[i] != '<' && !is_whitespace(input[i]))
 				i++;
 			split.argv[j++] = copy_word(input, split.start, i);
 		}	

@@ -178,7 +178,7 @@ int	parse_variable(const char *new_var, t_exp *exp)
 
 int	msh_export(char ***envp, const char *new_var)
 {
-	t_exp exp;
+	t_exp	exp;
 
 	if (parse_variable(new_var, &exp))
 		return (0);

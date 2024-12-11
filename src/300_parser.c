@@ -48,6 +48,7 @@ t_tkn	*to_parse(t_msh *msh)
 	if (syntax_check(msh, tokens) == FAILURE) //meter no inicio de tudo
 		return (NULL);
 	msh->pipe_count = count_pipes(tokens);
+	msh->line = ft_strdup(line); //ter o line para fazer verificacao no echo
 	if (line)
 	{
 		free(line);
