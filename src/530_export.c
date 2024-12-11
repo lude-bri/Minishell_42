@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:49:02 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/24 20:01:12 by mde-agui         ###   ########.fr       */
+/*   Updated: 2024/12/11 23:48:37 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int	update_existing_variable(char ***envp, t_exp *exp)
 		}
 		i++;
 	}
-	return (0);
+	return (2);
 }
 
 
@@ -179,12 +179,19 @@ int	parse_variable(const char *new_var, t_exp *exp)
 int	msh_export(char ***envp, const char *new_var)
 {
 	t_exp	exp;
+	int		update_var;
 
 	if (parse_variable(new_var, &exp))
-		return (0);
-	if (update_existing_variable(envp, &exp) == 0)
+	{
+		printf("Parsing failed\n");
+		return (1);
+	}
+	update_var = update_existing_variable(envp, &exp);
+	if (update_var == 1)
+		return (1);
+	if (update_var == 0)
 		return (0);
 	if (add_new_variable(envp, &exp, new_var))
-		return (0);
+		return (1);
 	return (0);
 }
