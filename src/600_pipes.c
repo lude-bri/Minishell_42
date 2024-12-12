@@ -55,14 +55,26 @@ int	exec_pipe(t_msh *msh, t_tkn *tokens)
 	else if (pid_left == 0)
 	{
 		close(fd[0]);
-		if (tokens->left->type == TKN_HEREDOC)
+		if (tokens->left->type == TKN_HEREDOC || tokens->left->next->type == TKN_HEREDOC)
         {
-            heredoc_fd = heredoc_pipe(tokens, msh, tokens->left->next->name, 1);
-			dup2(heredoc_fd, STDIN_FILENO);
-			apply_pipe(tokens->next->left, msh, fd, heredoc_fd);
-			free_arg(msh->envp);
-			free_msh(msh->cmds, msh, tokens->left);
-			exit(EXIT_SUCCESS);
+			if (tokens->left->type == TKN_HEREDOC)
+			{
+				heredoc_fd = heredoc_pipe(tokens, msh, tokens->left->next->name, 1);
+				dup2(heredoc_fd, STDIN_FILENO);
+				apply_pipe(tokens->next->left, msh, fd, heredoc_fd);
+				free_arg(msh->envp);
+				free_msh(msh->cmds, msh, tokens->left);
+				exit(EXIT_SUCCESS);
+			}
+			else
+			{
+				heredoc_fd = heredoc_pipe(tokens, msh, tokens->left->next->next->name, 0);
+				dup2(heredoc_fd, STDIN_FILENO);
+				apply_pipe(tokens->left, msh, fd, heredoc_fd);
+				free_arg(msh->envp);
+				free_msh(msh->cmds, msh, tokens->left);
+				exit(EXIT_SUCCESS);
+			}
         }
 		apply_pipe(tokens->left, msh, fd, 1);
 		free_arg(msh->envp);
