@@ -160,6 +160,7 @@ int	update_existing_variable(char ***envp, t_exp *exp)
 int	parse_variable(const char *new_var, t_exp *exp)
 {
 	exp->len = ft_strlen(new_var);
+	exp->no_sign = ft_strnstr(new_var, "", exp->len);
 	exp->equal_sign = ft_strnstr(new_var, "=", exp->len);
 	exp->add_sign = ft_strnstr(new_var, "+=", exp->len);
 	exp->remove_sign = ft_strnstr(new_var, "-=", exp->len);
@@ -169,6 +170,8 @@ int	parse_variable(const char *new_var, t_exp *exp)
 		exp->var = ft_substr(new_var, 0, exp->remove_sign - new_var);
 	else if (exp->equal_sign)
 		exp->var = ft_substr(new_var, 0, exp->equal_sign - new_var);
+	else if (exp->no_sign)
+		exp->var = ft_substr(new_var, 0, exp->no_sign - new_var);
 	else
 		return (1);
 	return (exp->var == NULL);

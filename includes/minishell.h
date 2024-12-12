@@ -158,6 +158,7 @@ typedef struct s_exp
 {
 	size_t	len;
 	size_t	prefix_len;
+	char	*no_sign;
 	char	*equal_sign;
 	char	*add_sign;
 	char	*remove_sign;

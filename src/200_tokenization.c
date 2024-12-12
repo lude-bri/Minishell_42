@@ -26,9 +26,9 @@ char	*expand_var(const char *input, int *i, t_msh *msh)
 	start = *i + 1;
 	if (input[start] == '?')
 	{
-		// printf("Current msh->exit_status before expanding $?: %d\n", msh->exit_status);
+		printf("Current msh->exit_status before expanding $?: %d\n", msh->exit_status);
 		result = ft_itoa(msh->exit_status);
-		// printf("Expanding $?: %s\n", result);
+		printf("Expanding $?: %s\n", result);
 		*i += 2;
 		return (result); 
 	}
@@ -216,9 +216,9 @@ char	**split_input(const char *input, t_msh *msh)
 			split.start = ++i;
 			if (input[i] == '"')
 				split.argv[j++] = ft_strdup("");
-			else if ((ft_strncmp(input, "|", 1) == 0) || (ft_strncmp(input, ">", 1) == 0)
-				|| (ft_strncmp(input, "<", 1) == 0) || ft_strncmp(input, "<<", 2) == 0)
-				split.argv[j++] = handle_double_quotes(input, &i, msh);
+			else if ((ft_strncmp(input, "|", 1) != 0) && (ft_strncmp(input, ">", 1) != 0)
+				&& (ft_strncmp(input, "<", 1) != 0) && ft_strncmp(input, "<<", 2) != 0)
+				split.argv[j++] = handle_double_quotes(input, &i, msh);	
 		}
 		else if (input[i] == '$')
 		{

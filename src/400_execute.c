@@ -101,7 +101,7 @@ static void	exec_special(t_tkn *tokens, t_msh *msh)
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
 		free_arg(msh->cmds->av);
-		exit(0);
+		exit(127);
 	}
 	if (msh->flag_redir == true)
 		if (execve(path, msh->cmds->av, msh->envp) == -1)
@@ -130,7 +130,7 @@ void	execute(t_msh *msh, t_tkn *tokens)
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
 		free_arg(args);
-		exit(0);
+		exit(127);
 	}
 	if (execve(path, args, msh->envp) == -1)
 	{
