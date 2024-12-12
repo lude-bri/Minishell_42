@@ -157,7 +157,6 @@ int	update_existing_variable(char ***envp, t_exp *exp)
 	return (2);
 }
 
-
 int	parse_variable(const char *new_var, t_exp *exp)
 {
 	exp->len = ft_strlen(new_var);
@@ -174,7 +173,6 @@ int	parse_variable(const char *new_var, t_exp *exp)
 		return (1);
 	return (exp->var == NULL);
 }
-
 
 int	msh_export(char ***envp, const char *new_var)
 {

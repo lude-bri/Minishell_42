@@ -214,7 +214,9 @@ char	**split_input(const char *input, t_msh *msh)
 		else if (input[i] == '"')
 		{
 			split.start = ++i;
-			if ((ft_strncmp(input, "|", 1) == 0) || (ft_strncmp(input, ">", 1) == 0)
+			if (input[i] == '"')
+				split.argv[j++] = ft_strdup("");
+			else if ((ft_strncmp(input, "|", 1) == 0) || (ft_strncmp(input, ">", 1) == 0)
 				|| (ft_strncmp(input, "<", 1) == 0) || ft_strncmp(input, "<<", 2) == 0)
 				split.argv[j++] = handle_double_quotes(input, &i, msh);
 		}
