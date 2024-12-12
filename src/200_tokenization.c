@@ -234,6 +234,30 @@ char	**split_input(const char *input, t_msh *msh)
 			else
 				split.argv[j++] = ft_strdup("|");
 			i++;
+		}	
+		else if (input[i] == '<' && input[i + 1] == '<')
+		{
+			if (input[i - 1] == '"' || input[i + 1] == '"')
+				split.argv[j++] = ft_strdup("\"<<\"");
+			else
+				split.argv[j++] = ft_strdup("<<");
+			i += 2;
+		}
+		else if (input[i] == '<')
+		{
+			if (input[i - 1] == '"' || input[i + 1] == '"')
+				split.argv[j++] = ft_strdup("\"<\"");
+			else
+				split.argv[j++] = ft_strdup("<");
+			i++;
+		}
+		else if (input[i] == '>')
+		{
+			if (input[i - 1] == '"' || input[i + 1] == '"')
+				split.argv[j++] = ft_strdup("\"<\"");
+			else
+				split.argv[j++] = ft_strdup("<");
+			i++;
 		}
 		else if (input[i] && !is_whitespace(input[i]))
 		{

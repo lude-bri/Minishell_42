@@ -60,7 +60,7 @@ int	exec_one(t_msh *msh, t_tkn *tokens)
 	else if ((tokens->type == TKN_IN || tokens->type == TKN_OUT
 		|| tokens->type == TKN_APPEND || tokens->type == TKN_HEREDOC))
 	{
-		if (tokens->type == TKN_HEREDOC)
+		if (tokens->type == TKN_HEREDOC && tokens->next != NULL)
 		{	
 			heredoc(tokens, msh, tokens->next->name, 1);
 			return (SUCCESS);
