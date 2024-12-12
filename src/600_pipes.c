@@ -34,7 +34,6 @@ void	apply_pipe(t_tkn *dir, t_msh *msh, int *fd,
 	exec_more(msh, dir);
 }
 
-
 int	exec_pipe(t_msh *msh, t_tkn *tokens)
 {
 	int		fd[2];
@@ -62,7 +61,6 @@ int	exec_pipe(t_msh *msh, t_tkn *tokens)
 			dup2(heredoc_fd, STDIN_FILENO);
 			apply_pipe(tokens->next->left, msh, fd, heredoc_fd);
 			free_arg(msh->envp);
-			free(msh->line);
 			free_msh(msh->cmds, msh, tokens->left);
 			exit(EXIT_SUCCESS);
         }

@@ -35,7 +35,6 @@ static void	handle_signal(int sig)
 	}
 }
 
-
 int heredoc_pipe(t_tkn *tokens, t_msh *msh, char *arg, int flag)
 {
     int pipe_fd[2];
@@ -60,7 +59,6 @@ int heredoc_pipe(t_tkn *tokens, t_msh *msh, char *arg, int flag)
             free_msh(msh->cmds, msh, tokens);
             exit(130);
         }
-
         line = readline("> ");
         if (!line || ft_strcmp(line, arg) == 0)
             break;
@@ -72,12 +70,12 @@ int heredoc_pipe(t_tkn *tokens, t_msh *msh, char *arg, int flag)
 	if (flag == 0) //if heredoc is in the beginning, dont dup2
 		dup2(pipe_fd[0], STDIN_FILENO);
 
-
     free(line);
     close(pipe_fd[1]); // Close write-end after writing
     signal(SIGINT, SIG_DFL);
-
-    return pipe_fd[0]; // Return the read-end for input redirection
+	free_arg(msh->envp);
+	free_msh(msh->cmds, msh, tokens);
+    return (pipe_fd[0]); // Return the read-end for input redirection
 }
 
 // int heredoc(t_tkn *tokens, t_msh *msh, char *arg, int flag)
