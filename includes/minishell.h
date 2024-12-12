@@ -324,6 +324,7 @@ void	redir_append(t_tkn *tokens, t_msh *msh);
 
 //740_heredoc.c
 void	heredoc(t_tkn *tokens, t_msh *msh, char *arg, int flag);
+int		heredoc_pipe(t_tkn *tokens, t_msh *msh, char *arg, int flag);
 
 /* **************** */
 /*      800        */
