@@ -41,7 +41,8 @@ char	*expand_var(const char *input, int *i, t_msh *msh)
 		return (NULL);
 	ft_strlcpy(var_name, &input[start], len + 1);
 	var_name[len] = '\0';
-	value = getenv(var_name);
+	// value = getenv(var_name);
+	value = get_variable(var_name, msh->envp);
 	free(var_name);
 	if (value)
 		result = ft_strdup(value);
@@ -153,6 +154,10 @@ char	*handle_double_quotes(const char *input, int *i, t_msh *msh)
 	{
 		if (input[*i] == '$')
 		{
+			if (input[*i + 1] == '"')
+			{
+				return ((char *)input);
+			}
 			expanded = expand_var(input, i, msh);
 			if (ft_strlen(expanded) + ft_strlen(word) >= word_size - 1)
 			{
@@ -229,7 +234,7 @@ char	**split_input(const char *input, t_msh *msh)
 				syntax_check_redirs(msh, NULL);
 				break ;
 			}
-			if (input[i + 1] == '\0')
+			if (input[i + 1] == '\0' || input[i + 1] == '\"')
 			{
 				split.argv[j++] = ft_strdup("$");
 				i++;
