@@ -118,6 +118,11 @@ int	count_words(const char *input)
 			i++;
 			counter++;
 		}
+		else if (input[i] == '$')
+		{
+			i++;
+			counter++;
+		}
 		else if (input[i])
 		{
 			counter++;
@@ -152,12 +157,8 @@ char	*handle_double_quotes(const char *input, int *i, t_msh *msh)
 	word[0] = '\0';
 	while (input[*i] && input[*i] != '"')
 	{
-		if (input[*i] == '$')
+		if (input[*i] == '$' && input[*i + 2] != '\0')
 		{
-			if (input[*i + 1] == '"')
-			{
-				return ((char *)input);
-			}
 			expanded = expand_var(input, i, msh);
 			if (ft_strlen(expanded) + ft_strlen(word) >= word_size - 1)
 			{
@@ -205,7 +206,7 @@ char	**split_input(const char *input, t_msh *msh)
 	char		*expanded;
 
 	split.number_words = count_words(input);
-	// printf("Token count: %d\n", split.number_words);
+	printf("Token count: %d\n", split.number_words);
 	split.argv = (char **)malloc(sizeof(char *) * (split.number_words + 1));
 	i = 0;
 	j = 0;
@@ -229,7 +230,7 @@ char	**split_input(const char *input, t_msh *msh)
 		}
 		else if (input[i] == '$')
 		{
-			if (input[i + 1] == '>')
+			if (input[i + 1] == '>') //verificar todos os outros operadores
 			{
 				syntax_check_redirs(msh, NULL);
 				break ;
@@ -299,12 +300,12 @@ char	**split_input(const char *input, t_msh *msh)
 		}
 	}
 	split.argv[j] = NULL;
-	// i = 0;
-	// while (i < j)
-	// {
-	// 	printf("Token %d: %s\n", i, split.argv[i]);
-	// 	i++;
-	// }
+	i = 0;
+	while (i < j)
+	{
+		printf("Token %d: %s\n", i, split.argv[i]);
+		i++;
+	}
 	return (split.argv);
 }
 
