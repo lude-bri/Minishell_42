@@ -97,7 +97,6 @@ int	exec_redirs(t_tkn *tokens, t_msh *msh)
 		if (tkn->type == TKN_IN || tkn->type == TKN_OUT
 			|| tkn->type == TKN_APPEND)
 		{
-			// redirs(tokens, msh);
 			redirs_2(tokens, msh);
 		}
 		tkn = tkn->next;

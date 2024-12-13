@@ -157,8 +157,25 @@ int	update_existing_variable(char ***envp, t_exp *exp)
 	return (2);
 }
 
+static int	is_alpha(const char *str)
+{
+	int	i;
+	
+	i = 0;
+	while (str[i])
+	{
+		if ((str[i] >= 'a' && str[i] <= 'z') 
+			|| (str[i] >= 'A' && str[i] <= 'Z'))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	parse_variable(const char *new_var, t_exp *exp)
 {
+	if (is_alpha(new_var))
+		return (1);
 	exp->len = ft_strlen(new_var);
 	exp->no_sign = ft_strnstr(new_var, "", exp->len);
 	exp->equal_sign = ft_strnstr(new_var, "=", exp->len);

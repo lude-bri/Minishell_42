@@ -24,11 +24,13 @@ char	*expand_var(const char *input, int *i, t_msh *msh)
 
 	len = 0;
 	start = *i + 1;
+	if (!input[1])
+		return (NULL);
 	if (input[start] == '?')
 	{
-		printf("Current msh->exit_status before expanding $?: %d\n", msh->exit_status);
+		// printf("Current msh->exit_status before expanding $?: %d\n", msh->exit_status);
 		result = ft_itoa(msh->exit_status);
-		printf("Expanding $?: %s\n", result);
+		// printf("Expanding $?: %s\n", result);
 		*i += 2;
 		return (result); 
 	}
@@ -198,7 +200,7 @@ char	**split_input(const char *input, t_msh *msh)
 	char		*expanded;
 
 	split.number_words = count_words(input);
-	printf("Token count: %d\n", split.number_words);
+	// printf("Token count: %d\n", split.number_words);
 	split.argv = (char **)malloc(sizeof(char *) * (split.number_words + 1));
 	i = 0;
 	j = 0;
@@ -222,11 +224,24 @@ char	**split_input(const char *input, t_msh *msh)
 		}
 		else if (input[i] == '$')
 		{
-			expanded = expand_var(input, &i, msh);
-			if (expanded)
+			if (input[i + 1] == '>')
 			{
-				split.argv[j++] = ft_strdup(expanded);
-				free(expanded);	
+				syntax_check_redirs(msh, NULL);
+				break ;
+			}
+			if (input[i + 1] == '\0')
+			{
+				split.argv[j++] = ft_strdup("$");
+				i++;
+			}
+			else
+			{
+				expanded = expand_var(input, &i, msh);
+				if (expanded)
+				{
+					split.argv[j++] = ft_strdup(expanded);
+					free(expanded);	
+				}
 			}
 		}
 		else if (input[i] == '|')
@@ -279,12 +294,12 @@ char	**split_input(const char *input, t_msh *msh)
 		}
 	}
 	split.argv[j] = NULL;
-	i = 0;
-	while (i < j)
-	{
-		printf("Token %d: %s\n", i, split.argv[i]);
-		i++;
-	}
+	// i = 0;
+	// while (i < j)
+	// {
+	// 	printf("Token %d: %s\n", i, split.argv[i]);
+	// 	i++;
+	// }
 	return (split.argv);
 }
 

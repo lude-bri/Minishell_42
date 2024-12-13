@@ -40,7 +40,8 @@ int	exec_pipe(t_msh *msh, t_tkn *tokens)
 	pid_t	pid_left;
 	pid_t	pid_right;
 	int		heredoc_fd;
-	int		status;
+	int		status_left;
+	int		status_right;
 
 	if (verify_pipe(tokens) == FAILURE)
 		return (SUCCESS);
@@ -64,7 +65,7 @@ int	exec_pipe(t_msh *msh, t_tkn *tokens)
 				apply_pipe(tokens->next->left, msh, fd, heredoc_fd);
 				free_arg(msh->envp);
 				free_msh(msh->cmds, msh, tokens->left);
-				exit(EXIT_SUCCESS);
+				exit(msh->exit_status);
 			}
 			else
 			{
@@ -73,13 +74,13 @@ int	exec_pipe(t_msh *msh, t_tkn *tokens)
 				apply_pipe(tokens->left, msh, fd, heredoc_fd);
 				free_arg(msh->envp);
 				free_msh(msh->cmds, msh, tokens->left);
-				exit(EXIT_SUCCESS);
+				exit(msh->exit_status);
 			}
         }
 		apply_pipe(tokens->left, msh, fd, 1);
 		free_arg(msh->envp);
 		free_msh(msh->cmds, msh, tokens->left);
-		exit(EXIT_SUCCESS);
+		exit(msh->exit_status);
 	}
 	pid_right = fork();
 	if (pid_right == -1)
@@ -93,10 +94,24 @@ int	exec_pipe(t_msh *msh, t_tkn *tokens)
 		apply_pipe(tokens->right, msh, fd, 0);
 		free_arg(msh->envp);
 		free_msh(msh->cmds, msh, tokens->left);
-		exit(EXIT_SUCCESS);
+		exit(msh->exit_status);
 	}
 	ft_close(fd);
-	waitpid(pid_left, &status, 0);
-	waitpid(pid_right, &status, 0);
-	return (SUCCESS);
+	waitpid(pid_left, &status_left, 0);
+	waitpid(pid_right, &status_right, 0);
+	// Debugging: Print statuses
+
+    // Use the exit status of the rightmost command
+    if (WIFEXITED(status_right)) // Check if right child exited normally
+    {
+        msh->exit_status = WEXITSTATUS(status_right);
+    }
+    else if (WIFSIGNALED(status_right)) // Check if right child terminated by a signal
+    {
+        msh->exit_status = 128 + WTERMSIG(status_right);
+    }
+
+    // Debugging: Print the final exit status
+
+    return (SUCCESS);
 }

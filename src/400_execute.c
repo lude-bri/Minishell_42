@@ -38,15 +38,13 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 	fd_out = dup(STDOUT_FILENO);
 	exec_redirs(tokens, msh);
 	if (tokens->cmd_type == CMD_CD)
-		msh_cd(tokens->cmdargs);
+		msh->exit_status = msh_cd(tokens->cmdargs);
 	else if (tokens->cmd_type == CMD_ENV)
 		msh_env(msh->envp);
 	else if (tokens->cmd_type == CMD_PWD)
 		msh_pwd();
 	else if (tokens->cmd_type == CMD_ECHO)
-		// msh_echo(tokens->cmdargs);
 		msh_echo(tokens->cmdargs, msh);
-		// msh_echo(msh, tokens);
 	else if (tokens->cmd_type == CMD_EXIT)
 		msh_exit(tokens->cmdargs, msh);
 	else if (tokens->cmd_type == CMD_UNSET)
@@ -56,7 +54,10 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 		if (msh->cmds->av[1] 
 			&& ((ft_strcmp(msh->cmds->av[1], ">") != 0)
 			&& (ft_strcmp(msh->cmds->av[1], ">>") != 0)))
-			msh_export(&(msh->envp), msh->cmds->av[1]);
+		{		
+			if (msh_export(&(msh->envp), msh->cmds->av[1]) == 1)
+				msh->exit_status = 1;
+		}
 		else
 			msh_export_no_var(msh->envp);
 	}
@@ -86,7 +87,20 @@ int exec_exe(t_tkn *tokens, t_msh *msh)
         exec_redirs(tokens, msh);
         execute(msh, tokens);
     }
-    waitpid(pid, &status, 0);
+    else if (pid > 0) // Parent process
+    {
+        waitpid(pid, &status, 0);
+        if (WIFEXITED(status)) // Check if child exited normally
+            msh->exit_status = WEXITSTATUS(status); // Update exit status
+        else if (WIFSIGNALED(status)) // Handle signals (if needed)
+            msh->exit_status = 128 + WTERMSIG(status); // Signal-based exit
+    }
+    else // Fork failed
+    {
+        perror("fork");
+        msh->exit_status = 1; // Indicate failure
+    }
+    // waitpid(pid, &status, 0);
     return (SUCCESS);
 }
 
@@ -111,7 +125,7 @@ static void	exec_special(t_tkn *tokens, t_msh *msh)
 			free_arg(msh->cmds->av);
 			free_msh(msh->cmds, msh, tokens);
 			free_array(msh->envp, 0);
-			exit(127);
+			exit(126);
 		}
 }
 
@@ -126,7 +140,7 @@ void	execute(t_msh *msh, t_tkn *tokens)
 	args = build_args(tokens);
 	if (!path)
 	{
-		printf("%s: command not found\n", tokens->cmdargs[0]);
+		printf("%s: command not found\n", args[0]); 
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
 		free_arg(args);
@@ -139,7 +153,7 @@ void	execute(t_msh *msh, t_tkn *tokens)
 		free_arg(args);
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
-		exit(127);
+		exit(126);
 	}
 }
 
