@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:49:02 by luigi             #+#    #+#             */
-/*   Updated: 2024/12/11 23:48:37 by mde-agui         ###   ########.fr       */
+/*   Updated: 2024/12/14 19:33:52 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,14 +162,19 @@ static int	is_alpha(const char *str)
 	int	i;
 	
 	i = 0;
+	if (str[i] == '=')
+		return (1);
 	while (str[i])
 	{
 		if ((str[i] >= 'a' && str[i] <= 'z') 
 			|| (str[i] >= 'A' && str[i] <= 'Z'))
-			return (0);
-		i++;
+			i++;
+		else if (str[i] == '+' || str[i] == '=' || (str[i] == '-' && str[i + 1] == '='))
+			break ;
+		else
+			return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int	parse_variable(const char *new_var, t_exp *exp)
