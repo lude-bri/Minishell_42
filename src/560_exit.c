@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:48:51 by luigi             #+#    #+#             */
-/*   Updated: 2024/10/31 19:01:57 by mde-agui         ###   ########.fr       */
+/*   Updated: 2024/12/14 18:37:05 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int	is_letter(const char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!ft_isalpha(str[i]))
-			return (0);
+		if (ft_isalpha(str[i]))
+			return (1);
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 int	msh_exit(char **argv, t_msh *msh)
@@ -116,7 +116,6 @@ static int	verify_arg(char **argv, t_msh *msh)
 	}
 	return (msh->exit_status);
 }
-
 
 
 
