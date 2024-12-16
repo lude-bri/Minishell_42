@@ -1,14 +1,14 @@
-==5778== Memcheck, a memory error detector
-==5778== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==5778== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==5778== Command: ./minishell
-==5778== Parent PID: 4359
-==5778== 
-==5778== (action at startup) vgdb me ... 
-==5778== 
-==5778== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==5778==   /path/to/gdb ./minishell
-==5778== and then give GDB the following command
-==5778==   target remote | /usr/bin/vgdb --pid=5778
-==5778== --pid is optional if only one valgrind process is running
-==5778== 
+==649638== Memcheck, a memory error detector
+==649638== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==649638== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==649638== Command: ./minishell
+==649638== Parent PID: 647052
+==649638== 
+==649638== (action at startup) vgdb me ... 
+==649638== 
+==649638== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==649638==   /path/to/gdb ./minishell
+==649638== and then give GDB the following command
+==649638==   target remote | /usr/bin/vgdb --pid=649638
+==649638== --pid is optional if only one valgrind process is running
+==649638== 

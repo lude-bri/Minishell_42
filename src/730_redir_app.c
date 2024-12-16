@@ -12,18 +12,42 @@
 
 #include "../includes/minishell.h"
 
-void	redir_append(t_tkn *tokens, t_msh *msh)
+void redir_append(t_tkn *tokens, t_msh *msh)
 {
-	int		fd;
+    int fd;
 
-	tokens = tokens->next;
-	fd = open(tokens->name, O_WRONLY | O_CREAT | O_APPEND, 0664);
-	if (fd < 0)
-	{
-		perror(tokens->name);
-		free_msh(msh->cmds, msh, tokens);
-		exit(EXIT_FAILURE);
-	}
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
+    tokens = tokens->next->next; // Move to the filename token
+    fd = open(tokens->name, O_WRONLY | O_CREAT | O_APPEND, 0664);
+    if (fd < 0)
+    {
+        perror(tokens->name);
+        free_msh(msh->cmds, msh, tokens);
+        exit(EXIT_FAILURE);
+    }
+    if (dup2(fd, STDOUT_FILENO) < 0)
+    {
+        perror("dup2");
+        free_msh(msh->cmds, msh, tokens);
+        exit(EXIT_FAILURE);
+    }
+    close(fd);
 }
+
+
+
+
+// void	redir_append(t_tkn *tokens, t_msh *msh)
+// {
+// 	int		fd;
+//
+// 	tokens = tokens->next;
+// 	fd = open(tokens->name, O_WRONLY | O_CREAT | O_APPEND, 0664);
+// 	if (fd < 0)
+// 	{
+// 		perror(tokens->name);
+// 		free_msh(msh->cmds, msh, tokens);
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	dup2(fd, STDOUT_FILENO);
+// 	close(fd);
+// }

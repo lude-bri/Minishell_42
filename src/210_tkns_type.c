@@ -13,7 +13,7 @@
 #include "../includes/minishell.h"
 
 static t_tkn	*tkn_new(t_msh *msh, char *content);
-static void		assign_tkn(t_tkn *token);
+static void		assign_tkn(t_tkn *token, char **av);
 static void		verify_tkn_cmd(t_tkn *token);
 
 static int	token_len(t_tkn *tokens)
@@ -33,6 +33,7 @@ static int	token_len(t_tkn *tokens)
 t_tkn	*tokenizer(t_msh *msh, char **av)
 {
 	int		i;
+	char	**find;
 	t_tkn	*new_token;
 	t_tkn	*token;
 	t_tkn	*current;
@@ -40,10 +41,11 @@ t_tkn	*tokenizer(t_msh *msh, char **av)
 	i = -1;
 	token = NULL;
 	current = NULL;
+	find = av;
 	while (av[++i])
 	{
 		new_token = tkn_new(msh, av[i]);
-		assign_tkn(new_token);
+		assign_tkn(new_token, find++);
 		if (new_token->type == TKN_CMD)
 			verify_tkn_cmd(new_token);
 		if (!token)
@@ -75,7 +77,7 @@ static t_tkn	*tkn_new(t_msh *msh, char *content)
 }
 
 //verify and assign the token type
-static void	assign_tkn(t_tkn *token)
+static void	assign_tkn(t_tkn *token, char **av)
 {
 	if (token->name[0] == ' ' || token->name[0] == '\n'
 		|| token->name[0] == '\v'
@@ -86,7 +88,7 @@ static void	assign_tkn(t_tkn *token)
 		token->type = TKN_NULL;
 	else if (token->name[0] == '|' && token->name[1] != '\"')
 		token->type = TKN_PIPE;
-	else if (token->name[0] == '>' && token->name[1] == '>' && token->name[2] != '\"')
+	else if (*av[0] == '>' && *av[1] == '>' && token->name[2] != '\"')
 		token->type = TKN_APPEND;	
 	else if (token->name[0] == '<' && token->name[1] == '<' && token->name[2] != '\"')
 		token->type = TKN_HEREDOC;
