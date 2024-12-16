@@ -1,5 +1,79 @@
-hello 
-hello 
-hello 
-hello 
-hello 
+example
+gdb.txt
+includes
+kill_minishell.sh
+lib
+Makefile
+minishell
+minishell_tester
+out
+README.md
+src
+sup
+test
+example
+gdb.txt
+includes
+kill_minishell.sh
+lib
+Makefile
+minishell
+minishell_tester
+out
+README.md
+src
+sup
+test
+example
+gdb.txt
+includes
+kill_minishell.sh
+lib
+Makefile
+minishell
+minishell_tester
+out
+README.md
+src
+sup
+test
+total 176
+drwxr-xr-x 10 lude-bri 2023_porto   4096 Dec 16 16:58 .
+drwxr-xr-x 11 lude-bri 2023_porto    190 Dec 16 16:20 ..
+drwxr-xr-x  2 lude-bri 2023_porto   4096 Dec 16 16:57 .build
+-rw-r--r--  1 lude-bri 2023_porto     60 Dec 10 09:06 example
+-rw-r--r--  1 lude-bri 2023_porto    618 Dec 16 11:42 gdb.txt
+drwxr-xr-x  8 lude-bri 2023_porto   4096 Dec 16 16:57 .git
+-rw-r--r--  1 lude-bri 2023_porto     18 Dec 12 10:49 .gitignore
+drwxr-xr-x  2 lude-bri 2023_porto     25 Dec 12 15:29 includes
+-rwxr-xr-x  1 lude-bri 2023_porto    976 Dec 10 09:06 kill_minishell.sh
+drwxr-xr-x  3 lude-bri 2023_porto     19 Dec 16 16:57 lib
+-rw-r--r--  1 lude-bri 2023_porto  10780 Dec 12 10:19 Makefile
+-rwxr-xr-x  1 lude-bri 2023_porto 116288 Dec 16 16:57 minishell
+drwxr-xr-x  3 lude-bri 2023_porto   4096 Dec 13 19:46 minishell_tester
+-rwxr-xr-x  1 lude-bri 2023_porto    330 Dec 16 16:58 out
+-rw-r--r--  1 lude-bri 2023_porto     20 Dec 10 09:06 README.md
+drwxr-xr-x  2 lude-bri 2023_porto   4096 Dec 16 16:57 src
+-rw-r--r--  1 lude-bri 2023_porto    183 Dec 16 11:43 sup
+drwxr-xr-x  2 lude-bri 2023_porto     82 Dec 16 16:57 .temp
+drwxr-xr-x  2 lude-bri 2023_porto     26 Dec 16 11:39 test
+total 176
+drwxr-xr-x 10 lude-bri 2023_porto   4096 Dec 16 16:58 .
+drwxr-xr-x 11 lude-bri 2023_porto    190 Dec 16 16:20 ..
+drwxr-xr-x  2 lude-bri 2023_porto   4096 Dec 16 16:57 .build
+-rw-r--r--  1 lude-bri 2023_porto     60 Dec 10 09:06 example
+-rw-r--r--  1 lude-bri 2023_porto    618 Dec 16 11:42 gdb.txt
+drwxr-xr-x  8 lude-bri 2023_porto   4096 Dec 16 16:57 .git
+-rw-r--r--  1 lude-bri 2023_porto     18 Dec 12 10:49 .gitignore
+drwxr-xr-x  2 lude-bri 2023_porto     25 Dec 12 15:29 includes
+-rwxr-xr-x  1 lude-bri 2023_porto    976 Dec 10 09:06 kill_minishell.sh
+drwxr-xr-x  3 lude-bri 2023_porto     19 Dec 16 16:57 lib
+-rw-r--r--  1 lude-bri 2023_porto  10780 Dec 12 10:19 Makefile
+-rwxr-xr-x  1 lude-bri 2023_porto 116288 Dec 16 16:57 minishell
+drwxr-xr-x  3 lude-bri 2023_porto   4096 Dec 13 19:46 minishell_tester
+-rwxr-xr-x  1 lude-bri 2023_porto   1510 Dec 16 16:58 out
+-rw-r--r--  1 lude-bri 2023_porto     20 Dec 10 09:06 README.md
+drwxr-xr-x  2 lude-bri 2023_porto   4096 Dec 16 16:57 src
+-rw-r--r--  1 lude-bri 2023_porto    183 Dec 16 11:43 sup
+drwxr-xr-x  2 lude-bri 2023_porto     82 Dec 16 16:57 .temp
+drwxr-xr-x  2 lude-bri 2023_porto     26 Dec 16 11:39 test

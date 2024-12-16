@@ -62,7 +62,10 @@ void	redirs_2(t_tkn *tokens, t_msh *msh)
 			else if (tokens->type == TKN_OUT)
 				redir_out(tokens, msh);
 			else if (tokens->type == TKN_APPEND)
+			{
 				redir_append(tokens, msh);
+				tokens->next->next->type = TKN_REDIR_ARG;
+			}
 			if (tokens->next != NULL)
 			{
 				if (tokens->next->type == TKN_PIPE)
@@ -81,6 +84,34 @@ void	redirs_2(t_tkn *tokens, t_msh *msh)
 	msh->cmds->av = arg;
 	msh->flag_redir = true;
 }
+
+
+// int exec_redirs(t_tkn *tokens, t_msh *msh)
+// {
+//     t_tkn *tkn;
+//
+//     tkn = tokens;
+//     while (tkn)
+//     {
+//         if (tkn->type == TKN_HEREDOC)
+//         {
+//             heredoc(tokens, msh, tkn->next->name, 0);
+//             return (SUCCESS);
+//         }
+//         if (tkn->type == TKN_IN || tkn->type == TKN_OUT 
+// 			|| tkn->type == TKN_APPEND)
+//         {
+//             if (tkn->type == TKN_IN)
+//                 redir_in(tkn, msh);
+//             else if (tkn->type == TKN_OUT)
+//                 redir_out(tkn, msh);
+//             else if (tkn->type == TKN_APPEND)
+//                 redir_append(tkn, msh);
+//         }
+//         tkn = tkn->next;
+//     }
+//     return (SUCCESS);
+// }
 
 int	exec_redirs(t_tkn *tokens, t_msh *msh)
 {

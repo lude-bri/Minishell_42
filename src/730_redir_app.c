@@ -12,12 +12,13 @@
 
 #include "../includes/minishell.h"
 
+
 void redir_append(t_tkn *tokens, t_msh *msh)
 {
     int fd;
 
-    tokens = tokens->next->next; // Move to the filename token
-    fd = open(tokens->name, O_WRONLY | O_CREAT | O_APPEND, 0664);
+    tokens = tokens->next->next;
+    fd = open(tokens->name, O_WRONLY | O_CREAT | O_APPEND, 0775);
     if (fd < 0)
     {
         perror(tokens->name);
