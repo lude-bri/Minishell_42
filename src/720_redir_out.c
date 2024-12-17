@@ -22,6 +22,7 @@ void	redir_out(t_tkn *tokens, t_msh *msh)
 	{
 		perror(tokens->name);
 		free_msh(msh->cmds, msh, tokens);
+		free_arg(msh->arg);
 		exit(EXIT_FAILURE);
 	}
 	dup2(fd, STDOUT_FILENO);

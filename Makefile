@@ -192,9 +192,27 @@ sync_shell:			## Test Minishell and Bash with SYNC
 ##@ Debug Rules 
 
 gdb: all $(NAME) $(TEMP_PATH)			## Debug w/ gdb
-	tmux split-window -h "gdb --tui --args ./$(NAME)"
-	tmux resize-pane -L 35 
-	# make get_log
+	get_log:
+	touch gdb.txt
+	@if command -v lnav; then \
+		lnav gdb.txt; \
+	else \
+		tail -f gdb.txt; \
+	fi
+
+get_log:
+	touch gdb.txt
+	@if command -v lnav; then \
+		lnav gdb.txt; \
+	else \
+		tail -f gdb.txt; \
+	fi
+
+vgdb_cmd: $(NAME) $(TEMP_PATH)
+	@printf "target remote | vgdb --pid=" > $(TEMP_PATH)/gdb_commands.txt
+	@printf "$(shell pgrep -f valgrind)" >> $(TEMP_PATH)/gdb_commands.txt
+	@printf "\n" >> $(TEMP_PATH)/gdb_commands.txt
+	@cat .vgdbinit >> $(TEMP_PATH)/gdb_commands.txt
 
 vgdb: all $(NAME) $(TEMP_PATH)			## Debug w/ valgrind (memcheck) & gdb
 	tmux split-window -h "valgrind --vgdb-error=0 --log-file=gdb.txt ./$(NAME) $(ARG)"

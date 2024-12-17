@@ -1,14 +1,197 @@
-==649638== Memcheck, a memory error detector
-==649638== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==649638== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==649638== Command: ./minishell
-==649638== Parent PID: 647052
-==649638== 
-==649638== (action at startup) vgdb me ... 
-==649638== 
-==649638== TO DEBUG THIS PROCESS USING GDB: start GDB like this
-==649638==   /path/to/gdb ./minishell
-==649638== and then give GDB the following command
-==649638==   target remote | /usr/bin/vgdb --pid=649638
-==649638== --pid is optional if only one valgrind process is running
-==649638== 
+==192195== Memcheck, a memory error detector
+==192195== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==192195== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==192195== Command: ./minishell
+==192195== Parent PID: 188633
+==192195== 
+==192195== (action at startup) vgdb me ... 
+==192195== 
+==192195== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==192195==   /path/to/gdb ./minishell
+==192195== and then give GDB the following command
+==192195==   target remote | /usr/bin/vgdb --pid=192195
+==192195== --pid is optional if only one valgrind process is running
+==192195== 
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showi==191319== 
+==191319== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==191319==   /path/to/gdb ./minishell
+==191319== and then give GDB the following command
+==191319==   target remote | /usr/bin/vgdb --pid=191319
+==191319== --pid is optional if only one valgrind process is running
+==191319== 
+==191319== 
+==191319== HEAP SUMMARY:
+==191319==     in use at exit: 233,496 bytes in 454 blocks
+==191319==   total heap usage: 645 allocs, 191 frees, 249,055 bytes allocated
+==191319== 
+==191319== LEAK SUMMARY:
+==191319==    definitely lost: 0 bytes in 0 blocks
+==191319==    indirectly lost: 0 bytes in 0 blocks
+==191319==      possibly lost: 0 bytes in 0 blocks
+==191319==    still reachable: 233,496 bytes in 454 blocks
+==191319==         suppressed: 0 bytes in 0 blocks
+==191319== Rerun with --leak-check=full to see details of leaked memory
+==191319== 
+==191319== For lists of detected and suppressed errors, rerun with: -s
+==191319== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+cumentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++target remote | vgdb --pid=191319 191579 192195
+sending command 191579 192195 to pid 191319
+.temp/gdb_commands.txt:1: Error in sourced command file:
+Remote communication error.  Target disconnected.: Connection reset by peer.
++q
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+No symbol table is loaded.  Use the "file" command.
+Make breakpoint pending on future shared library load? (y or [n]) [answered N; input not from terminal]
++run
+.gdbinit:58: Error in sourced command file:
+No executable file specified.
+Use the "file" or "exec-file" command.
++q
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc948, envp=0x7fffffffc958) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+maintenance internal-warning -- Give GDB an internal warning.
+maintenance packet -- Send an arbitrary packet to a remote target.
+maintenance print -- Maintenance command for printing GDB internal state.
+maintenance selftest -- Run gdb's unit tests.
+maintenance set -- Set GDB internal variables used by the GDB maintainer.
+maintenance show -- Show GDB internal variables used by the GDB maintainer.
+maintenance space -- Set the display of space usage.
+maintenance test-options -- Generic command for testing the options infrastructure.
+maintenance time -- Set the display of time usage.
+maintenance translate-address -- Translate a section name and address to a symbol.
+maintenance undeprecate -- Undeprecate a command (for testing purposes).
+maintenance with -- Like "with", but works with "maintenance set" variables.
+
+Type "help maintenance" followed by maintenance subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++n
++n
++s
+msh_loop (msh=0x7fffffffc7a0) at src/100_main.c:33
++n
++n
++n
++n
++ref
++n
++n
++s
+to_execute (msh=0x7fffffffc7a0, tokens=0x447e70) at src/400_execute.c:17
++n
++n
++n
++s
+exec_one (msh=0x7fffffffc7a0, tokens=0x447e70) at src/420_exec_one.c:53
++n
++p *tokens-type
+No symbol "type" in current context.
++p *tokens->type
+Attempt to take contents of a non-pointer value.
++p tokens->type
+$1 = TKN_IN
++q
