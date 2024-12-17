@@ -276,9 +276,6 @@ int		msh_cd(char **argv, char **envp);
 int		find_env_var(char **envp, const char *var);
 void	update_env_var(char **envp, const char *var, const char *value);
 
-
-
-
 //520_pwd.c
 int		msh_pwd(void);
 
@@ -299,7 +296,8 @@ int		msh_env(char **envp);
 
 //560_exit.c
 int		is_num(const char *str);
-int		msh_exit(char **argv, t_msh *msh);
+// int		msh_exit(char **argv, t_msh *msh);
+int		msh_exit(char **argv, t_msh *msh, t_tkn *tokens);
 
 /* **************** */
 /*      600        */

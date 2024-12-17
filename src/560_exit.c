@@ -13,8 +13,8 @@
 #include "../includes/minishell.h"
 
 
-static int	exit_msh(char **argv, t_msh *msh);
-static int	verify_arg(char **argv, t_msh *msh);
+static int	exit_msh(char **argv, t_msh *msh, t_tkn *tokens);
+static int	verify_arg(char **argv, t_msh *msh, t_tkn *tokens);
 
 int	is_num(const char *str)
 {
@@ -46,34 +46,59 @@ int	is_letter(const char *str)
 	return (0);
 }
 
-int	msh_exit(char **argv, t_msh *msh)
+int	msh_exit(char **argv, t_msh *msh, t_tkn *tokens)
 {
 	if (msh->cmd_count >= 2)
-		msh->exit_status = verify_arg(argv, msh);
-	msh->exit_status = exit_msh(argv, msh);
+		msh->exit_status = verify_arg(argv, msh, tokens);
+	msh->exit_status = exit_msh(argv, msh, tokens);
 	return (msh->exit_status);
 }
 
-static int	exit_msh(char **argv, t_msh *msh)
-{	
-	printf("exit\n");
-	free_arg(argv);
-	free_array(msh->envp, 0);
-	free(msh->cmds);
-	free(msh->line);
-	free_vector(&msh->tokens);
-	exit(msh->exit_status);
+static int exit_msh(char **argv, t_msh *msh, t_tkn *tokens)
+{
+    printf("exit\n");
+
+	(void)argv;
+    // if (argv != NULL)
+    // {
+    //     free_arg(argv);      // Free argv
+    //     argv = NULL;         // Prevent dangling pointer
+    // }
+    // if (msh->cmds && msh->cmds->av)
+    // {
+    //     free_arg(msh->cmds->av);  // Free msh->cmds->av separately
+    //     msh->cmds->av = NULL;
+    // }
+    free_array(msh->envp, 0); // Free envp
+    free_msh(msh->cmds, msh, tokens);
+    
+    exit(msh->exit_status);
 }
+
+
+
+// static int	exit_msh(char **argv, t_msh *msh, t_tkn *tokens)
+// {	
+// 	printf("exit\n");
+// 	free_arg(argv);
+// 	free_array(msh->envp, 0);
+// 	free_msh(msh->cmds, msh, tokens);
+// 	// free_arg(msh->cmds->av);
+// 	// free(msh->cmds);
+// 	// free(msh->line);
+// 	// free_vector(&msh->tokens);
+// 	exit(msh->exit_status);
+// }
 
 static int	is_sign(char *argv)
 {
 	return ((ft_strncmp(argv, "+", 1) == 0) || (ft_strncmp(argv, "-", 1) == 0));
 }
 
-static int	verify_arg(char **argv, t_msh *msh)
+static int	verify_arg(char **argv, t_msh *msh, t_tkn *tokens)
 {
 	if (!argv[1])
-		msh->exit_status = exit_msh(argv, msh);	
+		msh->exit_status = exit_msh(argv, msh, tokens);	
 	if (msh->cmd_count == 2)
 	{
 		if (is_letter(argv[1]))
