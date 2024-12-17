@@ -28,6 +28,8 @@ void	init_struct(t_msh *msh)
 {
 	msh->path = NULL;
 	msh->cmd_count = 0;
+	msh->flag_redir = false;
+	msh->arg = NULL;
 }
 
 void	init_vector(t_vector *vector, size_t size)

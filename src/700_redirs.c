@@ -45,11 +45,11 @@ void	redirs(t_tkn *tokens, t_msh *msh)
 //em um char** para ser enviado para o execve
 void	redirs_2(t_tkn *tokens, t_msh *msh)
 {
-	char	**arg;
+	// char	**arg;
 	int			i;
 
 	i = 0;
-	arg = malloc(sizeof(char *) * 100);
+	msh->arg = malloc(sizeof(char *) * (tokens->len + 1));
 	while (tokens)
 	{
 		if (tokens->type == TKN_PIPE)
@@ -76,12 +76,13 @@ void	redirs_2(t_tkn *tokens, t_msh *msh)
 		}
 		if (tokens->type == TKN_CMD && tokens->type != TKN_REDIR_ARG)
 		{
-			arg[i] = ft_strdup(tokens->name);
+			msh->arg[i] = ft_strdup(tokens->name);
 			i++;
 		}
 		tokens = tokens->next;
 	}
-	msh->cmds->av = arg;
+	msh->arg[i] = NULL;
+	msh->cmds->av = msh->arg;
 	msh->flag_redir = true;
 }
 
@@ -113,6 +114,36 @@ void	redirs_2(t_tkn *tokens, t_msh *msh)
 //     return (SUCCESS);
 // }
 
+static int	redir_found(t_tkn *tokens)
+{
+	return ((tokens->type == TKN_IN || tokens->type == TKN_OUT
+		|| tokens->type == TKN_APPEND));
+}
+
+// int exec_redirs(t_tkn *tokens, t_msh *msh)
+// {
+//     t_tkn *tkn;
+//
+//     tkn = tokens;
+//     while (tkn)
+//     {
+//         if (tkn->type == TKN_HEREDOC)
+//         {
+//             heredoc(tokens, msh, tkn->next->name, 0);
+//             if (tkn->next)
+//                 tkn = tkn->next;
+//         }
+//         else if (tkn->type == TKN_IN || tkn->type == TKN_OUT || tkn->type == TKN_APPEND)
+//         {
+//             redirs_2(tkn, msh);
+//             if (tkn->next && tkn->next->type == TKN_REDIR_ARG)
+//                 tkn = tkn->next;
+//         }
+//         tkn = tkn->next;
+//     }
+//     return (SUCCESS);
+// }
+
 int	exec_redirs(t_tkn *tokens, t_msh *msh)
 {
 	t_tkn	*tkn;
@@ -120,7 +151,7 @@ int	exec_redirs(t_tkn *tokens, t_msh *msh)
 	tkn = tokens;
 	while (tkn)
 	{
-		if (tkn->type == TKN_HEREDOC)
+		if (tkn->type == TKN_HEREDOC && !redir_found(tkn))
 		{
 			heredoc(tokens, msh, tkn->next->name, 0);
 			return (SUCCESS);

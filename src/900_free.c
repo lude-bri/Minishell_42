@@ -21,11 +21,16 @@ void	free_vector(t_vector *vector)
 	while (i < vector->count)
 	{
 		token = vector->buffer[i];
-		free(token->name);
-		free(token);
+		if (token != NULL)
+		{
+			free(token->name);
+			free(token);
+			token = NULL;
+		}
 		i++;
 	}
-	free(vector->buffer);
+	if (vector->buffer != NULL)
+		free(vector->buffer);
 	vector->buffer = NULL;
 	vector->count = 0;
 	vector->size = 0;

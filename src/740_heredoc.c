@@ -47,9 +47,7 @@ int heredoc_pipe(t_tkn *tokens, t_msh *msh, char *arg, int flag)
         free_msh(msh->cmds, msh, tokens);
         exit(EXIT_FAILURE);
     }
-
     signal(SIGINT, handle_signal);
-
     while (1)
     {
         if (g_heredoc_interrupted)
@@ -132,40 +130,29 @@ void	heredoc(t_tkn *tokens, t_msh *msh, char *arg, int flag)
 		free_msh(msh->cmds, msh, tokens);
 		exit(EXIT_FAILURE);
 	}
-
-	// Configurar o manipulador de sinal para o heredoc
 	signal(SIGINT, handle_signal);
-
 	while (1)
 	{
-		// Verifica se houve interrupção e sai imediatamente
 		if (g_heredoc_interrupted)
 		{
 			close(pipe_fd[0]);
 			close(pipe_fd[1]);
 			free_msh(msh->cmds, msh, tokens);
-			exit(130); // Código de saída para SIGINT
+			exit(130);
 		}
-
-		// Lê a entrada do usuário
 		line = readline("> ");
-		if (!line || ft_strcmp(line, arg) == 0) // Verifica fim do heredoc
+		if (!line || ft_strcmp(line, arg) == 0)
 			break;
-
-		// Escreve a linha no pipe
 		write(pipe_fd[1], line, ft_strlen(line));
 		write(pipe_fd[1], "\n", 1);
-		free(line); // Libera a linha lida
+		free(line);
 		line = NULL;
 	}
-
-	free(line); // Libera a linha caso tenha sido alocada
+	free(line);
 	close(pipe_fd[1]);
 	if (flag == 0) //if heredoc is in the beginning, dont dup2
 		dup2(pipe_fd[0], STDIN_FILENO);
 	close(pipe_fd[0]);
-
-	// Restaurar sinais originais
 	signal(SIGINT, SIG_DFL);
 }
 

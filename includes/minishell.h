@@ -24,7 +24,7 @@
 //Max
 # define INT_MAX 2147483647 
 # define INT_MIN -2147483647
-
+# define PATH_MAX 4096
 //Error
 # define INIT_ERROR			"msh: Init Error\n"
 # define ENV_INIT_ERROR		"msh: Env Init Error\n"
@@ -137,6 +137,7 @@ typedef struct s_msh
 	t_tkn		*tree_head; //binary tree head to execute
 	char		**envp;
 	char		**path;
+	char		**arg;
 
 	char		*user;
 	char		*home;
@@ -271,7 +272,12 @@ int		msh_echo(char **argv, t_msh *msh);
 // int		msh_echo(t_msh *msh, t_tkn *tokens);
 
 //510_cd.c
-int		msh_cd(char **argv);
+int		msh_cd(char **argv, char **envp);
+int		find_env_var(char **envp, const char *var);
+void	update_env_var(char **envp, const char *var, const char *value);
+
+
+
 
 //520_pwd.c
 int		msh_pwd(void);

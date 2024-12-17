@@ -106,25 +106,25 @@ int msh_cd(char **argv, char **envp)
     return (0);
 }
 
-int	msh_cd(char **argv)
-{
-	if (argv[1] == NULL)
-	{
-		printf("cd: missing argument\n");
-		return (1);
-	}
-	else if (argv[2])
-	{
-		printf("msh: cd: too many arguments\n");
-		return (1);
-	}
-	if (chdir(argv[1]) != 0)
-	{
-		perror("msh: cd");
-		return (1);
-	}
-	return (0);
-}
+// int	msh_cd(char **argv)
+// {
+// 	if (argv[1] == NULL)
+// 	{
+// 		printf("cd: missing argument\n");
+// 		return (1);
+// 	}
+// 	else if (argv[2])
+// 	{
+// 		printf("msh: cd: too many arguments\n");
+// 		return (1);
+// 	}
+// 	if (chdir(argv[1]) != 0)
+// 	{
+// 		perror("msh: cd");
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 //
 // static int	change_directory(t_msh *msh, char *path)
 // {

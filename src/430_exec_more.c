@@ -22,7 +22,7 @@ int	exec_more(t_msh *msh, t_tkn *tokens)
 			return (SUCCESS);
 		}
 		if (exec_pipe(msh, tokens) != SUCCESS)
-		 	return (FAILURE);
+			return (FAILURE);
 	}
 	else
 	{

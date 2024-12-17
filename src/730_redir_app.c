@@ -12,7 +12,6 @@
 
 #include "../includes/minishell.h"
 
-
 void redir_append(t_tkn *tokens, t_msh *msh)
 {
     int fd;
@@ -33,9 +32,6 @@ void redir_append(t_tkn *tokens, t_msh *msh)
     }
     close(fd);
 }
-
-
-
 
 // void	redir_append(t_tkn *tokens, t_msh *msh)
 // {

@@ -38,7 +38,7 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 	fd_out = dup(STDOUT_FILENO);
 	exec_redirs(tokens, msh);
 	if (tokens->cmd_type == CMD_CD)
-		msh->exit_status = msh_cd(tokens->cmdargs);
+		msh->exit_status = msh_cd(tokens->cmdargs, msh->envp);
 	else if (tokens->cmd_type == CMD_ENV)
 		msh_env(msh->envp);
 	else if (tokens->cmd_type == CMD_PWD)
