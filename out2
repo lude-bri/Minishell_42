@@ -1,6 +1,8 @@
+<
 >
 example
 gdb.txt
+hi
 includes
 kill_minishell.sh
 lib
@@ -8,6 +10,8 @@ Makefile
 minishell
 minishell_tester
 out
+out1
+out2
 README.md
 src
 sup

@@ -12,6 +12,9 @@
 
 #include "../includes/minishell.h"
 
+static int	find_redir(t_tkn *tokens);
+static int	find_cmd(t_tkn *tokens);
+
 int	syntax_check_pipes(t_msh *msh, t_tkn *tokens)
 {
 	if (tokens->type == TKN_PIPE)
@@ -29,9 +32,45 @@ int	syntax_check_pipes(t_msh *msh, t_tkn *tokens)
 
 int	syntax_check_redirs(t_msh *msh, t_tkn *tokens)
 {
-	(void)tokens;
-	printf("msh: syntax error near unexpected token `newline'\n");
-	msh->exit_status = 2;
+	while (tokens)
+	{
+		if (tokens->type == TKN_IN || tokens->type == TKN_OUT
+			|| tokens->type == TKN_APPEND || tokens->type == TKN_HEREDOC)
+			break ;
+		else
+			tokens = tokens->next;
+	}
+	if (tokens->next == NULL || (find_redir(tokens) == SUCCESS
+		&& find_cmd(tokens) == FAILURE))
+	{
+		printf("msh: syntax error near unexpected token `newline'\n");
+		msh->exit_status = 2;
+		return (FAILURE);
+	}
+	return (SUCCESS);
+}
+
+static int	find_cmd(t_tkn *tokens)
+{
+	while (tokens)
+	{
+		if (tokens->type == TKN_CMD)
+			return (SUCCESS);
+		tokens = tokens->next;
+	}
+	return (FAILURE);
+}
+
+
+static int	find_redir(t_tkn *tokens)
+{
+	while (tokens)
+	{
+		if (tokens->type == TKN_IN || tokens->type == TKN_OUT
+			|| tokens->type == TKN_APPEND || tokens->type == TKN_HEREDOC)
+			return (SUCCESS);
+		tokens = tokens->next;
+	}
 	return (FAILURE);
 }
 
@@ -39,9 +78,11 @@ int	syntax_check(t_msh *msh, t_tkn *tokens)
 {
 	if (tokens->type == TKN_PIPE)
 		syntax_check_pipes(msh, tokens);
-	else if ((tokens->type == TKN_IN || tokens->type == TKN_OUT
-		|| tokens->type == TKN_HEREDOC)
-		&& tokens->next == NULL)
-		syntax_check_redirs(msh, tokens);
+	// else if ((tokens->type == TKN_IN || tokens->type == TKN_OUT
+	// 	|| tokens->type == TKN_HEREDOC)
+	// 	&& tokens->next == NULL)
+	else if (find_redir(tokens) == SUCCESS)
+		if (syntax_check_redirs(msh, tokens) != SUCCESS)
+			return (FAILURE);
 	return (SUCCESS);
 }

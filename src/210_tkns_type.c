@@ -88,8 +88,15 @@ static void	assign_tkn(t_tkn *token, char **av)
 		token->type = TKN_NULL;
 	else if (token->name[0] == '|' && token->name[1] != '\"')
 		token->type = TKN_PIPE;
-	else if (*av[0] == '>' && *av[1] == '>' && token->name[2] != '\"')
+	// else if (*av[0] == '>' && *av[1] == '>' && token->name[2] != '\"')
+	// 		token->type = TKN_APPEND;
+	else if (*av[0] == '>' && av[1] != NULL)
+	{	
+		if (*av[1] == '>')
 			token->type = TKN_APPEND;
+		else
+			token->type = TKN_OUT;
+	}
 	// if (av[1] != NULL)
 	// {		
 	// 	if (*av[0] == '>' && *av[1] == '>')

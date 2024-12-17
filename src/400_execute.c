@@ -44,12 +44,11 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 	else if (tokens->cmd_type == CMD_PWD)
 		msh_pwd();
 	else if (tokens->cmd_type == CMD_ECHO)
-		msh_echo(tokens->cmdargs, msh);
+		msh_echo(msh->cmds->av, msh);
 	else if (tokens->cmd_type == CMD_EXIT)
-		// msh_exit(tokens->cmdargs, msh);
 		msh_exit(tokens->cmdargs, msh, tokens);
 	else if (tokens->cmd_type == CMD_UNSET)
-		msh_unset(tokens->cmdargs, &(msh->envp));
+		msh_unset(msh->cmds->av, &(msh->envp));
 	else if (tokens->cmd_type == CMD_EXPORT)
 	{
 		if (msh->cmds->av[1] 

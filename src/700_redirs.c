@@ -82,7 +82,11 @@ void	redirs_2(t_tkn *tokens, t_msh *msh)
 		tokens = tokens->next;
 	}
 	msh->arg[i] = NULL;
+	free_arg(msh->cmds->av);
 	msh->cmds->av = msh->arg;
+	// free_arg(tokens->cmdargs);
+	// tokens->cmdargs = NULL;
+	// tokens->cmdargs = msh->arg;
 	msh->flag_redir = true;
 }
 
