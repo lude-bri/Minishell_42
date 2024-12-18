@@ -47,13 +47,33 @@ static int	is_bi(t_tkn *tokens)
 
 int	exec_one(t_msh *msh, t_tkn *tokens)
 {
-	// char	*path;
-	// int		fd;
+	int		pid;
+	int		status;
 
 	if (tokens->type == TKN_CMD)
 	{
 		if (is_bi(tokens) == SUCCESS)
-			exec_bi(tokens, msh);
+		{
+			if (tokens->cmd_type == CMD_EXIT)
+				exec_bi(tokens, msh);
+			else
+			{
+				pid = fork();
+				if (pid == 0)
+				{
+					exec_bi(tokens, msh);
+					exit(msh->exit_status);
+				}
+				else if (pid > 0)
+				{
+					waitpid(pid, &status, 0);
+					if (WIFEXITED(status)) // Check if child exited normally
+						msh->exit_status = WEXITSTATUS(status); // Update exit status
+					else if (WIFSIGNALED(status)) // Handle signals (if needed)
+						msh->exit_status = 128 + WTERMSIG(status); // Si
+				}
+			}
+		}
 		else
 			exec_exe(tokens, msh);
 	}

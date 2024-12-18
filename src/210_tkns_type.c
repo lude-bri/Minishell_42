@@ -110,10 +110,11 @@ static void	assign_tkn(t_tkn *token, char **av)
 
 	else if (token->name[0] == '<' && av[1] != NULL)
 	{
-		if (*av[1] == '<')
-			token->type = TKN_HEREDOC;
-		else
-			token->type = TKN_IN;
+		token->type = TKN_IN;
+		// if (*av[1] == '<')
+		// 	token->type = TKN_HEREDOC;
+		// else
+		// 	token->type = TKN_IN;
 	}
 
 

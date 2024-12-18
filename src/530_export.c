@@ -206,7 +206,7 @@ int	msh_export(char ***envp, const char *new_var)
 
 	if (parse_variable(new_var, &exp))
 	{
-		printf("Parsing failed\n");
+		perror(" not a valid identifier\n");
 		return (1);
 	}
 	update_var = update_existing_variable(envp, &exp);

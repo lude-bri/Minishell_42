@@ -1,0 +1,12 @@
+example
+gdb.txt
+includes
+kill_minishell.sh
+lib
+Makefile
+minishell
+minishell_tester
+README.md
+src
+sup
+test

@@ -5853,3 +5853,1611 @@ $6 = {
   right = 0x0,
   next = 0x0
 }
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+maintenance internal-warning -- Give GDB an internal warning.
+maintenance packet -- Send an arbitrary packet to a remote target.
+maintenance print -- Maintenance command for printing GDB internal state.
+maintenance selftest -- Run gdb's unit tests.
+maintenance set -- Set GDB internal variables used by the GDB maintainer.
+maintenance show -- Show GDB internal variables used by the GDB maintainer.
+maintenance space -- Set the display of space usage.
+maintenance test-options -- Generic command for testing the options infrastructure.
+maintenance time -- Set the display of time usage.
+maintenance translate-address -- Translate a section name and address to a symbol.
+maintenance undeprecate -- Undeprecate a command (for testing purposes).
+maintenance with -- Like "with", but works with "maintenance set" variables.
+
+Type "help maintenance" followed by maintenance subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++c
+Continuing.
+[Attaching after Thread 0x7ffff7cf3740 (LWP 470963) fork to child process 470978]
+[New inferior 2 (process 470978)]
+[Detaching after fork from parent process 470963]
+[Inferior 1 (process 470963) detached]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Inferior 2 (process 470978) exited with code 0177]
++start
+Temporary breakpoint 2 at 0x4012f0: -qualified main. (2 locations)
+Starting program: /home/lude-bri/CC/Rank3/msh_v4/minishell 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++y
+Undefined command: "y".  Try "help".
++ref
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++n
++ref
++n
++n
++s
+to_execute (msh=0x7fffffffc788, tokens=0x4473d0) at src/400_execute.c:17
++n
++n
++n
++s
+exec_one (msh=0x7fffffffc788, tokens=0x4473d0) at src/420_exec_one.c:53
++n
++n
++s
+exec_exe (tokens=0x4473d0, msh=0x7fffffffc788) at src/400_execute.c:78
++n
++set follow-fork-mode child
++n
+[Attaching after Thread 0x7ffff7cf3740 (LWP 470982) fork to child process 471016]
+[New inferior 3 (process 471016)]
+[Detaching after fork from parent process 470982]
+[Inferior 2 (process 470982) detached]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Switching to Thread 0x7ffff7cf3740 (LWP 471016)]
+exec_exe (tokens=0x4473d0, msh=0x7fffffffc788) at src/400_execute.c:85
++n
++n
+
+Thread 3.1 "minishell" received signal SIGSEGV, Segmentation fault.
+0x00007ffff7dcd3fe in __GI___libc_free (mem=0x6e692f73656c6966) at ./malloc/malloc.c:3368
++ref
++exit
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+maintenance internal-warning -- Give GDB an internal warning.
+maintenance packet -- Send an arbitrary packet to a remote target.
+maintenance print -- Maintenance command for printing GDB internal state.
+maintenance selftest -- Run gdb's unit tests.
+maintenance set -- Set GDB internal variables used by the GDB maintainer.
+maintenance show -- Show GDB internal variables used by the GDB maintainer.
+maintenance space -- Set the display of space usage.
+maintenance test-options -- Generic command for testing the options infrastructure.
+maintenance time -- Set the display of time usage.
+maintenance translate-address -- Translate a section name and address to a symbol.
+maintenance undeprecate -- Undeprecate a command (for testing purposes).
+maintenance with -- Like "with", but works with "maintenance set" variables.
+
+Type "help maintenance" followed by maintenance subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++n
++ref
++n
++n
++s
+to_execute (msh=0x7fffffffc788, tokens=0x448070) at src/400_execute.c:17
++n
++n
++n
++s
+exec_one (msh=0x7fffffffc788, tokens=0x448070) at src/420_exec_one.c:53
++n
++n
++s
+exec_exe (tokens=0x448070, msh=0x7fffffffc788) at src/400_execute.c:78
++n
++set follow-fork-mode child
++ref
++n
+[Attaching after Thread 0x7ffff7cf3740 (LWP 471425) fork to child process 471440]
+[New inferior 2 (process 471440)]
+[Detaching after fork from parent process 471425]
+[Inferior 1 (process 471425) detached]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Switching to Thread 0x7ffff7cf3740 (LWP 471440)]
+exec_exe (tokens=0x448070, msh=0x7fffffffc788) at src/400_execute.c:85
++n
++s
+exec_redirs (tokens=0x448070, msh=0x7fffffffc788) at src/700_redirs.c:155
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++s
+redirs_2 (tokens=0x448070, msh=0x7fffffffc788) at src/700_redirs.c:51
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++disp *tokens
+1: *tokens = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXEC,
+  name = 0x448130 "hi",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x448150
+}
++n
+1: *tokens = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXEC,
+  name = 0x448130 "hi",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x448150
+}
++n
+1: *tokens = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXEC,
+  name = 0x448130 "hi",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x448150
+}
++n
+1: *tokens = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXEC,
+  name = 0x448130 "hi",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x448150
+}
++n
+1: *tokens = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXEC,
+  name = 0x448130 "hi",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x448150
+}
++n
+1: *tokens = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXEC,
+  name = 0x448130 "hi",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x448150
+}
++n
+1: *tokens = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXEC,
+  name = 0x448130 "hi",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x448150
+}
++n
+1: *tokens = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXEC,
+  name = 0x448130 "hi",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x448150
+}
++n
+1: *tokens = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXEC,
+  name = 0x448130 "hi",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x448150
+}
++n
+1: *tokens = {
+  type = TKN_IN,
+  cmd_type = CMD_EXEC,
+  name = 0x4481a0 "<",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x4481c0
+}
++n
+1: *tokens = {
+  type = TKN_IN,
+  cmd_type = CMD_EXEC,
+  name = 0x4481a0 "<",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x4481c0
+}
++n
+1: *tokens = {
+  type = TKN_IN,
+  cmd_type = CMD_EXEC,
+  name = 0x4481a0 "<",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x4481c0
+}
++n
+1: *tokens = {
+  type = TKN_IN,
+  cmd_type = CMD_EXEC,
+  name = 0x4481a0 "<",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x4481c0
+}
++n
+1: *tokens = {
+  type = TKN_IN,
+  cmd_type = CMD_EXEC,
+  name = 0x4481a0 "<",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x4481c0
+}
++s
+redir_in (tokens=0x448150, msh=0x7fffffffc788) at src/710_redir_in.c:19
++n
++n
++n
++n
++ref
++p msh->arg
+$1 = (char **) 0x42ee80
++p *msh->arg
+$2 = 0x448230 "grep"
++n
++n
++n
+
+Thread 2.1 "minishell" received signal SIGSEGV, Segmentation fault.
+0x00007ffff7dcd3fe in __GI___libc_free (mem=0x6e692f656c69665f) at ./malloc/malloc.c:3368
++start
+Temporary breakpoint 2 at 0x4012f0: -qualified main. (2 locations)
+Starting program: /home/lude-bri/CC/Rank3/msh_v4/minishell 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++n
++ref
++n
++n
++s
+to_execute (msh=0x7fffffffc788, tokens=0x448060) at src/400_execute.c:17
++n
++n
++n
++s
+exec_one (msh=0x7fffffffc788, tokens=0x448060) at src/420_exec_one.c:53
++n
++n
++s
+exec_exe (tokens=0x448060, msh=0x7fffffffc788) at src/400_execute.c:78
++n
++set follow-fork-mode child
++ref
++n
+[Attaching after Thread 0x7ffff7cf3740 (LWP 471624) fork to child process 471637]
+[New inferior 3 (process 471637)]
+[Detaching after fork from parent process 471624]
+[Inferior 2 (process 471624) detached]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Switching to Thread 0x7ffff7cf3740 (LWP 471637)]
+exec_exe (tokens=0x448060, msh=0x7fffffffc788) at src/400_execute.c:85
++n
++s
+exec_redirs (tokens=0x448060, msh=0x7fffffffc788) at src/700_redirs.c:155
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++s
+redirs_2 (tokens=0x448060, msh=0x7fffffffc788) at src/700_redirs.c:51
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++s
+redir_in (tokens=0x448140, msh=0x7fffffffc788) at src/710_redir_in.c:19
++n
++n
++n
++n
++ref
++n
++n
++s
+free_arg (argv=0x4139c0) at src/900_free.c:56
++p *argv
+$3 = 0x448220 "grep"
++p argv[0]
+$4 = 0x448220 "grep"
++p argv[1]
+$5 = 0x448240 "hi"
++p argv[2]
+$6 = 0x666e692f656c6966 <error: Cannot access memory at address 0x666e692f656c6966>
++n
++n
++n
++n
++disp argv[i]
+2: argv[i] = 0x448220 "h\006A"
++n
+2: argv[i] = 0x0
++n
+2: argv[i] = 0x448240 "hi"
++n
+2: argv[i] = 0x448240 "hi"
++n
+2: argv[i] = 0x448240 "X\206D"
++n
+2: argv[i] = 0x0
++n
+2: argv[i] = 0x666e692f656c6966 <error: Cannot access memory at address 0x666e692f656c6966>
++n
+2: argv[i] = 0x666e692f656c6966 <error: Cannot access memory at address 0x666e692f656c6966>
++n
+
+Thread 3.1 "minishell" received signal SIGSEGV, Segmentation fault.
+0x00007ffff7dcd3fe in __GI___libc_free (mem=0x666e692f656c6966) at ./malloc/malloc.c:3368
+warning: Error detected on fd 0
+error detected on stdin
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+maintenance internal-warning -- Give GDB an internal warning.
+maintenance packet -- Send an arbitrary packet to a remote target.
+maintenance print -- Maintenance command for printing GDB internal state.
+maintenance selftest -- Run gdb's unit tests.
+maintenance set -- Set GDB internal variables used by the GDB maintainer.
+maintenance show -- Show GDB internal variables used by the GDB maintainer.
+maintenance space -- Set the display of space usage.
+maintenance test-options -- Generic command for testing the options infrastructure.
+maintenance time -- Set the display of time usage.
+maintenance translate-address -- Translate a section name and address to a symbol.
+maintenance undeprecate -- Undeprecate a command (for testing purposes).
+maintenance with -- Like "with", but works with "maintenance set" variables.
+
+Type "help maintenance" followed by maintenance subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++n
++ref
++n
++n
++s
+to_execute (msh=0x7fffffffc788, tokens=0x446ff0) at src/400_execute.c:17
++n
++n
++n
++s
+exec_one (msh=0x7fffffffc788, tokens=0x446ff0) at src/420_exec_one.c:53
++n
++n
++s
+exec_exe (tokens=0x446ff0, msh=0x7fffffffc788) at src/400_execute.c:78
++n
++set follow-fork-mode child
++ref
++n
+[Attaching after Thread 0x7ffff7cf3740 (LWP 472626) fork to child process 472640]
+[New inferior 2 (process 472640)]
+[Detaching after fork from parent process 472626]
+[Inferior 1 (process 472626) detached]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Switching to Thread 0x7ffff7cf3740 (LWP 472640)]
+exec_exe (tokens=0x446ff0, msh=0x7fffffffc788) at src/400_execute.c:85
++n
++s
+exec_redirs (tokens=0x446ff0, msh=0x7fffffffc788) at src/700_redirs.c:156
+warning: Source file is more recent than executable.
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++s
+redirs_2 (tokens=0x446ff0, msh=0x7fffffffc788) at src/700_redirs.c:51
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++s
+redir_in (tokens=0x446f20, msh=0x7fffffffc788) at src/710_redir_in.c:19
++n
++n
++n
++n
++ref
++n
++n
++s
+free_arg (argv=0x448270) at src/900_free.c:56
++disp argv[i]
+1: argv[i] = 0x0
++n
+1: argv[i] = 0x448290 "grep"
++n
+1: argv[i] = 0x448290 "grep"
++n
+1: argv[i] = 0x448290 "grep"
++n
+1: argv[i] = 0x448290 "h\006A"
++n
+1: argv[i] = 0x0
++n
+1: argv[i] = 0x4482b0 "hi"
++n
+1: argv[i] = 0x4482b0 "hi"
++n
+1: argv[i] = 0x4482b0 "ȆD"
++n
+1: argv[i] = 0x0
++n
+1: argv[i] = 0x0
++n
+1: argv[i] = 0x0
++n
+1: argv[i] = 0x0
++n
+1: argv[i] = <error: Cannot access memory at address 0x10>
++n
+redir_in (tokens=0x448200, msh=0x7fffffffc788) at src/710_redir_in.c:27
++n
+[Inferior 2 (process 472640) exited with code 01]
+warning: Error detected on fd 0
+error detected on stdin
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+maintenance internal-warning -- Give GDB an internal warning.
+maintenance packet -- Send an arbitrary packet to a remote target.
+maintenance print -- Maintenance command for printing GDB internal state.
+maintenance selftest -- Run gdb's unit tests.
+maintenance set -- Set GDB internal variables used by the GDB maintainer.
+maintenance show -- Show GDB internal variables used by the GDB maintainer.
+maintenance space -- Set the display of space usage.
+maintenance test-options -- Generic command for testing the options infrastructure.
+maintenance time -- Set the display of time usage.
+maintenance translate-address -- Translate a section name and address to a symbol.
+maintenance undeprecate -- Undeprecate a command (for testing purposes).
+maintenance with -- Like "with", but works with "maintenance set" variables.
+
+Type "help maintenance" followed by maintenance subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++n
++n
++n
+[Attaching after Thread 0x7ffff7cf3740 (LWP 480459) fork to child process 480468]
+[New inferior 2 (process 480468)]
+[Detaching after fork from parent process 480459]
+[Inferior 1 (process 480459) detached]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Inferior 2 (process 480468) exited with code 0177]
+warning: Error detected on fd 0
+error detected on stdin
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+maintenance internal-warning -- Give GDB an internal warning.
+maintenance packet -- Send an arbitrary packet to a remote target.
+maintenance print -- Maintenance command for printing GDB internal state.
+maintenance selftest -- Run gdb's unit tests.
+maintenance set -- Set GDB internal variables used by the GDB maintainer.
+maintenance show -- Show GDB internal variables used by the GDB maintainer.
+maintenance space -- Set the display of space usage.
+maintenance test-options -- Generic command for testing the options infrastructure.
+maintenance time -- Set the display of time usage.
+maintenance translate-address -- Translate a section name and address to a symbol.
+maintenance undeprecate -- Undeprecate a command (for testing purposes).
+maintenance with -- Like "with", but works with "maintenance set" variables.
+
+Type "help maintenance" followed by maintenance subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++n
++ref
++n
++n
++p *tokens
+$1 = {
+  type = TKN_HEREDOC,
+  cmd_type = CMD_EXEC,
+  name = 0x447f00 "<",
+  cmdargs = 0x0,
+  len = 2,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x447f20
+}
++n
++ref
++n
++n
++n
++n
++s
+to_parse (msh=0x7fffffffc788) at src/300_parser.c:36
++n
++ref
++n
++n
++n
++n
++n
++n
++n
++n
++p *tokens
+$2 = {
+  type = TKN_HEREDOC,
+  cmd_type = CMD_EXEC,
+  name = 0x448030 "<",
+  cmdargs = 0x0,
+  len = 2,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x447eb0
+}
++start
+Temporary breakpoint 2 at 0x40130d: file src/100_main.c, line 23.
+Starting program: /home/lude-bri/CC/Rank3/msh_v4/minishell 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++s
+to_parse (msh=0x7fffffffc788) at src/300_parser.c:36
++n
++ref
++n
++n
++n
++n
++n
++n
++n
++s
+tokenizer (msh=0x7fffffffc788, av=0x447e70) at src/210_tkns_type.c:41
++n
++n
++n
++n
++n
++n
++s
+assign_tkn (token=0x447f50, av=0x447e70) at src/210_tkns_type.c:82
++n
++n
++n
++n
++n
++n
++n
++p *av[0]
+$3 = 60 '<'
++p *av[1]
+$4 = 60 '<'
++n
++n
++n
+warning: Error detected on fd 0
+error detected on stdin
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+maintenance internal-warning -- Give GDB an internal warning.
+maintenance packet -- Send an arbitrary packet to a remote target.
+maintenance print -- Maintenance command for printing GDB internal state.
+maintenance selftest -- Run gdb's unit tests.
+maintenance set -- Set GDB internal variables used by the GDB maintainer.
+maintenance show -- Show GDB internal variables used by the GDB maintainer.
+maintenance space -- Set the display of space usage.
+maintenance test-options -- Generic command for testing the options infrastructure.
+maintenance time -- Set the display of time usage.
+maintenance translate-address -- Translate a section name and address to a symbol.
+maintenance undeprecate -- Undeprecate a command (for testing purposes).
+maintenance with -- Like "with", but works with "maintenance set" variables.
+
+Type "help maintenance" followed by maintenance subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++n
++ref
++n
++n
++s
+to_execute (msh=0x7fffffffc788, tokens=0x446f00) at src/400_execute.c:17
++n
++n
++n
++s
+exec_one (msh=0x7fffffffc788, tokens=0x446f00) at src/420_exec_one.c:53
++n
++n
++s
+exec_bi (tokens=0x446f00, msh=0x7fffffffc788) at src/400_execute.c:37
++p *tokens
+$1 = {
+  type = TKN_CMD,
+  cmd_type = CMD_ECHO,
+  name = 0x446eb0 "echo",
+  cmdargs = 0x448190,
+  len = 5,
+  tokens = 0x30,
+  left = 0x0,
+  right = 0x0,
+  next = 0x446f80
+}
++n
++n
++n
+[Inferior 1 (process 488341) exited with code 01]
++ref
++m
+Ambiguous command "m": macro, maintenance, make, mchk, mem, memory-tag, monitor, mt.
++n
+The program is not being run.
++n
+The program is not being run.
++n
+The program is not being run.
++start
+Temporary breakpoint 2 at 0x40130d: file src/100_main.c, line 23.
+Starting program: /home/lude-bri/CC/Rank3/msh_v4/minishell 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++s
+to_parse (msh=0x7fffffffc788) at src/300_parser.c:36
++n
++ref
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:39
++n
++n
++s
+to_execute (msh=0x7fffffffc788, tokens=0x4480f0) at src/400_execute.c:17
++n
++n
++n
++s
+exec_one (msh=0x7fffffffc788, tokens=0x4480f0) at src/420_exec_one.c:53
++n
++n
++s
+exec_bi (tokens=0x4480f0, msh=0x7fffffffc788) at src/400_execute.c:37
++n
++n
++s
+exec_redirs (tokens=0x4480f0, msh=0x7fffffffc788) at src/700_redirs.c:156
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++s
+redirs_2 (tokens=0x4480f0, msh=0x7fffffffc788) at src/700_redirs.c:51
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++s
+redir_out (tokens=0x4481d0, msh=0x7fffffffc788) at src/720_redir_out.c:19
++n
++n
++n
++n
++ref
++n
++n
++n
++n
+[Inferior 1 (process 488366) exited with code 01]
++n
+The program is not being run.
++n
+The program is not being run.
+warning: Error detected on fd 0
+error detected on stdin
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+maintenance internal-warning -- Give GDB an internal warning.
+maintenance packet -- Send an arbitrary packet to a remote target.
+maintenance print -- Maintenance command for printing GDB internal state.
+maintenance selftest -- Run gdb's unit tests.
+maintenance set -- Set GDB internal variables used by the GDB maintainer.
+maintenance show -- Show GDB internal variables used by the GDB maintainer.
+maintenance space -- Set the display of space usage.
+maintenance test-options -- Generic command for testing the options infrastructure.
+maintenance time -- Set the display of time usage.
+maintenance translate-address -- Translate a section name and address to a symbol.
+maintenance undeprecate -- Undeprecate a command (for testing purposes).
+maintenance with -- Like "with", but works with "maintenance set" variables.
+
+Type "help maintenance" followed by maintenance subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++n
++ref
++n
++n
++s
+to_execute (msh=0x7fffffffc788, tokens=0x448090) at src/400_execute.c:17
++n
++n
++n
++s
+exec_one (msh=0x7fffffffc788, tokens=0x448090) at src/420_exec_one.c:53
++n
++n
++s
+exec_bi (tokens=0x448090, msh=0x7fffffffc788) at src/400_execute.c:37
++n
++n
++n
+[Inferior 1 (process 497887) exited with code 01]
++ref
++start
+
+
+Fatal signal: Segmentation fault
+----- Backtrace -----
+Backtrace unavailable
+---------------------
+A fatal error internal to GDB has been detected, further
+debugging is not possible.  GDB will now terminate.
+
+This is a bug, please report it.  For instructions, see:
+<https://www.gnu.org/software/gdb/bugs/>.
+
+`/home/lude-bri/CC/Rank3/msh_v4/minishell' has changed; re-reading symbols.
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+maintenance internal-warning -- Give GDB an internal warning.
+maintenance packet -- Send an arbitrary packet to a remote target.
+maintenance print -- Maintenance command for printing GDB internal state.
+maintenance selftest -- Run gdb's unit tests.
+maintenance set -- Set GDB internal variables used by the GDB maintainer.
+maintenance show -- Show GDB internal variables used by the GDB maintainer.
+maintenance space -- Set the display of space usage.
+maintenance test-options -- Generic command for testing the options infrastructure.
+maintenance time -- Set the display of time usage.
+maintenance translate-address -- Translate a section name and address to a symbol.
+maintenance undeprecate -- Undeprecate a command (for testing purposes).
+maintenance with -- Like "with", but works with "maintenance set" variables.
+
+Type "help maintenance" followed by maintenance subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++n
++ref
++n
++n
++s
+to_execute (msh=0x7fffffffc788, tokens=0x447e70) at src/400_execute.c:17
++n
++n
++n
++s
+exec_one (msh=0x7fffffffc788, tokens=0x447e70) at src/420_exec_one.c:50
++n
++n
++p *tokens
+$1 = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXIT,
+  name = 0x42ef20 "exit",
+  cmdargs = 0x4139c0,
+  len = 1,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x0
+}
++start
+`/home/lude-bri/CC/Rank3/msh_v4/minishell' has changed; re-reading symbols.
+Temporary breakpoint 2 at 0x40130d: file src/100_main.c, line 23.
+Starting program: /home/lude-bri/CC/Rank3/msh_v4/minishell 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++s
+to_parse (msh=0x7fffffffc788) at src/300_parser.c:36
++s
+build_prompt (msh=0x7fffffffc788) at src/120_prompt.c:19
++s
++ref
++n
++n
++n
++n
+to_parse (msh=0x7fffffffc788) at src/300_parser.c:37
++n
++n
++n
++n
++n
++n
++n
++n
++s
+syntax_check (msh=0x7fffffffc788, tokens=0x44b800) at src/320_syntax.c:101
++n
++n
++s
+syntax_check_redirs (msh=0x7fffffffc788, tokens=0x44b800) at src/320_syntax.c:35
++n
++n
++n
++n
++n
++n
++n
++n
++n
++n
++p *tokens
+$1 = {
+  type = TKN_OUT,
+  cmd_type = CMD_EXEC,
+  name = 0x44b8c0 "> >> []",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x0
+}
++p *tokens
+$2 = {
+  type = TKN_OUT,
+  cmd_type = CMD_EXEC,
+  name = 0x44b8c0 "> >> []",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x0
+}
++starrt
+Undefined command: "starrt".  Try "help".
++start
+Temporary breakpoint 3 at 0x40130d: file src/100_main.c, line 23.
+Starting program: /home/lude-bri/CC/Rank3/msh_v4/minishell 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++s
+to_parse (msh=0x7fffffffc788) at src/300_parser.c:36
++n
++ref
++n
++n
++n
++n
++n
++n
++n
++n
++s
+syntax_check (msh=0x7fffffffc788, tokens=0x44b3e0) at src/320_syntax.c:101
++n
++n
++s
+syntax_check_redirs (msh=0x7fffffffc788, tokens=0x44b3e0) at src/320_syntax.c:35
++p *tokens
+$3 = {
+  type = TKN_CMD,
+  cmd_type = CMD_ECHO,
+  name = 0x44b430 "echo",
+  cmdargs = 0x0,
+  len = 2,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x44b450
+}
++n
++n
++n
++disp *tokens
+1: *tokens = {
+  type = TKN_CMD,
+  cmd_type = CMD_ECHO,
+  name = 0x44b430 "echo",
+  cmdargs = 0x0,
+  len = 2,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x44b450
+}
++n
+1: *tokens = {
+  type = TKN_CMD,
+  cmd_type = CMD_ECHO,
+  name = 0x44b430 "echo",
+  cmdargs = 0x0,
+  len = 2,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x44b450
+}
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, 
+   maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+Quit
+warning: Error detected on fd 0
+error detected on stdin

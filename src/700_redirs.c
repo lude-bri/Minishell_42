@@ -49,7 +49,8 @@ void	redirs_2(t_tkn *tokens, t_msh *msh)
 	int			i;
 
 	i = 0;
-	msh->arg = malloc(sizeof(char *) * (tokens->len + 1));
+	// msh->arg = malloc(sizeof(char *) * (tokens->len + 1));
+	msh->arg = ft_calloc(tokens->len + 1, sizeof(char *));
 	while (tokens)
 	{
 		if (tokens->type == TKN_PIPE)
