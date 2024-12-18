@@ -104,8 +104,30 @@ static void	assign_tkn(t_tkn *token, char **av)
 	// }
 	else if (token->name[0] == '<' && token->name[1] == '<' && token->name[2] != '\"')
 		token->type = TKN_HEREDOC;
-	else if (token->name[0] == '<' && token->name[1] != '\"' && token->name[2] == '\0')
-		token->type = TKN_IN;
+	// else if (token->name[0] == '<' && token->name[1] != '\"' && token->name[2] == '\0')
+	// 	token->type = TKN_IN;
+
+
+	else if (token->name[0] == '<' && av[1] != NULL)
+	{
+		if (*av[1] == '<')
+			token->type = TKN_HEREDOC;
+		else
+			token->type = TKN_IN;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 	// else if (token->name[0] == '>' && token->name[1] != '\"' && token->name[2] == '\0')
 	else if (token->name[0] == '>')
 		token->type = TKN_OUT;

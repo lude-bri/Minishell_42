@@ -52,13 +52,35 @@ int	syntax_check_redirs(t_msh *msh, t_tkn *tokens)
 
 static int	find_cmd(t_tkn *tokens)
 {
+	t_tkn	*current;
+
+	current = NULL;
 	while (tokens)
 	{
-		if (tokens->type == TKN_CMD)
+		if (!current && tokens->type == TKN_CMD)
 			return (SUCCESS);
+		else if (current && (current->type == TKN_IN || current->type == TKN_OUT
+			|| current->type == TKN_APPEND || current->type == TKN_HEREDOC) 
+				&& (tokens->type == TKN_CMD))
+		{
+			if (current->type == TKN_APPEND || current->type == TKN_HEREDOC)
+				current = current->next;
+			else if (current->type == TKN_CMD)
+				return (SUCCESS);
+		}
+		else if (current && current->type == TKN_CMD)
+			return (SUCCESS);
+		current = tokens;
 		tokens = tokens->next;
 	}
 	return (FAILURE);
+	// while (tokens)
+	// {
+	// 	if (tokens->type == TKN_CMD)
+	// 		return (SUCCESS);
+	// 	tokens = tokens->next;
+	// }
+	// return (FAILURE);
 }
 
 

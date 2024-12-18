@@ -217,9 +217,11 @@ char	**split_input(const char *input, t_msh *msh)
 	int			j;
 	char		*expanded;
 
-	split.number_words = count_words(input);
+	// split.number_words = count_words(input);
+	msh->len = take_len(input);
 	// printf("Token count: %d\n", split.number_words);
-	split.argv = (char **)malloc(sizeof(char *) * (split.number_words + 1));
+	// split.argv = (char **)malloc(sizeof(char *) * (split.number_words + 1));
+	split.argv = (char **)malloc(sizeof(char *) * (msh->len + 1));
 	i = 0;
 	j = 0;
 	split.start = 0;
@@ -312,20 +314,33 @@ char	**split_input(const char *input, t_msh *msh)
 						break ;
 				}
 			}
-
-			// if (input[i - 1] == '"' || input[i + 1] == '"')
-				// split.argv[j++] = ft_strdup("\"<\"");
 			else
 				split.argv[j++] = ft_strdup("<");
 			i++;
 		}
 		else if (input[i] == '>')
 		{
-			if (input[i - 1] == '"' || input[i + 1] == '"')
-				split.argv[j++] = ft_strdup("\">\"");
+			if (msh->len == 1)
+				break ;
+			else if (msh->len == 2)
+			{
+				if (i > 0 && input[i - 1] == '\0')
+				{
+					if (input[i + 1] == '"')
+						split.argv[j++] = ft_strdup("\">\"");
+					else
+						break ;
+				}
+			}
 			else
 				split.argv[j++] = ft_strdup(">");
 			i++;
+			//OLD_VERSION
+			// if (input[i - 1] == '"' || input[i + 1] == '"')
+			// 	split.argv[j++] = ft_strdup("\">\"");
+			// else
+			// 	split.argv[j++] = ft_strdup(">");
+			// i++;
 		}
 		else if (input[i] && !is_whitespace(input[i]))
 		{

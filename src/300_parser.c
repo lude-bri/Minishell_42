@@ -50,7 +50,11 @@ t_tkn	*to_parse(t_msh *msh)
 	msh->cmd_count = ft_matrixlen(msh->cmds->av);
 	tokens = tokenizer(msh, msh->cmds->av);
 	if (syntax_check(msh, tokens) == FAILURE) //meter no inicio de tudo
+	{
+		free_arg(msh->cmds->av);
+		free(msh->cmds);
 		return (NULL);
+	}
 	msh->pipe_count = count_pipes(tokens);
 	msh->line = ft_strdup(line); //ter o line para fazer verificacao no echo
 	if (line)
