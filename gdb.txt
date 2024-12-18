@@ -5097,3 +5097,759 @@ msh_loop (msh=0x7fffffffc788) at src/100_main.c:39
 +n
 +n
 +exit
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+maintenance internal-warning -- Give GDB an internal warning.
+maintenance packet -- Send an arbitrary packet to a remote target.
+maintenance print -- Maintenance command for printing GDB internal state.
+maintenance selftest -- Run gdb's unit tests.
+maintenance set -- Set GDB internal variables used by the GDB maintainer.
+maintenance show -- Show GDB internal variables used by the GDB maintainer.
+maintenance space -- Set the display of space usage.
+maintenance test-options -- Generic command for testing the options infrastructure.
+maintenance time -- Set the display of time usage.
+maintenance translate-address -- Translate a section name and address to a symbol.
+maintenance undeprecate -- Undeprecate a command (for testing purposes).
+maintenance with -- Like "with", but works with "maintenance set" variables.
+
+Type "help maintenance" followed by maintenance subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++n
++ref
++n
++n
++s
+to_execute (msh=0x7fffffffc788, tokens=0x447f00) at src/400_execute.c:17
++n
++n
++n
++s
+exec_more (msh=0x7fffffffc788, tokens=0x447fe0) at src/430_exec_more.c:17
++n
++n
++s
+exec_pipe (msh=0x7fffffffc788, tokens=0x447fe0) at src/600_pipes.c:45
+warning: Source file is more recent than executable.
++s
+verify_pipe (tokens=0x447fe0) at src/600_pipes.c:17
++s
++s
++s
+exec_pipe (msh=0x7fffffffc788, tokens=0x447fe0) at src/600_pipes.c:47
++set follow-fork-mode child
++ref
++n
++n
+[Attaching after Thread 0x7ffff7cf3740 (LWP 425967) fork to child process 425980]
+[New inferior 2 (process 425980)]
+[Detaching after fork from parent process 425967]
+[Inferior 1 (process 425967) detached]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Switching to Thread 0x7ffff7cf3740 (LWP 425980)]
+exec_pipe (msh=0x7fffffffc788, tokens=0x447fe0) at src/600_pipes.c:50
++ref
++n
++n
++n
++p *tokens
+$1 = {
+  type = TKN_PIPE,
+  cmd_type = CMD_EXEC,
+  name = 0x448030 "|",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x447f00,
+  right = 0x448050,
+  next = 0x448050
+}
++p *tokens->next
+$2 = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXEC,
+  name = 0x4480a0 "wc",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x0
+}
++p *tokens
+$3 = {
+  type = TKN_PIPE,
+  cmd_type = CMD_EXEC,
+  name = 0x448030 "|",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x447f00,
+  right = 0x448050,
+  next = 0x448050
+}
++p *tokens->right
+$4 = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXEC,
+  name = 0x4480a0 "wc",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x0
+}
++p *tokens->left
+$5 = {
+  type = TKN_HEREDOC,
+  cmd_type = CMD_EXEC,
+  name = 0x447f50 "<<",
+  cmdargs = 0x447e70,
+  len = 4,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x447f70
+}
++p *tokens->next->left
+Cannot access memory at address 0x0
++p *tokens->left->next
+$6 = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXEC,
+  name = 0x447fc0 "here",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x447fe0
+}
++p tokens->left
+$7 = (struct s_tkn *) 0x447f00
++p *tokens->left
+$8 = {
+  type = TKN_HEREDOC,
+  cmd_type = CMD_EXEC,
+  name = 0x447f50 "<<",
+  cmdargs = 0x447e70,
+  len = 4,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x447f70
+}
++exit
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+maintenance internal-warning -- Give GDB an internal warning.
+maintenance packet -- Send an arbitrary packet to a remote target.
+maintenance print -- Maintenance command for printing GDB internal state.
+maintenance selftest -- Run gdb's unit tests.
+maintenance set -- Set GDB internal variables used by the GDB maintainer.
+maintenance show -- Show GDB internal variables used by the GDB maintainer.
+maintenance space -- Set the display of space usage.
+maintenance test-options -- Generic command for testing the options infrastructure.
+maintenance time -- Set the display of time usage.
+maintenance translate-address -- Translate a section name and address to a symbol.
+maintenance undeprecate -- Undeprecate a command (for testing purposes).
+maintenance with -- Like "with", but works with "maintenance set" variables.
+
+Type "help maintenance" followed by maintenance subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++n
++ref
++n
++n
++s
+to_execute (msh=0x7fffffffc788, tokens=0x447f00) at src/400_execute.c:17
++n
++n
++n
++s
+exec_more (msh=0x7fffffffc788, tokens=0x447fe0) at src/430_exec_more.c:17
++n
++n
++s
+exec_pipe (msh=0x7fffffffc788, tokens=0x447fe0) at src/600_pipes.c:45
++n
++n
++set follow-fork-mode child
++ref
++n
+[Attaching after Thread 0x7ffff7cf3740 (LWP 427309) fork to child process 427318]
+[New inferior 2 (process 427318)]
+[Detaching after fork from parent process 427309]
+[Inferior 1 (process 427309) detached]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Switching to Thread 0x7ffff7cf3740 (LWP 427318)]
+exec_pipe (msh=0x7fffffffc788, tokens=0x447fe0) at src/600_pipes.c:50
++n
++n
++n
++p *tokens->next->left
+Cannot access memory at address 0x0
++p *tokens->left->next
+$1 = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXEC,
+  name = 0x447fc0 "here",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x447fe0
+}
++n
++n
++n
++ref
++n
++p *tokens->next->left
+Cannot access memory at address 0x0
++p *tokens->right
+$2 = {
+  type = 4488088,
+  cmd_type = CMD_EXEC,
+  name = 0x4480a0 "h\204D",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x0
+}
++p *tokens
+$3 = {
+  type = 1095,
+  cmd_type = CMD_EXEC,
+  name = 0x448030 "\370{D",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x447f00,
+  right = 0x448050,
+  next = 0x448050
+}
++p *tokens
+$4 = {
+  type = 1095,
+  cmd_type = CMD_EXEC,
+  name = 0x448030 "\370{D",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x447f00,
+  right = 0x448050,
+  next = 0x448050
+}
++p *tokens->left
+$5 = {
+  type = 4254823,
+  cmd_type = CMD_EXEC,
+  name = 0x7e45e9d50b88a549 <error: Cannot access memory at address 0x7e45e9d50b88a549>,
+  cmdargs = 0x447e70,
+  len = 4,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x447f70
+}
++p *tokens->right
+$6 = {
+  type = 4488088,
+  cmd_type = CMD_EXEC,
+  name = 0x4480a0 "h\204D",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x0
+}
+Quit
++y
+Undefined command: "y".  Try "help".
++q
+
+quit
++quit
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+maintenance internal-warning -- Give GDB an internal warning.
+maintenance packet -- Send an arbitrary packet to a remote target.
+maintenance print -- Maintenance command for printing GDB internal state.
+maintenance selftest -- Run gdb's unit tests.
+maintenance set -- Set GDB internal variables used by the GDB maintainer.
+maintenance show -- Show GDB internal variables used by the GDB maintainer.
+maintenance space -- Set the display of space usage.
+maintenance test-options -- Generic command for testing the options infrastructure.
+maintenance time -- Set the display of time usage.
+maintenance translate-address -- Translate a section name and address to a symbol.
+maintenance undeprecate -- Undeprecate a command (for testing purposes).
+maintenance with -- Like "with", but works with "maintenance set" variables.
+
+Type "help maintenance" followed by maintenance subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++n
++ref
++n
++n
++s
+to_execute (msh=0x7fffffffc788, tokens=0x447f00) at src/400_execute.c:17
++n
++n
++n
++s
+exec_more (msh=0x7fffffffc788, tokens=0x447fe0) at src/430_exec_more.c:17
++n
++n
++s
+exec_pipe (msh=0x7fffffffc788, tokens=0x447fe0) at src/600_pipes.c:45
++n
++n
++set follow-fork-mode child
++ref
++n
+[Attaching after Thread 0x7ffff7cf3740 (LWP 428849) fork to child process 428904]
+[New inferior 2 (process 428904)]
+[Detaching after fork from parent process 428849]
+[Inferior 1 (process 428849) detached]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Switching to Thread 0x7ffff7cf3740 (LWP 428904)]
+exec_pipe (msh=0x7fffffffc788, tokens=0x447fe0) at src/600_pipes.c:50
++n
++n
++n
++n
++n
++n
++ref
++n
++s
+apply_pipe (dir=0x0, msh=0x7fffffffc788, fd=0x7fffffffc6d0, multi_fd=3) at src/600_pipes.c:25
++n
++n
++sref
+Undefined command: "sref".  Try "help".
++ref
++s
+exec_more (msh=0x7fffffffc788, tokens=0x0) at src/430_exec_more.c:17
++p tokens->type
+Cannot access memory at address 0x0
++n
+
+Thread 2.1 "minishell" received signal SIGSEGV, Segmentation fault.
+0x00000000004046b4 in exec_more (msh=0x7fffffffc788, tokens=0x0) at src/430_exec_more.c:17
++start
+Temporary breakpoint 2 at 0x4012f0: -qualified main. (2 locations)
+Starting program: /home/lude-bri/CC/Rank3/msh_v4/minishell 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++n
++ref
++n
++n
++s
+to_execute (msh=0x7fffffffc788, tokens=0x447f00) at src/400_execute.c:17
++n
++n
++n
++s
+exec_more (msh=0x7fffffffc788, tokens=0x447fe0) at src/430_exec_more.c:17
++n
++n
++s
+exec_pipe (msh=0x7fffffffc788, tokens=0x447fe0) at src/600_pipes.c:45
++n
++n
++set follow-fork-mode child
++ref
++n
+[Attaching after Thread 0x7ffff7cf3740 (LWP 428916) fork to child process 428923]
+[New inferior 3 (process 428923)]
+[Detaching after fork from parent process 428916]
+[Inferior 2 (process 428916) detached]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Switching to Thread 0x7ffff7cf3740 (LWP 428923)]
+exec_pipe (msh=0x7fffffffc788, tokens=0x447fe0) at src/600_pipes.c:50
++n
++n
++n
++n
++n
++p *tokens
+$1 = {
+  type = TKN_PIPE,
+  cmd_type = CMD_EXEC,
+  name = 0x448030 "|",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x447f00,
+  right = 0x448050,
+  next = 0x448050
+}
++n
++ref
++p *tokens
+$2 = {
+  type = TKN_PIPE,
+  cmd_type = CMD_EXEC,
+  name = 0x448030 "|",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x447f00,
+  right = 0x448050,
+  next = 0x448050
+}
++disp *tokens
+1: *tokens = {
+  type = TKN_PIPE,
+  cmd_type = CMD_EXEC,
+  name = 0x448030 "|",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x447f00,
+  right = 0x448050,
+  next = 0x448050
+}
++n
+1: *tokens = {
+  type = TKN_PIPE,
+  cmd_type = CMD_EXEC,
+  name = 0x448030 "|",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x447f00,
+  right = 0x448050,
+  next = 0x448050
+}
++s
+apply_pipe (dir=0x0, msh=0x7fffffffc788, fd=0x7fffffffc6d0, multi_fd=3) at src/600_pipes.c:25
++n
++p *dir
+Cannot access memory at address 0x0
++start
+Temporary breakpoint 3 at 0x4012f0: -qualified main. (3 locations)
+Starting program: /home/lude-bri/CC/Rank3/msh_v4/minishell 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++ref
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++n
++ref
++n
++n
++s
+to_execute (msh=0x7fffffffc788, tokens=0x447f00) at src/400_execute.c:17
++n
++n
++n
++s
+exec_more (msh=0x7fffffffc788, tokens=0x447fe0) at src/430_exec_more.c:17
++n
++n
++s
+exec_pipe (msh=0x7fffffffc788, tokens=0x447fe0) at src/600_pipes.c:45
+1: *tokens = {
+  type = TKN_PIPE,
+  cmd_type = CMD_EXEC,
+  name = 0x448030 "|",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x447f00,
+  right = 0x448050,
+  next = 0x448050
+}
++n
+1: *tokens = {
+  type = TKN_PIPE,
+  cmd_type = CMD_EXEC,
+  name = 0x448030 "|",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x447f00,
+  right = 0x448050,
+  next = 0x448050
+}
++n
+1: *tokens = {
+  type = TKN_PIPE,
+  cmd_type = CMD_EXEC,
+  name = 0x448030 "|",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x447f00,
+  right = 0x448050,
+  next = 0x448050
+}
++set follow-fork-mode child
++ref
++disp *tokens
+2: *tokens = {
+  type = TKN_PIPE,
+  cmd_type = CMD_EXEC,
+  name = 0x448030 "|",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x447f00,
+  right = 0x448050,
+  next = 0x448050
+}
++n
+[Attaching after Thread 0x7ffff7cf3740 (LWP 428960) fork to child process 428988]
+[New inferior 4 (process 428988)]
+[Detaching after fork from parent process 428960]
+[Inferior 3 (process 428960) detached]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Switching to Thread 0x7ffff7cf3740 (LWP 428988)]
+exec_pipe (msh=0x7fffffffc788, tokens=0x447fe0) at src/600_pipes.c:50
++n
++n
++n
++n
++n
++n
++ref
++*tokens
+Undefined command: "".  Try "help".
++p *tokens
+$3 = {
+  type = TKN_PIPE,
+  cmd_type = CMD_EXEC,
+  name = 0x448030 "|",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x447f00,
+  right = 0x448050,
+  next = 0x448050
+}
++p *tokens->next->left
+Cannot access memory at address 0x0
++p *tokens->next
+$4 = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXEC,
+  name = 0x4480a0 "wc",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x0
+}
++p *tokens->left
+$5 = {
+  type = TKN_HEREDOC,
+  cmd_type = CMD_EXEC,
+  name = 0x447f50 "<<",
+  cmdargs = 0x447e70,
+  len = 4,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x447f70
+}
++p *tokens->right
+$6 = {
+  type = TKN_CMD,
+  cmd_type = CMD_EXEC,
+  name = 0x4480a0 "wc",
+  cmdargs = 0x0,
+  len = 0,
+  tokens = 0x0,
+  left = 0x0,
+  right = 0x0,
+  next = 0x0
+}

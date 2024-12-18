@@ -72,7 +72,7 @@ int heredoc_pipe(t_tkn *tokens, t_msh *msh, char *arg, int flag)
     close(pipe_fd[1]); // Close write-end after writing
     signal(SIGINT, SIG_DFL);
 	free_arg(msh->envp);
-	free_msh(msh->cmds, msh, tokens);
+	// free_msh(msh->cmds, msh, tokens);
     return (pipe_fd[0]); // Return the read-end for input redirection
 }
 

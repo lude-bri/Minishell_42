@@ -61,9 +61,10 @@ int	exec_pipe(t_msh *msh, t_tkn *tokens)
 			{
 				heredoc_fd = heredoc_pipe(tokens, msh, tokens->left->next->name, 1);
 				dup2(heredoc_fd, STDIN_FILENO);
-				apply_pipe(tokens->next->left, msh, fd, heredoc_fd);
+				if (tokens->next->left != NULL)
+					apply_pipe(tokens->next->left, msh, fd, heredoc_fd);
 				// free_arg(msh->envp);
-				// free_msh(msh->cmds, msh, tokens->left);
+				free_msh(msh->cmds, msh, tokens->left);
 				exit(msh->exit_status);
 			}
 			else
