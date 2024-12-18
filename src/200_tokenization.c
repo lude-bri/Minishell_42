@@ -198,6 +198,18 @@ char	*handle_single_quotes(const char *input, int *i)
 	return (word);
 }
 
+static int	take_len(const char *input)
+{
+	int		i;
+
+	i = 0;
+	while (*input && is_whitespace(input[i]))
+		input++;
+	while (input[i])
+		i++;
+	return (i);
+}
+
 char	**split_input(const char *input, t_msh *msh)
 {
 	t_tkn_op	split;
@@ -213,6 +225,8 @@ char	**split_input(const char *input, t_msh *msh)
 	split.start = 0;
 	if (!split.argv)
 		return (NULL);
+	msh->len = take_len(input);
+	// printf("%d\n", msh->len);
 	while (input[i])
 	{
 		while (input[i] && is_whitespace(input[i]))
@@ -286,8 +300,21 @@ char	**split_input(const char *input, t_msh *msh)
 		// }
 		else if (input[i] == '<')
 		{
-			if (input[i - 1] == '"' || input[i + 1] == '"')
-				split.argv[j++] = ft_strdup("\"<\"");
+			if (msh->len == 1)
+				break ;
+			else if (msh->len == 2)
+			{
+				if (i > 0 && input[i - 1] == '\0')
+				{
+					if (input[i + 1] == '"')
+						split.argv[j++] = ft_strdup("\"<\"");
+					else
+						break ;
+				}
+			}
+
+			// if (input[i - 1] == '"' || input[i + 1] == '"')
+				// split.argv[j++] = ft_strdup("\"<\"");
 			else
 				split.argv[j++] = ft_strdup("<");
 			i++;
@@ -308,7 +335,7 @@ char	**split_input(const char *input, t_msh *msh)
 				i++;
 			split.argv[j++] = copy_word(input, split.start, i);
 		}	
-		if (!split.argv[j - 1])
+		if (j > 0 && !split.argv[j - 1])
 		{
 			printf("Error: Memory allocation failed for token %d\n", j - 1);
 			while (--j >= 0)

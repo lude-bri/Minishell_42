@@ -42,7 +42,11 @@ t_tkn	*to_parse(t_msh *msh)
 		return (NULL);
 	msh->cmds->av = split_input(line, msh); //necessario revisar!!
 	if (!msh->cmds->av || !*msh->cmds->av)
+	{
+		free_arg(msh->cmds->av);
+		free(msh->cmds);
 		return (NULL);
+	}
 	msh->cmd_count = ft_matrixlen(msh->cmds->av);
 	tokens = tokenizer(msh, msh->cmds->av);
 	if (syntax_check(msh, tokens) == FAILURE) //meter no inicio de tudo

@@ -2708,3 +2708,355 @@ $2 = {
 }
 warning: Error detected on fd 0
 error detected on stdin
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+maintenance internal-warning -- Give GDB an internal warning.
+maintenance packet -- Send an arbitrary packet to a remote target.
+maintenance print -- Maintenance command for printing GDB internal state.
+maintenance selftest -- Run gdb's unit tests.
+maintenance set -- Set GDB internal variables used by the GDB maintainer.
+maintenance show -- Show GDB internal variables used by the GDB maintainer.
+maintenance space -- Set the display of space usage.
+maintenance test-options -- Generic command for testing the options infrastructure.
+maintenance time -- Set the display of time usage.
+maintenance translate-address -- Translate a section name and address to a symbol.
+maintenance undeprecate -- Undeprecate a command (for testing purposes).
+maintenance with -- Like "with", but works with "maintenance set" variables.
+
+Type "help maintenance" followed by maintenance subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++n
++n
++s
+msh_loop (msh=0x7fffffffc790) at src/100_main.c:33
++n
++n
++n
++s
+to_parse (msh=0x7fffffffc790) at src/300_parser.c:36
++n
++ref
++n
++n
++n
++n
++s
+split_input (input=0x42ef60 "\"<\"", msh=0x7fffffffc790) at src/200_tokenization.c:208
++n
++p split.number_words
+$1 = 1
++n
++n
++n
++n
++n
++n
++p input[i]
+$2 = 34 '"'
++p input[0]
+$3 = 34 '"'
++p input[1]
+$4 = 60 '<'
++p input[2]
+$5 = 34 '"'
+warning: Error detected on fd 0
+error detected on stdin
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+maintenance internal-warning -- Give GDB an internal warning.
+maintenance packet -- Send an arbitrary packet to a remote target.
+maintenance print -- Maintenance command for printing GDB internal state.
+maintenance selftest -- Run gdb's unit tests.
+maintenance set -- Set GDB internal variables used by the GDB maintainer.
+maintenance show -- Show GDB internal variables used by the GDB maintainer.
+maintenance space -- Set the display of space usage.
+maintenance test-options -- Generic command for testing the options infrastructure.
+maintenance time -- Set the display of time usage.
+maintenance translate-address -- Translate a section name and address to a symbol.
+maintenance undeprecate -- Undeprecate a command (for testing purposes).
+maintenance with -- Like "with", but works with "maintenance set" variables.
+
+Type "help maintenance" followed by maintenance subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++s
+to_parse (msh=0x7fffffffc788) at src/300_parser.c:36
+warning: Source file is more recent than executable.
++n
++ref
++n
++n
++n
++n
++s
+split_input (input=0x42ef60 ">\"", msh=0x7fffffffc788) at src/200_tokenization.c:220
++nn
+Undefined command: "nn".  Try "help".
++n
++p split.numer_words
+There is no member named numer_words.
++p split.number_words
+$1 = 1
++n
++n
++n
++n
++n
++n
++p msh->len
+$2 = 2
++n
++ref
++n
++disp input[i]
+1: input[i] = 62 '>'
++n
+1: input[i] = 62 '>'
++n
+1: input[i] = 62 '>'
++n
+1: input[i] = 62 '>'
++n
+1: input[i] = 62 '>'
++n
+1: input[i] = 62 '>'
++n
+1: input[i] = 62 '>'
++n
+1: input[i] = 62 '>'
++n
+1: input[i] = 62 '>'
++start
+Temporary breakpoint 2 at 0x40130d: file src/100_main.c, line 23.
+Starting program: /home/lude-bri/CC/Rank3/msh_v4/minishell 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++c
+Continuing.
+[Attaching after Thread 0x7ffff7cf3740 (LWP 306224) fork to child process 306226]
+[New inferior 2 (process 306226)]
+[Detaching after fork from parent process 306224]
+[Inferior 1 (process 306224) detached]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+[Inferior 2 (process 306226) exited with code 0177]
++q
++set follow-fork-mode child
++show follow-fork-mode
+Debugger response to a program call of fork or vfork is "child".
++set print pretty on
++set print array on
++skip -gfi *libreadline.so.8
+File(s) *libreadline.so.8 will be skipped when stepping.
++define mchk
++define rfr
++define nr
++define xx
++break main
+Breakpoint 1 at 0x40130d: file src/100_main.c, line 23.
++run
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
+
+Breakpoint 1, main (ac=1, av=0x7fffffffc938, envp=0x7fffffffc948) at src/100_main.c:23
++main
+List of maintenance subcommands:
+
+maintenance agent -- Translate an expression into remote agent bytecode for tracing.
+maintenance agent-eval -- Translate an expression into remote agent bytecode for evaluation.
+maintenance agent-printf -- Translate an expression into remote agent bytecode for evaluation and display the bytecodes.
+maintenance btrace -- Branch tracing maintenance commands.
+maintenance check -- Commands for checking internal gdb state.
+maintenance check-psymtabs -- Check consistency of currently expanded psymtabs versus symtabs.
+maintenance check-symtabs -- Check consistency of currently expanded symtabs.
+maintenance cplus, maintenance cp -- C++ maintenance commands.
+maintenance demangler-warning -- Give GDB a demangler warning.
+maintenance deprecate -- Deprecate a command (for testing purposes).
+maintenance dump-me -- Get fatal error; make debugger dump its core.
+maintenance expand-symtabs -- Expand symbol tables.
+maintenance flush -- Maintenance command for flushing GDB internal caches.
+maintenance info, maintenance i -- Commands for showing internal info about the program being debugged.
+maintenance internal-error -- Give GDB an internal error.
+maintenance internal-warning -- Give GDB an internal warning.
+maintenance packet -- Send an arbitrary packet to a remote target.
+maintenance print -- Maintenance command for printing GDB internal state.
+maintenance selftest -- Run gdb's unit tests.
+maintenance set -- Set GDB internal variables used by the GDB maintainer.
+maintenance show -- Show GDB internal variables used by the GDB maintainer.
+maintenance space -- Set the display of space usage.
+maintenance test-options -- Generic command for testing the options infrastructure.
+maintenance time -- Set the display of time usage.
+maintenance translate-address -- Translate a section name and address to a symbol.
+maintenance undeprecate -- Undeprecate a command (for testing purposes).
+maintenance with -- Like "with", but works with "maintenance set" variables.
+
+Type "help maintenance" followed by maintenance subcommand name for full documentation.
+Type "apropos word" to search for commands related to "word".
+Type "apropos -v word" for full documentation of commands related to "word".
+Command name abbreviations are allowed if unambiguous.
++fs cmd
+Focus set to cmd window.
++rfr
+++refresh
++info break
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x000000000040130d in main at src/100_main.c:23
+	breakpoint already hit 1 time
++info watch
+No watchpoints.
++n
++n
++s
+msh_loop (msh=0x7fffffffc788) at src/100_main.c:33
++n
++n
++n
++s
+to_parse (msh=0x7fffffffc788) at src/300_parser.c:36
+warning: Source file is more recent than executable.
++n
++ref
++n
++n
++n
++n
++s
+split_input (input=0x42ef60 "<\"", msh=0x7fffffffc788) at src/200_tokenization.c:220
++n
++n
++n
++n
++n
++n
++n
++n
++n
++ref
++disp input[i]
+1: input[i] = 60 '<'
++n
+1: input[i] = 60 '<'
++n
+1: input[i] = 60 '<'
++n
+1: input[i] = 60 '<'
++n
+1: input[i] = 60 '<'
++n
+1: input[i] = 60 '<'
++n
+1: input[i] = 60 '<'
++n
+1: input[i] = 60 '<'
++n
+1: input[i] = 60 '<'
++n
+1: input[i] = 60 '<'
++n
+1: input[i] = 60 '<'
++p i
+$1 = 0
++n
+1: input[i] = 60 '<'
+warning: Error detected on fd 0
+error detected on stdin

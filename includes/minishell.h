@@ -148,6 +148,7 @@ typedef struct s_msh
 
 	int			cmd_count;
 	int			pipe_count;
+	int			len;
 	int			exit_status;
 	bool		flag_redir;
 	t_vector	tokens;
