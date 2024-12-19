@@ -246,9 +246,10 @@ char	**split_input(const char *input, t_msh *msh)
 		}
 		else if (input[i] == '$')
 		{
-			if (input[i + 1] == '>') //verificar todos os outros operadores
+			if (input[i + 1] == '>' || input[i + 1] == '<') //verificar todos os outros operadores
 			{
-				syntax_check_redirs(msh, NULL);
+				// syntax_check_redirs(msh, NULL);
+				printf("msh: syntax error near unexpected token `newline'\n");
 				break ;
 			}
 			if (input[i + 1] == '\0' || input[i + 1] == '\"')
