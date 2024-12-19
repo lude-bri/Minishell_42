@@ -62,6 +62,8 @@ int	exec_one(t_msh *msh, t_tkn *tokens)
 				if (pid == 0)
 				{
 					exec_bi(tokens, msh);
+					free_arg(msh->envp);
+					free_msh(msh->cmds, msh, tokens);
 					exit(msh->exit_status);
 				}
 				else if (pid > 0)

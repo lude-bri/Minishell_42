@@ -16,6 +16,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../lib/libft/libft_42/libft.h"
+# include "../lib/libft/libft_42/fprintf.h"
+
 
 /* ************************************************************************** */
 /*                                  DEFINES                                   */

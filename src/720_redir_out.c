@@ -17,7 +17,9 @@ void	redir_out(t_tkn *tokens, t_msh *msh)
 	int		fd;
 
 	tokens = tokens->next;
-	fd = open(tokens->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd = -1;
+	if (tokens != NULL)
+		fd = open(tokens->name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 	{
 		perror(tokens->name);

@@ -112,6 +112,7 @@ static void	exec_special(t_tkn *tokens, t_msh *msh)
 	if (!path)
 	{
 		printf("%s: command not found\n", tokens->cmdargs[0]);
+		// ft_fprintf(2, "%s: command not found\n", tokens->cmdargs[0]);
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
 		free_arg(msh->cmds->av);
@@ -140,7 +141,9 @@ void	execute(t_msh *msh, t_tkn *tokens)
 	args = build_args(tokens);
 	if (!path)
 	{
-		printf("%s: command not found\n", args[0]); 
+		// printf("%s: command not found\n", args[0]);
+		// ft_fprintf(STDERR_FILENO, "%s: command not found\n", args[0]);
+		write(STDERR_FILENO, "command not found\n", 18);
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
 		free_arg(args);

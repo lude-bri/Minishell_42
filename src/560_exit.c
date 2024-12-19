@@ -103,7 +103,8 @@ static int	verify_arg(char **argv, t_msh *msh, t_tkn *tokens)
 	{
 		if (is_letter(argv[1]))
 		{
-			ft_printf("msh: exit: %s: numeric argument required\n", argv[1]);
+			// ft_printf("msh: exit: %s: numeric argument required\n", argv[1]);
+			write(STDERR_FILENO, " numeric argument required\n", 26);
 			return (2);
 		}
 		else
@@ -130,12 +131,14 @@ static int	verify_arg(char **argv, t_msh *msh, t_tkn *tokens)
 		}
 		else if (is_letter(argv[1]))
 		{
-			ft_printf("msh: exit: %s: numeric argument required\n", argv[1]);
+			// ft_printf("msh: exit: %s: numeric argument required\n", argv[1]);
+			write(STDERR_FILENO, " numeric argument required\n", 26);
 			return (2);
 		}
 		else 
 		{
-			ft_printf("msh: exit: too many arguments\n");
+			// ft_printf("msh: exit: too many arguments\n");
+			write(STDERR_FILENO, " too many arguments\n", 20);
 			return (1);
 		}
 	}

@@ -83,7 +83,8 @@ int msh_cd(char **argv, char **envp)
     }
     else if (argv[2])
     {
-        printf("msh: cd: too many arguments\n");
+        // printf("msh: cd: too many arguments\n");
+		write(STDERR_FILENO, " too many arguments\n", 18);
         return (1);
     }
     else if (chdir(argv[1]) != 0)
