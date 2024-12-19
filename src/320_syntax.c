@@ -32,6 +32,8 @@ int	syntax_check_pipes(t_msh *msh, t_tkn *tokens)
 
 int	syntax_check_redirs(t_msh *msh, t_tkn *tokens)
 {
+	if (find_cmd(tokens) == SUCCESS)
+		return (SUCCESS);
 	while (tokens)
 	{
 		if (tokens->type == TKN_IN || tokens->type == TKN_OUT
@@ -40,6 +42,8 @@ int	syntax_check_redirs(t_msh *msh, t_tkn *tokens)
 		else
 			tokens = tokens->next;
 	}
+	// if (verify_quotes_and_more(tokens) == SUCCESS)
+	// 	return (SUCCESS);
 	if (tokens->next == NULL || (find_redir(tokens) == SUCCESS
 		&& find_cmd(tokens) == FAILURE))
 	{
@@ -77,7 +81,7 @@ static int	find_cmd(t_tkn *tokens)
 	// return (FAILURE);
 	while (tokens)
 	{
-		if (tokens->type == TKN_CMD)
+		if (tokens->type == TKN_CMD || tokens->cmd_type == CMD_ECHO)
 			return (SUCCESS);
 		tokens = tokens->next;
 	}
