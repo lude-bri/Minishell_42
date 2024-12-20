@@ -50,6 +50,10 @@ int	exec_one(t_msh *msh, t_tkn *tokens)
 	int		pid;
 	int		status;
 
+	while (tokens && tokens->type == TKN_NULL)
+		tokens = tokens->next;
+	if (!tokens)
+		return (SUCCESS);
 	if (tokens->type == TKN_CMD)
 	{
 		if (is_bi(tokens) == SUCCESS)

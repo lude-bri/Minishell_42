@@ -61,18 +61,18 @@
 // 	return (0);
 // }
 
-static int	is_delimiter(char *argv)
-{
-	if (ft_strncmp(argv, "<", 1) == 0)
-		return (SUCCESS);
-	else if (ft_strncmp(argv, ">", 1) == 0)
-		return (SUCCESS);
-	else if (ft_strncmp(argv, "|", 1) == 0)
-		return (SUCCESS);
-	else if (ft_strncmp(argv, ">>", 1) == 0)
-		return (SUCCESS);
-	return (FAILURE);
-}
+// static int	is_delimiter(char *argv)
+// {
+// 	if (ft_strncmp(argv, "<", 1) == 0)
+// 		return (SUCCESS);
+// 	else if (ft_strncmp(argv, ">", 1) == 0)
+// 		return (SUCCESS);
+// 	else if (ft_strncmp(argv, "|", 1) == 0)
+// 		return (SUCCESS);
+// 	else if (ft_strncmp(argv, ">>", 1) == 0)
+// 		return (SUCCESS);
+// 	return (FAILURE);
+// }
 
 static int	verify_whitespaces(char *line)
 {
@@ -92,12 +92,13 @@ static int	verify_whitespaces(char *line)
 	return (FAILURE);
 }
 
-int	msh_echo(char **argv, t_msh *msh)
+int	msh_echo(char **argv, t_msh *msh, t_tkn *tokens)
 {
 	int		i;
 	int		newline;
 	int		space;
 
+	(void)tokens;
 	if (!argv[1])
 	{
 		ft_printf("\n");
@@ -110,14 +111,16 @@ int	msh_echo(char **argv, t_msh *msh)
 		newline = 0;
 		i = 2;
 	}
+	if (ft_strcmp(argv[0], "echo") != 0)
+		i++;
 	if (verify_whitespaces(msh->line) == SUCCESS)
 		space = 1;
 	else
 		space = 0;
 	while (argv[i])
 	{
-		if (is_delimiter(argv[i]) == SUCCESS)
-			break ;
+		// if (is_delimiter(argv[i]) == SUCCESS)
+		// 	break ;
 		ft_printf("%s", argv[i]);
 		if (argv[i + 1] && space == 1)
 			ft_printf(" ");

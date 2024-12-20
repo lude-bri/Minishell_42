@@ -44,7 +44,8 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 	else if (tokens->cmd_type == CMD_PWD)
 		msh_pwd();
 	else if (tokens->cmd_type == CMD_ECHO)
-		msh_echo(msh->cmds->av, msh);
+		// msh_echo(msh->cmds->av, msh);
+		msh_echo(msh->cmds->av, msh, tokens);
 	else if (tokens->cmd_type == CMD_EXIT)
 		msh_exit(tokens->cmdargs, msh, tokens);
 	else if (tokens->cmd_type == CMD_UNSET)
@@ -113,10 +114,10 @@ static void	exec_special(t_tkn *tokens, t_msh *msh)
 	{
 		// printf("%s: command not found\n", tokens->cmdargs[0]);
 		// ft_fprintf(2, "%s: command not found\n", tokens->cmdargs[0]);
-		write(STDERR_FILENO, " command not found\n", 18);
+		write(STDERR_FILENO, " command not found\n", 19);
+		// free_arg(msh->cmds->av);
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
-		free_arg(msh->cmds->av);
 		exit(127);
 	}
 	if (msh->flag_redir == true)
@@ -144,7 +145,7 @@ void	execute(t_msh *msh, t_tkn *tokens)
 	{
 		// printf("%s: command not found\n", args[0]);
 		// ft_fprintf(STDERR_FILENO, "%s: command not found\n", args[0]);
-		write(STDERR_FILENO, " command not found\n", 18);
+		write(STDERR_FILENO, " command not found\n", 19);
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
 		free_arg(args);

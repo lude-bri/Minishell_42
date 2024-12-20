@@ -13,7 +13,7 @@
 #include "../includes/minishell.h"
 
 static t_tkn	*tkn_new(t_msh *msh, char *content);
-static void		assign_tkn(t_tkn *token, char **av);
+static void		assign_tkn(t_tkn *token, char **av, t_msh *msh);
 static void		verify_tkn_cmd(t_tkn *token);
 
 static int	token_len(t_tkn *tokens)
@@ -45,7 +45,7 @@ t_tkn	*tokenizer(t_msh *msh, char **av)
 	while (av[++i])
 	{
 		new_token = tkn_new(msh, av[i]);
-		assign_tkn(new_token, find++);
+		assign_tkn(new_token, find++, msh);
 		if (new_token->type == TKN_CMD)
 			verify_tkn_cmd(new_token);
 		if (!token)
@@ -76,9 +76,28 @@ static t_tkn	*tkn_new(t_msh *msh, char *content)
 	return (node);
 }
 
-//verify and assign the token type
-static void	assign_tkn(t_tkn *token, char **av)
+static int	verify_quotes(char operator, char *line)
 {
+	int		i;
+
+	i = 0;
+	while (line[i] != operator)
+		i++;
+	if (i > 0)
+	{
+		if (line[i + 1] == '"' || line[i - 1] == '"'
+			|| line[i + 1] == '\'' || line[i - 1] == '\'')
+			return (SUCCESS);
+	}
+	return (FAILURE);
+}
+
+//verify and assign the token type
+static void	assign_tkn(t_tkn *token, char **av, t_msh *msh)
+{
+	char	*line;
+
+	line = msh->line;
 	if (token->name[0] == ' ' || token->name[0] == '\n'
 		|| token->name[0] == '\v'
 		|| token->name[0] == '\t' || token->name[0] == '\r'
@@ -86,10 +105,13 @@ static void	assign_tkn(t_tkn *token, char **av)
 		token->type = TKN_BLANK;
 	else if (token->name[0] == '\0')
 		token->type = TKN_NULL;
-	else if (token->name[0] == '|' && token->name[1] != '\"')
-		token->type = TKN_PIPE;
-	// else if (*av[0] == '>' && *av[1] == '>' && token->name[2] != '\"')
-	// 		token->type = TKN_APPEND;
+	else if (token->name[0] == '|')
+	{
+		if (verify_quotes(token->name[0], line) == FAILURE)
+			token->type = TKN_PIPE;
+		else
+			token->type = TKN_CMD;
+	}
 	else if (*av[0] == '>' && av[1] != NULL)
 	{	
 		if (*av[1] == '>')
@@ -97,41 +119,22 @@ static void	assign_tkn(t_tkn *token, char **av)
 		else
 			token->type = TKN_OUT;
 	}
-	// if (av[1] != NULL)
-	// {		
-	// 	if (*av[0] == '>' && *av[1] == '>')
-	// 			token->type = TKN_APPEND;
-	// }
 	else if (token->name[0] == '<' && token->name[1] == '<' && token->name[2] != '\"')
-		token->type = TKN_HEREDOC;
-	// else if (token->name[0] == '<' && token->name[1] != '\"' && token->name[2] == '\0')
-	// 	token->type = TKN_IN;
-
-
-	else if (token->name[0] == '<' && av[1] != NULL)
 	{
-		token->type = TKN_IN;
-		// if (*av[1] == '<')
-		// 	token->type = TKN_HEREDOC;
-		// else
-		// 	token->type = TKN_IN;
+		if (verify_quotes(token->name[0], line) == FAILURE)
+			token->type = TKN_HEREDOC;
+		else
+			token->type = TKN_CMD;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// else if (token->name[0] == '>' && token->name[1] != '\"' && token->name[2] == '\0')
+	else if (token->name[0] == '<' && av[1] != NULL)
+		token->type = TKN_IN;
 	else if (token->name[0] == '>')
-		token->type = TKN_OUT;
+	{
+		if (verify_quotes(token->name[0], line) == FAILURE)
+			token->type = TKN_OUT;
+		else
+			token->type = TKN_CMD;
+	}
 	else
 		token->type = TKN_CMD;
 }

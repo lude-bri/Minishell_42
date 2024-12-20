@@ -1,9 +1,6 @@
-!
-?
-a
-A
 example
 gdb.txt
+hello
 includes
 kill_minishell.sh
 lib
@@ -11,6 +8,8 @@ ls
 Makefile
 minishell
 minishell_tester
+ out
+out
 README.md
 src
 sup

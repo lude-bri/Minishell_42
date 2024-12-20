@@ -271,7 +271,8 @@ int		exec_more(t_msh *msh, t_tkn *tokens);
 
 //500_echo.c
 // int		msh_echo(char **argv);
-int		msh_echo(char **argv, t_msh *msh);
+// int		msh_echo(char **argv, t_msh *msh);
+int		msh_echo(char **argv, t_msh *msh, t_tkn *tokens);
 // int		msh_echo(t_msh *msh, t_tkn *tokens);
 
 //510_cd.c

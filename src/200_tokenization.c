@@ -157,7 +157,7 @@ char	*handle_double_quotes(const char *input, int *i, t_msh *msh)
 	word[0] = '\0';
 	while (input[*i] && input[*i] != '"')
 	{
-		if (input[*i] == '$' && input[*i + 2] != '\0')
+		if (input[*i] == '$' && input[*i + 1] != ' ' && input[*i + 2] != '\0')
 		{
 			expanded = expand_var(input, i, msh);
 			if (ft_strlen(expanded) + ft_strlen(word) >= word_size - 1)
@@ -240,15 +240,14 @@ char	**split_input(const char *input, t_msh *msh)
 			split.start = ++i;
 			if (input[i] == '"')
 				split.argv[j++] = ft_strdup("");
-			else if ((ft_strncmp(input, "|", 1) != 0) && (ft_strncmp(input, ">", 1) != 0)
-				&& (ft_strncmp(input, "<", 1) != 0) && ft_strncmp(input, "<<", 2) != 0)
+			else if ((ft_strncmp((char *)input, "|", 1) != 0) && (ft_strncmp((char *)input, ">", 1) != 0)
+				&& (ft_strncmp((char *)input, "<", 1) != 0) && ft_strncmp((char *)input, "<<", 2) != 0)
 				split.argv[j++] = handle_double_quotes(input, &i, msh);	
 		}
 		else if (input[i] == '$')
 		{
 			if (input[i + 1] == '>' || input[i + 1] == '<') //verificar todos os outros operadores
 			{
-				// syntax_check_redirs(msh, NULL);
 				printf("msh: syntax error near unexpected token `newline'\n");
 				break ;
 			}
