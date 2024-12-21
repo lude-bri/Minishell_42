@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/21 15:40:26 by mde-agui          #+#    #+#             */
+/*   Updated: 2024/12/21 15:44:27 by mde-agui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -17,7 +28,6 @@
 # include <readline/history.h>
 # include "../lib/libft/libft_42/libft.h"
 # include "../lib/libft/libft_42/fprintf.h"
-
 
 /* ************************************************************************** */
 /*                                  DEFINES                                   */
@@ -46,20 +56,19 @@
 # define NO_PATH 0
 # define NO_CMDS 0
 
-
 /* ************************************************************************** */
 /*                                  ENUMS								  	  */
 /* ************************************************************************** */
 
 //Minishell Status
-typedef enum e_status 
+typedef enum e_status
 {
 	FAILURE,
 	SUCCESS
-}   t_status;
+}	t_status;
 
 //Token Groups
-typedef	enum e_token_group
+typedef enum e_token_group
 {
 	TKN_IN,
 	TKN_APPEND,
@@ -91,10 +100,9 @@ typedef enum e_cmd_group
 /*                                  STRUCTS                                   */
 /* ************************************************************************** */
 
-
 //struct to deal with operations when tokenizing
 //used in 200_tokenization.c
-typedef struct s_tkn_op 
+typedef struct s_tkn_op
 {
 	int		number_words;
 	int		start;
@@ -102,7 +110,7 @@ typedef struct s_tkn_op
 }			t_tkn_op;
 
 //struct to deal with tokens
-typedef struct s_tkn 
+typedef struct s_tkn
 {
 	t_token_group	type;
 	t_cmd_group		cmd_type;
@@ -112,12 +120,12 @@ typedef struct s_tkn
 	struct s_tkn	*tokens;
 	struct s_tkn	*left; //to binary tree
 	struct s_tkn	*right; //to binary tree
-	struct s_tkn    *next; //linked list -> helps w free
+	struct s_tkn	*next; //linked list -> helps w free
 }					t_tkn;
 
 //struct that deals with commands
-typedef struct s_command 
-{	
+typedef struct s_command
+{
 	int		ac; //argument counter
 	char	**av; //argument values
 	char	*cmd; //command
@@ -129,7 +137,7 @@ typedef struct s_vector
 	int		count;
 	int		size;
 	t_tkn	**buffer;
-}			t_vector;	
+}			t_vector;
 
 //main struct to deal with the hole minishell system
 //it's called msh because its a MiniSHell
@@ -221,7 +229,6 @@ t_tkn	*tokenizer(t_msh *msh, char **av);
 //220_vectors.c
 void	vector_push(t_vector *vector, t_tkn *token);
 
-
 /* **************** */
 /*      300        */
 /* *************** */
@@ -237,7 +244,6 @@ t_tkn	*create_bin_tree(t_tkn *tokens);
 int		syntax_check(t_msh *msh, t_tkn *tokens);
 int		syntax_check_redirs(t_msh *msh, t_tkn *tokens);
 int		syntax_check_pipes(t_msh *msh, t_tkn *tokens);
-
 
 /* **************** */
 /*      400        */
@@ -284,12 +290,12 @@ void	update_env_var(char **envp, const char *var, const char *value);
 int		msh_pwd(void);
 
 //530_export.c
-int	sort_envp(char **envp);
-int	msh_export_no_var(char **envp);
-int	add_new_variable(char ***envp, t_exp *exp, const char *new_var);
-int	update_existing_variable(char ***envp, t_exp *exp);
-int	parse_variable(const char *new_var, t_exp *exp);
-int	msh_export(char ***envp, const char *new_var);
+int		sort_envp(char **envp);
+int		msh_export_no_var(char **envp);
+int		add_new_variable(char ***envp, t_exp *exp, const char *new_var);
+int		update_existing_variable(char ***envp, t_exp *exp);
+int		parse_variable(const char *new_var, t_exp *exp);
+int		msh_export(char ***envp, const char *new_var);
 
 //540_unset.c
 int		is_variable_match(const char *env_var, const char *var_name);
@@ -340,7 +346,6 @@ int		heredoc_pipe(t_tkn *tokens, t_msh *msh, char *arg, int flag);
 /* *************** */
 // ERROR HANDLERS
 
-
 /* **************** */
 /*      900        */
 /* *************** */
@@ -354,6 +359,5 @@ void	free_vector(t_vector *vector);
 
 //910_close.c
 void	ft_close(int *fd);
-
 
 #endif
