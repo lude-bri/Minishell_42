@@ -58,7 +58,9 @@ int	exec_one(t_msh *msh, t_tkn *tokens)
 	{
 		if (is_bi(tokens) == SUCCESS)
 		{
-			if (tokens->cmd_type == CMD_EXIT)
+			if (tokens->cmd_type == CMD_EXIT 
+				|| tokens->cmd_type == CMD_PWD
+				|| tokens->cmd_type == CMD_CD)
 				exec_bi(tokens, msh);
 			else
 			{

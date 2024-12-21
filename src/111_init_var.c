@@ -12,23 +12,17 @@
 
 #include "../includes/minishell.h"
 
-static char		*find_variable(char *target, char **envp, int flag);
-static char		*get_hostname(char *hostname, char c);
+static char		*find_variable(char *target, char **envp);
 
 char	*get_variable(char *v, char **envp)
 {
 	char	*find;
-	char	*hostname;
 
-	hostname = "SESSION_MANAGER";
-	if (v == hostname)
-		find = find_variable(v, envp, 1);
-	else
-		find = find_variable(v, envp, 0);
+	find = find_variable(v, envp);
 	return (find);
 }
 
-static char	*find_variable(char *target, char **envp, int flag)
+static char	*find_variable(char *target, char **envp)
 {
 	char	*tmp;
 	char	*var;
@@ -48,39 +42,6 @@ static char	*find_variable(char *target, char **envp, int flag)
 		}
 		++envp;
 	}
-	if (flag == 1)
-		var = get_hostname(var, '.');
 	free(tmp);
 	return (var);
-}
-
-static char		*get_hostname(char *hostname, char c)
-{
-	int		i;
-	int		j;
-	int		start;
-	char	*trim;
-
-	i = 0;
-	j = 0;
-	while (hostname[i] != '/')
-		i++;
-	start = i;
-	while (hostname[i++] != c)
-		j++;
-	trim = ft_calloc((j + 1), sizeof(char));
-	start++;
-	j = 0;
-	while (hostname[start])
-	{
-		if (hostname[start] != c)
-			trim[j] = hostname[start];
-		else
-			break ;
-		start++;
-		j++;
-	}
-	trim[j] = '\0';
-	free(hostname);
-	return (trim);
 }

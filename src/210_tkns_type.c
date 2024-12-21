@@ -113,13 +113,14 @@ static void	assign_tkn(t_tkn *token, char **av, t_msh *msh)
 			token->type = TKN_CMD;
 	}
 	else if (*av[0] == '>' && av[1] != NULL)
-	{	
+	{
 		if (*av[1] == '>')
 			token->type = TKN_APPEND;
 		else
 			token->type = TKN_OUT;
 	}
-	else if (token->name[0] == '<' && token->name[1] == '<' && token->name[2] != '\"')
+	else if (token->name[0] == '<' && token->name[1] == '<'
+		&& token->name[2] != '\"')
 	{
 		if (verify_quotes(token->name[0], line) == FAILURE)
 			token->type = TKN_HEREDOC;
@@ -159,55 +160,3 @@ static void	verify_tkn_cmd(t_tkn *token)
 	else
 		token->cmd_type = CMD_EXEC;
 }
-
-// void init_vector(t_vector *vector, size_t size)
-// {
-// 	vector->count = 0;
-// 	vector->size = size;
-// 	vector->buffer = malloc(sizeof(t_tkn *) * size);
-// }
-
-// void free_vector(t_vector *vector)
-// {
-// 	int		index;
-// 	t_tkn	*element;
-//
-// 	index = 0;
-// 	while (index < vector->count)
-// 	{
-// 		element = vector->buffer[index];
-// 		free(element->name);
-// 		free(element);
-// 		index++;
-// 	}
-// 	free(vector->buffer);
-// 	vector->buffer = NULL;
-// 	vector->count = 0;
-// 	vector->size = 0;
-// }
-//
-// void vector_push(t_vector *vector, t_tkn *element)
-// {
-// 	int		i;
-// 	t_tkn	**new_buffer;
-//
-// 	if (vector->buffer == NULL)
-// 		init_vector(vector, 100);
-// 	if (vector->count == vector->size)
-// 	{
-// 		vector->size = vector->size * 2 + 1;
-// 		new_buffer= malloc(sizeof(t_tkn *) * vector->size);
-// 		if (!new_buffer)
-// 			return ;
-// 		i = 0;
-// 		while (i < vector->count)
-// 		{
-// 			new_buffer[i] = vector->buffer[i];
-// 			i++;
-// 		}
-// 		free(vector->buffer);
-// 		vector->buffer = new_buffer;
-// 	}
-// 	vector->buffer[vector->count] = element;
-// 	vector->count++;
-// }

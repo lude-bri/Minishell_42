@@ -12,8 +12,6 @@
 
 #include "../includes/minishell.h"
 
-// static char	**free_arrays(const char **s, int a);
-
 char	*expand_var(const char *input, int *i, t_msh *msh)
 {
 	int		len;
@@ -28,20 +26,18 @@ char	*expand_var(const char *input, int *i, t_msh *msh)
 		return (NULL);
 	if (input[start] == '?')
 	{
-		// printf("Current msh->exit_status before expanding $?: %d\n", msh->exit_status);
 		result = ft_itoa(msh->exit_status);
-		// printf("Expanding $?: %s\n", result);
 		*i += 2;
-		return (result); 
+		return (result);
 	}
-	while (input[start + len] && (ft_isalnum(input[start + len]) || input[start + len] == '_'))
+	while (input[start + len] && (ft_isalnum(input[start + len])
+			|| input[start + len] == '_'))
 		len++;
 	var_name = (char *)malloc(len + 1);
 	if (!var_name)
 		return (NULL);
 	ft_strlcpy(var_name, &input[start], len + 1);
 	var_name[len] = '\0';
-	// value = getenv(var_name);
 	value = get_variable(var_name, msh->envp);
 	free(var_name);
 	if (value)
@@ -126,24 +122,14 @@ int	count_words(const char *input)
 		else if (input[i])
 		{
 			counter++;
-			while (input[i] && input[i] != '\'' && input[i] != '"' && input[i] != '|'
-				&& input[i] != '<' && input[i] != '>' && !is_whitespace(input[i]))
+			while (input[i] && input[i] != '\'' && input[i] != '"'
+				&& input[i] != '|' && input[i] != '<'
+				&& input[i] != '>' && !is_whitespace(input[i]))
 				i++;
 		}
 	}
 	return (counter);
 }
-
-// static char	**free_arrays(const char **s, int a)
-// {
-// 	while (a > 0)
-// 	{
-// 		a--;
-// 		free((void *)s[a]);
-// 	}
-// 	free(s);
-// 	return (NULL);
-// }
 
 char	*handle_double_quotes(const char *input, int *i, t_msh *msh)
 {
@@ -151,7 +137,7 @@ char	*handle_double_quotes(const char *input, int *i, t_msh *msh)
 	size_t	len;
 	char	*word;
 	char	*expanded;
-	
+
 	word_size = ft_strlen(input) * 1024;
 	word = (char *)malloc(word_size);
 	word[0] = '\0';
@@ -217,10 +203,7 @@ char	**split_input(const char *input, t_msh *msh)
 	int			j;
 	char		*expanded;
 
-	// split.number_words = count_words(input);
 	msh->len = take_len(input);
-	// printf("Token count: %d\n", split.number_words);
-	// split.argv = (char **)malloc(sizeof(char *) * (split.number_words + 1));
 	split.argv = (char **)malloc(sizeof(char *) * (msh->len + 1));
 	i = 0;
 	j = 0;
@@ -228,7 +211,6 @@ char	**split_input(const char *input, t_msh *msh)
 	if (!split.argv)
 		return (NULL);
 	msh->len = take_len(input);
-	// printf("%d\n", msh->len);
 	while (input[i])
 	{
 		while (input[i] && is_whitespace(input[i]))
@@ -240,13 +222,15 @@ char	**split_input(const char *input, t_msh *msh)
 			split.start = ++i;
 			if (input[i] == '"')
 				split.argv[j++] = ft_strdup("");
-			else if ((ft_strncmp((char *)input, "|", 1) != 0) && (ft_strncmp((char *)input, ">", 1) != 0)
-				&& (ft_strncmp((char *)input, "<", 1) != 0) && ft_strncmp((char *)input, "<<", 2) != 0)
-				split.argv[j++] = handle_double_quotes(input, &i, msh);	
+			else if ((ft_strncmp((char *)input, "|", 1) != 0)
+				&& (ft_strncmp((char *)input, ">", 1) != 0)
+				&& (ft_strncmp((char *)input, "<", 1) != 0)
+				&& ft_strncmp((char *)input, "<<", 2) != 0)
+				split.argv[j++] = handle_double_quotes(input, &i, msh);
 		}
 		else if (input[i] == '$')
 		{
-			if (input[i + 1] == '>' || input[i + 1] == '<') //verificar todos os outros operadores
+			if (input[i + 1] == '>' || input[i + 1] == '<')
 			{
 				printf("msh: syntax error near unexpected token `newline'\n");
 				break ;
@@ -262,11 +246,10 @@ char	**split_input(const char *input, t_msh *msh)
 				if (expanded)
 				{
 					split.argv[j++] = ft_strdup(expanded);
-					free(expanded);	
+					free(expanded);
 				}
 			}
 		}
-
 		else if (input[i] == '|')
 		{
 			if (i > 0 && (input[i - 1] == '"' || input[i + 1] == '"'))
@@ -275,15 +258,6 @@ char	**split_input(const char *input, t_msh *msh)
 				split.argv[j++] = ft_strdup("|");
 			i++;
 		}
-		// else if (input[i] == '|')
-		// {
-		// 	if (input[i - 1] == '"' || input[i + 1] == '"')
-		// 		split.argv[j++] = ft_strdup("\"|\"");
-		// 	else
-		// 		split.argv[j++] = ft_strdup("|");
-		// 	i++;
-		// }
-		//
 		else if (input[i] == '<' && input[i + 1] == '<')
 		{
 			if (i > 0 && input[i - 1] == '"')
@@ -292,14 +266,6 @@ char	**split_input(const char *input, t_msh *msh)
 				split.argv[j++] = ft_strdup("<<");
 			i += 2;
 		}
-		// else if (input[i] == '<' && input[i + 1] == '<')
-		// {
-		// 	if (input[i - 1] == '"')
-		// 		split.argv[j++] = ft_strdup("\"<<\"");
-		// 	else
-		// 		split.argv[j++] = ft_strdup("<<");
-		// 	i += 2;
-		// }
 		else if (input[i] == '<')
 		{
 			if (msh->len == 1)
@@ -335,21 +301,17 @@ char	**split_input(const char *input, t_msh *msh)
 			else
 				split.argv[j++] = ft_strdup(">");
 			i++;
-			//OLD_VERSION
-			// if (input[i - 1] == '"' || input[i + 1] == '"')
-			// 	split.argv[j++] = ft_strdup("\">\"");
-			// else
-			// 	split.argv[j++] = ft_strdup(">");
-			// i++;
 		}
 		else if (input[i] && !is_whitespace(input[i]))
 		{
 			split.start = i;
-			while (input[i] && input[i] != '\'' && input[i] != '"' && input[i] != '|' && input[i] != '>' 
-				&& input[i] != '<' && !is_whitespace(input[i]))
+			while (input[i] && input[i] != '\''
+				&& input[i] != '"' && input[i] != '|'
+				&& input[i] != '>' && input[i] != '<'
+				&& !is_whitespace(input[i]))
 				i++;
 			split.argv[j++] = copy_word(input, split.start, i);
-		}	
+		}
 		if (j > 0 && !split.argv[j - 1])
 		{
 			printf("Error: Memory allocation failed for token %d\n", j - 1);
@@ -360,12 +322,5 @@ char	**split_input(const char *input, t_msh *msh)
 		}
 	}
 	split.argv[j] = NULL;
-	// i = 0;
-	// while (i < j)
-	// {
-	// 	printf("Token %d: %s\n", i, split.argv[i]);
-	// 	i++;
-	// }
 	return (split.argv);
 }
-

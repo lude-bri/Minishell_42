@@ -17,7 +17,7 @@ static int	syntax(t_msh *msh, char *line);
 static int	count_pipes(t_tkn *tokens)
 {
 	int		counter;
-	
+
 	counter = 0;
 	while (tokens)
 	{
@@ -42,7 +42,7 @@ t_tkn	*to_parse(t_msh *msh)
 	msh->cmds = ft_calloc(1, sizeof(t_command));
 	if (!msh->cmds)
 		return (NULL);
-	msh->cmds->av = split_input(line, msh); //necessario revisar!!
+	msh->cmds->av = split_input(line, msh);
 	if (!msh->cmds->av || !*msh->cmds->av)
 	{
 		free_arg(msh->cmds->av);
@@ -58,14 +58,7 @@ t_tkn	*to_parse(t_msh *msh)
 	msh->cmd_count = ft_matrixlen(msh->cmds->av);
 	msh->line = ft_strdup(line);
 	tokens = tokenizer(msh, msh->cmds->av);
-	// if (syntax_check(msh, tokens) == FAILURE) //meter no inicio de tudo
-	// {
-	// 	free_arg(msh->cmds->av);
-	// 	free(msh->cmds);
-	// 	return (NULL);
-	// }
 	msh->pipe_count = count_pipes(tokens);
-	// msh->line = ft_strdup(line); //ter o line para fazer verificacao no echo
 	if (line)
 	{
 		free(line);
@@ -116,14 +109,105 @@ static void	error_syntax(t_msh *msh)
 // 3. SE FOR NULO A SEGUIR DE UM OPERADOR
 // 4. SE HOUVER MAIS DO QUE UMA REDIRECAO SEGUIDA
 //
-static int syntax(t_msh *msh, char *line) {
+// static int syntax(t_msh *msh, char *line)
+// {
+// 	char	*str = *msh->cmds->av;
+// 	int		i = 0;
+// 	char	*temp;
+//
+// 	temp = line;
+// 	while (*temp)
+// 		temp++;
+// 	temp--;
+// 	if ((ft_strncmp(temp, "|", 1) == 0)
+// 		|| (ft_strncmp(temp, "<", 1) == 0)
+// 		|| (ft_strncmp(temp, ">", 1) == 0))
+// 	{
+// 		error_syntax(msh);
+// 		return (FAILURE);
+// 	}
+// 	// Caso 1: Verificar operadores seguidos de nulo diretamente
+// 	while (line[i] != '\0') 
+// 	{
+// 		if (i > 0 && (line[0] == '<' && line[1] == '<'))
+// 			return (SUCCESS);
+// 		if (line[i] == '|' || line[i] == '>' || line[i] == '<') {
+// 			if (line[i + 1] == '\0') {
+// 				error_syntax(msh);
+// 				return (FAILURE);
+// 			}
+// 		}
+// 		i++;
+// 	}
+// 	// Caso 2. Operadores seguidos de operadores
+// 	// while (line[i])
+// 	// {
+// 	// 	if (i > 0 && ((line[i] == '<' && line[i + 1] == '<')
+// 	// 		|| (line[i] == '>' && line[i + 1] == '>')
+// 	// 		|| (line[i] == '<') || (line[i] == '<')))
+// 	// 	{
+// 	// 		if (line[i + 1] == '|')
+// 	// 		{
+// 	// 			error_syntax(msh);
+// 	// 			return (FAILURE);
+// 	// 		}
+// 	// 	}
+// 	// 	if (line[i] == '|')
+// 	// 	{
+// 	// 		if (i > 0 && line[i] == '|')
+// 	// 		{
+// 	// 			error_syntax(msh);
+// 	// 			return (FAILURE);
+// 	// 		}
+// 	// 	}
+// 	// 	i++;
+// 	// }
+//
+// 	if (strstr(line, "||") || strstr(str, "&&") || strstr(str, "| |")
+// 		|| strstr(str, "<>") || strstr(str, "><")
+// 		|| strstr(str, "?>") || strstr(str, ">?")
+// 		|| strstr(str, ">|") || strstr(str, "|<") || strstr(str, "|>")
+// 		|| strstr(str, "<|"))
+// 	{
+// 		error_syntax(msh);
+// 		return (FAILURE);
+// 	}
+// 	i = 0;
+// 	while (str[i]) 
+// 	{
+// 		if (str[i] == '|') 
+// 		{
+// 			if (str[i + 1] == '\0' || str[i + 1] == ' ' || str[i + 1] == '|') 
+// 			{
+// 				error_syntax(msh);
+// 				return (FAILURE);
+// 			}
+// 		}
+// 		i++;
+// 	}
+// 	return (SUCCESS);
+// }
+
+static int is_operator(char *line)
+{
+    if (!*line)
+        return (FAILURE);
+    if (*line == '|' || *line == '<' || *line == '>')
+        return (SUCCESS);
+    return (FAILURE);
+}
+
+static int syntax(t_msh *msh, char *line)
+{
 	char *str = *msh->cmds->av;
 
 	int i = 0;
+	char	*temp;
 
-	while (*line)
-		line++;
-	line--;
+	temp = line;
+	while (*temp)
+		temp++;
+	temp--;
 	if ((ft_strncmp(line, "|", 1) == 0)
 		|| (ft_strncmp(line, "<", 1) == 0)
 		|| (ft_strncmp(line, ">", 1) == 0))
@@ -144,6 +228,33 @@ static int syntax(t_msh *msh, char *line) {
 		}
 		i++;
 	}
+    i = 0;
+    while (line[i])
+    {
+		if ((ft_strncmp(line, "echo \"", 6) == 0)
+			|| ft_strncmp(line, "echo \'", 6) == 0)
+			return (SUCCESS);
+        // Avança enquanto não encontrar um operador
+        if (is_operator(&line[i]) == FAILURE)
+        {
+            i++;
+            continue;
+        }
+        // Verifica se é "<<"" ou ">>"
+        if ((ft_strncmp(&line[i], "<<", 2) == 0) || (ft_strncmp(&line[i], ">>", 2) == 0))
+        {
+            i += 2; // Salta os dois caracteres
+            continue;
+        }
+        // Verifica se o próximo caractere também é um operador
+        if (is_operator(&line[i + 1]) == SUCCESS)
+        {
+            error_syntax(msh);
+            return (FAILURE);
+        }
+        i++; // Avança para o próximo caractere
+    }
+    return (SUCCESS);
 
 	// Caso 2: Verificar se há múltiplos pipes consecutivos ou operadores inválidos
 	if (strstr(str, "||") || strstr(str, "&&") || strstr(str, "| |") || 
@@ -167,4 +278,3 @@ static int syntax(t_msh *msh, char *line) {
 	}
 	return (SUCCESS); // Sem erro de sintaxe
 }
-
