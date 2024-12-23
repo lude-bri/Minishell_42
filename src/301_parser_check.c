@@ -14,7 +14,9 @@
 
 int	check_initial_syntax(t_msh *msh, char *line)
 {
-	if ((ft_strncmp(line, "|", 1) == 0)
+	if ((ft_strncmp(line, "<<", 2) == 0))
+		return (SUCCESS);
+	else if ((ft_strncmp(line, "|", 1) == 0)
 		|| (ft_strncmp(line, "<", 1) == 0)
 		|| (ft_strncmp(line, ">", 1) == 0))
 		return (error_syntax(msh), FAILURE);
@@ -92,6 +94,11 @@ int	detailed_syntax_checks(t_msh *msh, char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] == '<')
+	{
+		if (str[i + 1] != '\0' && str[i + 1] == '<')
+			return (SUCCESS);
+	}
 	while (str[i] != '\0')
 	{
 		if ((str[i] == '&' || str[i] == '|' || str[i] == '>' || str[i] == '<'))
