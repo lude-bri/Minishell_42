@@ -15,7 +15,12 @@
 int	check_initial_syntax(t_msh *msh, char *line)
 {
 	if ((ft_strncmp(line, "<<", 2) == 0))
-		return (SUCCESS);
+	{
+		if (ft_strlen(line) >= 3)
+			return (SUCCESS);
+		else
+			return (error_syntax(msh), FAILURE);
+	}
 	else if ((ft_strncmp(line, "|", 1) == 0)
 		|| (ft_strncmp(line, "<", 1) == 0)
 		|| (ft_strncmp(line, ">", 1) == 0))
