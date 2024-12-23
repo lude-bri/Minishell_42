@@ -68,7 +68,10 @@ void	handle_double_in_redir(const char *input, t_tkn_op *sp)
 void	handle_single_in_redir(const char *input, t_tkn_op *sp, t_msh *msh)
 {
 	if (msh->len == 1)
+	{
+		(sp->i)++;
 		return ;
+	}
 	else if (msh->len == 2)
 	{
 		if (sp->i > 0 && input[sp->i - 1] == '\0')

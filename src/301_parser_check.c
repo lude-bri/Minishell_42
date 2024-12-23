@@ -21,6 +21,11 @@ int	check_initial_syntax(t_msh *msh, char *line)
 		else
 			return (error_syntax(msh), FAILURE);
 	}
+	else if (ft_strncmp(line, "<", 1) == 0)
+	{
+		if (ft_strlen(line) > 1)
+			return (SUCCESS);
+	}
 	else if ((ft_strncmp(line, "|", 1) == 0)
 		|| (ft_strncmp(line, "<", 1) == 0)
 		|| (ft_strncmp(line, ">", 1) == 0))
@@ -82,19 +87,19 @@ int	initial_syntax_checks(t_msh *msh, char *line, char *str)
 	len = ft_strlen(str);
 	if (check_initial_syntax(msh, line) == FAILURE)
 		return (FAILURE);
-	if (check_str_syntax(msh, str) == FAILURE)
+	if (check_str_syntax(msh, line) == FAILURE)
 		return (FAILURE);
 	if (check_line_syntax(msh, line) == FAILURE)
 		return (FAILURE);
 	if (ft_strnstr(str, "||", len) || ft_strnstr(str, "&&", len)
-		|| ft_strnstr(str, "| |", len) || ft_strnstr(str, ">>", len)
+		|| ft_strnstr(str, "| |", len) || ft_strnstr(line, ">>>", len)
 		|| ft_strnstr(str, "<>", len) || ft_strnstr(str, "><", len)
 		|| ft_strnstr(str, "?>", len) || ft_strnstr(str, ">?", len))
 		return (error_syntax(msh), FAILURE);
 	return (SUCCESS);
 }
 
-int	detailed_syntax_checks(t_msh *msh, char *str)
+int	detailed_syntax_checks(t_msh *msh, char *str, char *line)
 {
 	int	i;
 
@@ -102,6 +107,11 @@ int	detailed_syntax_checks(t_msh *msh, char *str)
 	if (str[i] == '<')
 	{
 		if (str[i + 1] != '\0' && str[i + 1] == '<')
+			return (SUCCESS);
+	}
+	if (line[i] == '<')
+	{
+		if (line[i + 1] != '\0' && ft_strlen(line) > 1)
 			return (SUCCESS);
 	}
 	while (str[i] != '\0')

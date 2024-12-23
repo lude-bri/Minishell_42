@@ -53,7 +53,7 @@ int	syntax(t_msh *msh, char *line)
 	str = *msh->cmds->av;
 	if (initial_syntax_checks(msh, line, str) == FAILURE)
 		return (FAILURE);
-	if (detailed_syntax_checks(msh, str) == FAILURE)
+	if (detailed_syntax_checks(msh, str, line) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }

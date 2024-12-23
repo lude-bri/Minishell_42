@@ -25,7 +25,10 @@ void	handle_output_redir(const char *input, t_tkn_op *sp, t_msh *msh)
 	if (input[sp->i] == '>')
 	{
 		if (msh->len == 1)
+		{
+			(sp->i)++;
 			return ;
+		}
 		else if (msh->len == 2)
 		{
 			if (sp->i > 0 && input[sp->i - 1] == '\0')
@@ -55,11 +58,6 @@ void	handle_expand(const char *input, t_tkn_op *sp, t_msh *msh)
 {
 	char	*expanded;
 
-	if (input[sp->i + 1] == '>' || input[sp->i + 1] == '<')
-	{
-		perror("msh: syntax error near unexpected token `newline'\n");
-		return ;
-	}
 	if (input[sp->i + 1] == '\0' || input[sp->i + 1] == '\"')
 	{
 		sp->argv[(sp->j)++] = ft_strdup("$");

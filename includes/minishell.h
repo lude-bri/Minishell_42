@@ -291,10 +291,12 @@ t_tkn	*to_parse(t_msh *msh);
 
 //301_parser_check.c
 int		check_initial_syntax(t_msh *msh, char *line);
-int		check_str_syntax(t_msh *msh, char *str);
+// int		check_str_syntax(t_msh *msh, char *str);
+int		check_str_syntax(t_msh *msh, char *line);
 int		check_line_syntax(t_msh *msh, char *line);
 int		initial_syntax_checks(t_msh *msh, char *line, char *str);
-int		detailed_syntax_checks(t_msh *msh, char *str);
+// int		detailed_syntax_checks(t_msh *msh, char *str);
+int		detailed_syntax_checks(t_msh *msh, char *str, char *line);
 
 //310_bi_tree.c
 t_tkn	*create_bin_tree(t_tkn *tokens);
