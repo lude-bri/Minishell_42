@@ -17,7 +17,8 @@ int	is_variable_match(const char *env_var, const char *var_name)
 	int	len;
 
 	len = ft_strlen(var_name);
-	return (ft_strncmp(env_var, var_name, len) == 0 && env_var[len] == '=');
+	return (ft_strncmp(env_var, var_name, len) == 0 && (env_var[len] == '='
+			|| env_var[len] == '\0'));
 }
 
 int	remove_variable(char ***envp, char *var)
