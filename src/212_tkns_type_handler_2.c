@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 14:59:11 by mde-agui          #+#    #+#             */
-/*   Updated: 2024/12/22 15:20:42 by mde-agui         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:18:03 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,26 @@ void	handle_pipe_token(t_tkn *token, char *line)
 		token->type = TKN_CMD;
 }
 
-void	handle_append_token(t_tkn *token)
+void	handle_append_token(t_tkn *token, char *line)
 {
-	token->type = TKN_APPEND;
+	if (verify_inbetween_quotes(token->name[0], line) == FAILURE)
+		token->type = TKN_APPEND;
+	else
+		token->type = TKN_CMD;
 }
 
-void	handle_out_token(t_tkn *token)
+void	handle_out_token(t_tkn *token, char *line)
 {
-	token->type = TKN_OUT;
+	if (verify_inbetween_quotes(token->name[0], line) == FAILURE)
+		token->type = TKN_OUT;
+	else
+		token->type = TKN_CMD;
 }
 
-void	handle_in_token(t_tkn *token)
+void	handle_in_token(t_tkn *token, char *line)
 {
-	token->type = TKN_IN;
+	if (verify_inbetween_quotes(token->name[0], line) == FAILURE)
+		token->type = TKN_IN;
+	else
+		token->type = TKN_CMD;
 }

@@ -14,7 +14,7 @@
 
 int	check_initial_syntax(t_msh *msh, char *line)
 {
-	if ((ft_strncmp(line, "<<", 2) == 0))
+	if ((ft_strncmp(line, "<<", 2) == 0) || ft_strncmp(line, ">>", 2) == 0)
 	{
 		if (ft_strlen(line) >= 3)
 			return (SUCCESS);
@@ -71,7 +71,8 @@ int	check_line_syntax(t_msh *msh, char *line)
 			|| (ft_strncmp(&line[i], ">>", 2) == 0))
 		{
 			i += 2;
-			continue ;
+			if (is_operator(&line[i]) == SUCCESS)
+				return (error_syntax(msh), FAILURE);
 		}
 		if (is_operator(&line[i + 1]) == SUCCESS)
 			return (error_syntax(msh), FAILURE);

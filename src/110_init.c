@@ -29,6 +29,7 @@ void	init_struct(t_msh *msh)
 	msh->path = NULL;
 	msh->cmd_count = 0;
 	msh->flag_redir = false;
+	msh->flag_exit = false;
 	msh->arg = NULL;
 }
 

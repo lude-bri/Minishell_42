@@ -45,9 +45,15 @@ static int	handle_multiple_commands(char **argv, t_msh *msh)
 			msh->exit_status = 256 - ft_atoi(argv[2]);
 	}
 	else if (is_letter(argv[1]))
+	{
+		msh->flag_exit = false;
 		return (write(STDERR_FILENO, " numeric argument required\n", 26), 2);
+	}
 	else
+	{
+		msh->flag_exit = true;
 		return (write(STDERR_FILENO, " too many arguments\n", 20), 1);
+	}
 	return (msh->exit_status);
 }
 
@@ -74,6 +80,7 @@ int	msh_exit(char **argv, t_msh *msh, t_tkn *tokens)
 {
 	if (msh->cmd_count >= 2)
 		msh->exit_status = verify_arg(argv, msh, tokens);
-	msh->exit_status = exit_msh(argv, msh, tokens);
+	if (msh->flag_exit == false)
+		msh->exit_status = exit_msh(argv, msh, tokens);
 	return (msh->exit_status);
 }

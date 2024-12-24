@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 15:01:31 by mde-agui          #+#    #+#             */
-/*   Updated: 2024/12/22 15:18:44 by mde-agui         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:39:31 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,22 @@ int	verify_quotes(char operator, char *line)
 	{
 		if (line[i + 1] == '"' || line[i - 1] == '"'
 			|| line[i + 1] == '\'' || line[i - 1] == '\'')
+			return (SUCCESS);
+	}
+	return (FAILURE);
+}
+
+int	verify_inbetween_quotes(char operator, char *line)
+{
+	int		i;
+
+	i = 0;
+	while (line[i] != operator)
+		i++;
+	if (i > 0)
+	{
+		if ((line[i + 1] == '"' && line[i - 1] == '"')
+			|| (line[i + 1] == '\'' && line[i - 1] == '\''))
 			return (SUCCESS);
 	}
 	return (FAILURE);
@@ -45,19 +61,19 @@ void	handle_other_tokens(t_tkn *tkn, char **av, t_msh *msh)
 		handle_pipe_token(tkn, line);
 	else if (*av[0] == '>' && av[1] != NULL)
 	{
-		if (*av[1] == '>')
-			handle_append_token(tkn);
+		if (ft_strncmp(*av, ">>", 2) == 0)
+			handle_append_token(tkn, line);
 		else
-			handle_out_token(tkn);
+			handle_out_token(tkn, line);
 	}
 	else if (tkn->name[0] == '<' && tkn->name[1] == '<' && tkn->name[2] != '\"')
 		handle_heredoc_token(tkn, line);
 	else if (tkn->name[0] == '<' && av[1] != NULL)
-		handle_in_token(tkn);
+		handle_in_token(tkn, line);
 	else if (tkn->name[0] == '>')
 	{
 		if (verify_quotes(tkn->name[0], line) == FAILURE)
-			handle_out_token(tkn);
+			handle_out_token(tkn, line);
 		else
 			tkn->type = TKN_CMD;
 	}

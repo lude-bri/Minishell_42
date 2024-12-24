@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 15:40:26 by mde-agui          #+#    #+#             */
-/*   Updated: 2024/12/23 03:14:13 by mde-agui         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:17:40 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ typedef struct s_msh
 	int			len;
 	int			exit_status;
 	bool		flag_redir;
+	bool		flag_exit;
 	t_vector	tokens;
 	size_t		word_size;
 
@@ -244,14 +245,18 @@ void	handle_words(const char *input, t_tkn_op *sp);
 void	handle_double_in_redir(const char *input, t_tkn_op *sp);
 void	handle_single_in_redir(const char *input, t_tkn_op *sp, t_msh *msh);
 
-//203_tkns_misc.c
+//203_tkns_handlers_3.c
+void	handle_double_out_redir(const char *input, t_tkn_op *sp);
+void	handle_single_out_redir(const char *input, t_tkn_op *sp, t_msh *msh);
+
+//204_tkns_misc.c
 int		quote_helper(const char *input, int i);
 bool	special_char_helper(const char *input, int *i);
 bool	regular_char_helper(const char *input, int *i);
 void	append_char_to_word(const char *input, int *i, t_msh *msh);
 int		take_len(const char *input);
 
-//204_tkns_expander.c
+//205_tkns_expander.c
 char	*expand_helper(const char *input, int *i, t_msh *msh);
 char	*expand_var(const char *input, int *i, t_msh *msh);
 
@@ -264,15 +269,16 @@ t_tkn	*tokenizer(t_msh *msh, char **av);
 
 //211_tkns_type_handler.c
 int		verify_quotes(char operator, char *line);
+int		verify_inbetween_quotes(char operator, char *line);
 void	handle_heredoc_token(t_tkn *token, char *line);
 void	handle_other_tokens(t_tkn *tkn, char **av, t_msh *msh);
 
 //212_tkns_type_handler_2.c
 void	handle_blank_and_null(t_tkn *token);
 void	handle_pipe_token(t_tkn *token, char *line);
-void	handle_append_token(t_tkn *token);
-void	handle_out_token(t_tkn *token);
-void	handle_in_token(t_tkn *token);
+void	handle_append_token(t_tkn *token, char *line);
+void	handle_out_token(t_tkn *token, char *line);
+void	handle_in_token(t_tkn *token, char *line);
 
 //220_vectors.c
 void	vector_push(t_vector *vector, t_tkn *token);

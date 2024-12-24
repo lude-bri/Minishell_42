@@ -32,13 +32,30 @@ static int	is_bi(t_tkn *tokens)
 		return (FAILURE);
 }
 
+static int	is_special_bi(t_tkn *tokens)
+{
+	if (tokens->cmd_type == CMD_CD)
+		return (SUCCESS);
+	if (tokens->cmd_type == CMD_PWD)
+		return (SUCCESS);
+	if (tokens->cmd_type == CMD_ENV)
+		return (SUCCESS);
+	if (tokens->cmd_type == CMD_EXIT)
+		return (SUCCESS);
+	if (tokens->cmd_type == CMD_UNSET)
+		return (SUCCESS);
+	if (tokens->cmd_type == CMD_EXPORT)
+		return (SUCCESS);
+	else
+		return (FAILURE);
+}
+
 void	handle_builtin_commands(t_msh *msh, t_tkn *tokens)
 {
 	int	pid;
 	int	status;
 
-	if (tokens->cmd_type == CMD_EXIT || tokens->cmd_type == CMD_PWD
-		|| tokens->cmd_type == CMD_CD)
+	if (is_special_bi(tokens) == SUCCESS)
 		exec_bi(tokens, msh);
 	else
 	{

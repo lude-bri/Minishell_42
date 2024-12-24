@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 23:11:56 by mde-agui          #+#    #+#             */
-/*   Updated: 2024/12/22 00:10:30 by mde-agui         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:20:44 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,10 @@ void	handle_input_redir(const char *input, t_tkn_op *sp, t_msh *msh)
 
 void	handle_output_redir(const char *input, t_tkn_op *sp, t_msh *msh)
 {
-	if (input[sp->i] == '>')
-	{
-		if (msh->len == 1)
-		{
-			(sp->i)++;
-			return ;
-		}
-		else if (msh->len == 2)
-		{
-			if (sp->i > 0 && input[sp->i - 1] == '\0')
-			{
-				if (input[sp->i + 1] == '"')
-					sp->argv[(sp->j)++] = ft_strdup("\">\"");
-				else
-					return ;
-			}
-		}
-		else
-			sp->argv[(sp->j)++] = ft_strdup(">");
-		(sp->i)++;
-	}
+	if (input[sp->i] == '>' && input[sp->i + 1] == '>')
+		handle_double_out_redir(input, sp);
+	else if (input[sp->i] == '>')
+		handle_single_out_redir(input, sp, msh);
 }
 
 void	handle_pipes(const char *input, t_tkn_op *sp)

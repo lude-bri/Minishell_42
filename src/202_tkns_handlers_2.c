@@ -70,6 +70,7 @@ void	handle_single_in_redir(const char *input, t_tkn_op *sp, t_msh *msh)
 	if (msh->len == 1)
 	{
 		(sp->i)++;
+		sp->argv[(sp->j)++] = ft_strdup("<");
 		return ;
 	}
 	else if (msh->len == 2)

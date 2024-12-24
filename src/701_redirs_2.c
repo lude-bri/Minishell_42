@@ -58,7 +58,7 @@ void	handle_command_arguments(t_tkn *tokens, t_msh *msh)
 	int	i;
 
 	i = 0;
-	msh->arg = ft_calloc(tokens->len + 1, sizeof(char *));
+	msh->arg = ft_calloc(1024 + 1, sizeof(char *));
 	while (tokens)
 	{
 		if (tokens->type == TKN_PIPE)

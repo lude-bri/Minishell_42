@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 08:03:26 by luigi             #+#    #+#             */
-/*   Updated: 2024/12/23 02:52:18 by mde-agui         ###   ########.fr       */
+/*   Updated: 2024/12/24 12:46:46 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	redir_append(t_tkn *tokens, t_msh *msh)
 {
 	int	fd;
 
-	tokens = tokens->next->next;
+	tokens = tokens->next;
 	fd = open(tokens->name, O_WRONLY | O_CREAT | O_APPEND, 0775);
 	if (fd < 0)
 	{
