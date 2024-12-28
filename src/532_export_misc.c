@@ -18,11 +18,11 @@ void	print_env_var(char *env_var)
 	int		j;
 
 	equal_sign = ft_strchr(env_var, '=');
-	j = 0;
 	if (equal_sign)
 	{
-		printf("declare -x ");
-		while (&env_var[j] != equal_sign)
+		j = 0;
+		write(1, "declare -x ", 11);
+		while (env_var[j] != '=')
 		{
 			if (write(1, &env_var[j], 1) == -1)
 				return ;

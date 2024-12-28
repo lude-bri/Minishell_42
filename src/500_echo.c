@@ -30,19 +30,39 @@ static int	verify_whitespaces(char *line)
 	return (FAILURE);
 }
 
+// int	handle_echo_options(char **argv, int *newline)
+// {
+// 	int	i;
+//
+// 	i = 1;
+// 	*newline = 1;
+// 	if (argv[1] && ft_strncmp(argv[1], "-n", 2) == 0)
+// 	{
+// 		*newline = 0;
+// 		i = 2;
+// 	}
+// 	if (ft_strcmp(argv[0], "echo") != 0)
+// 		i++;
+// 	return (i);
+// }
+
 int	handle_echo_options(char **argv, int *newline)
 {
-	int	i;
+	int		i;
+	int		j;
 
-	i = 1;
 	*newline = 1;
-	if (argv[1] && ft_strncmp(argv[1], "-n", 2) == 0)
+	i = 1;
+	while (argv[i] && argv[i][0] == '-' && argv[i][1] == 'n')
 	{
+		j = 2;
+		while (argv[i][j] && argv[i][j] == 'n')
+			j++;
+		if (argv[i][j] != '\0')
+			break ;
 		*newline = 0;
-		i = 2;
-	}
-	if (ft_strcmp(argv[0], "echo") != 0)
 		i++;
+	}
 	return (i);
 }
 
