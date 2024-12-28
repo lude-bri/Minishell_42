@@ -50,5 +50,5 @@ char	*expand_var(const char *input, int *i, t_msh *msh)
 	else
 		exp.result = ft_strdup("");
 	*i += len + 1;
-	return (exp.result);
+	return (free(exp.value), exp.result);
 }
