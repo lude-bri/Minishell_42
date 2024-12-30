@@ -33,6 +33,7 @@ int	remove_variable(char ***envp, char *var)
 		if (is_variable_match((*envp)[j], var))
 		{
 			found = 1;
+			free((*envp)[j]);
 			while ((*envp)[j + 1])
 			{
 				(*envp)[j] = (*envp)[j + 1];
