@@ -72,6 +72,7 @@ static int	exit_msh(char **argv, t_msh *msh, t_tkn *tokens)
 	printf("exit\n");
 	(void)argv;
 	free_array(msh->envp, 0);
+	free_array(msh->ex_envp, 0);
 	free_msh(msh->cmds, msh, tokens);
 	exit(msh->exit_status);
 }

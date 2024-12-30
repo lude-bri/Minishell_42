@@ -32,11 +32,11 @@ void	execute_builtin_commands(t_tkn *tokens, t_msh *msh)
 			&& ((ft_strcmp(msh->cmds->av[1], ">") != 0)
 				&& (ft_strcmp(msh->cmds->av[1], ">>") != 0)))
 		{
-			if (msh_export(&(msh->envp), msh->cmds->av[1]) == 1)
+			if (msh_export(msh, &(msh->ex_envp), msh->cmds->av[1]) == 1)
 				msh->exit_status = 1;
 		}
 		else
-			msh_export_no_var(msh->envp);
+			msh_export_no_var(msh->ex_envp);
 	}
 }
 

@@ -12,6 +12,33 @@
 
 #include "../includes/minishell.h"
 
+static int	add_new_variable_env(char ***envp, t_exp *exp, const char *new_var)
+{
+	int	i;
+
+	i = 0;
+	while ((*envp)[i])
+		i++;
+	exp->new_envp = malloc(sizeof(char *) * (i + 2));
+	if (!exp->new_envp)
+		return (free(exp->var), 1);
+	i = 0;
+	while ((*envp)[i])
+	{
+		exp->new_envp[i] = (*envp)[i];
+		i++;
+	}
+	exp->new_entry = ft_strdup(new_var);
+	if (!exp->new_entry)
+		return (free(exp->new_envp), free(exp->var), 1);
+	exp->new_envp[i] = exp->new_entry;
+	exp->new_envp[i + 1] = NULL;
+	free(*envp);
+	*envp = exp->new_envp;
+	return (0);
+}
+
+
 int	sort_envp(char **envp)
 {
 	int		i;
@@ -79,7 +106,7 @@ int	parse_variable(const char *new_var, t_exp *exp)
 	return (exp->var == NULL);
 }
 
-int	msh_export(char ***envp, const char *new_var)
+int	msh_export(t_msh *msh, char ***envp, const char *new_var)
 {
 	t_exp	exp;
 	int		update_var;
@@ -94,7 +121,9 @@ int	msh_export(char ***envp, const char *new_var)
 		return (1);
 	if (update_var == 0)
 		return (0);
-	if (add_new_variable(envp, &exp, new_var))
+	if (add_new_variable(&msh->ex_envp, &exp, new_var))
 		return (1);
+	if (exp.equal_sign)
+		add_new_variable_env(&msh->envp, &exp, new_var);
 	return (0);
 }

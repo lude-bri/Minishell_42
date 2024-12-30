@@ -30,6 +30,18 @@ void	print_env_var(char *env_var)
 		}
 		printf("=\"%s\"\n", equal_sign + 1);
 	}
+	else
+	{	
+		j = 0;
+		write(1, "declare -x ", 11);
+		while (env_var[j])
+		{
+			if (write(1, &env_var[j], 1) == -1)
+				return ;
+			j++;
+		}
+		write(1, "\n", 1);
+	}
 }
 
 int	find_existing_variable(char ***envp, t_exp *exp)

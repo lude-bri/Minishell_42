@@ -17,7 +17,10 @@ static void	increment_shlvl(char **envp);
 void	init_msh(t_msh *msh, char **envp)
 {
 	if (!msh->envp)
+	{
 		msh->envp = init_env(envp);
+		msh->ex_envp = init_env(envp);
+	}
 	msh->cmds = NULL;
 	msh->tree_head = NULL;
 	init_vector(&msh->tokens, 100);

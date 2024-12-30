@@ -148,6 +148,7 @@ typedef struct s_msh
 	t_command	*cmds;
 	t_tkn		*tree_head; //binary tree head to execute
 	char		**envp;
+	char		**ex_envp;
 	char		**path;
 	char		**arg;
 
@@ -367,7 +368,7 @@ int		msh_pwd(void);
 int		sort_envp(char **envp);
 int		msh_export_no_var(char **envp);
 int		parse_variable(const char *new_var, t_exp *exp);
-int		msh_export(char ***envp, const char *new_var);
+int		msh_export(t_msh *msh, char ***envp, const char *new_var);
 
 //531_export_change_var.c
 int		add_new_variable(char ***envp, t_exp *exp, const char *new_var);
