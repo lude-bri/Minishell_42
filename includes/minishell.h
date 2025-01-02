@@ -19,6 +19,7 @@
 /* ************************************************************************** */
 
 # include <unistd.h>
+# include <limits.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <signal.h>
@@ -34,9 +35,8 @@
 /* ************************************************************************** */
 
 //Max
-# define INT_MAX 2147483647 
-# define INT_MIN -2147483647
 # define PATH_MAX 4096
+
 //Error
 # define INIT_ERROR			"msh: Init Error\n"
 # define ENV_INIT_ERROR		"msh: Env Init Error\n"
@@ -341,6 +341,7 @@ void	sigint_handler(int sig);
 
 //420_exec_one.c
 int		exec_one(t_msh *msh, t_tkn *tokens);
+int		is_bi(t_tkn *tokens);
 
 //430_exec_more.c
 int		exec_more(t_msh *msh, t_tkn *tokens);

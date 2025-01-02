@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-static int	is_bi(t_tkn *tokens)
+int	is_bi(t_tkn *tokens)
 {
 	if (tokens->cmd_type == CMD_CD)
 		return (SUCCESS);

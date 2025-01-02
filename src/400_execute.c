@@ -25,12 +25,16 @@ void	execute_builtin_commands(t_tkn *tokens, t_msh *msh)
 	else if (tokens->cmd_type == CMD_EXIT)
 		msh_exit(tokens->cmdargs, msh, tokens);
 	else if (tokens->cmd_type == CMD_UNSET)
+	{
 		msh_unset(msh->cmds->av, &(msh->envp));
+		msh_unset(msh->cmds->av, &(msh->ex_envp));
+	}
 	else if (tokens->cmd_type == CMD_EXPORT)
 	{
 		if (msh->cmds->av[1]
 			&& ((ft_strcmp(msh->cmds->av[1], ">") != 0)
-				&& (ft_strcmp(msh->cmds->av[1], ">>") != 0)))
+				&& (ft_strcmp(msh->cmds->av[1], ">>") != 0)
+				&& (ft_strcmp(msh->cmds->av[1], "|") != 0)))
 		{
 			if (msh_export(msh, &(msh->ex_envp), msh->cmds->av[1]) == 1)
 				msh->exit_status = 1;

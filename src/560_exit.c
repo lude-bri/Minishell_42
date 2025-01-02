@@ -59,8 +59,19 @@ static int	handle_multiple_commands(char **argv, t_msh *msh)
 
 static int	verify_arg(char **argv, t_msh *msh, t_tkn *tokens)
 {
+	long long	ll;
+
 	if (!argv[1])
 		msh->exit_status = exit_msh(argv, msh, tokens);
+	if (is_num(argv[1]))
+	{
+		ll = ft_atoll(argv[1]);
+		if (ll >= LLONG_MAX)
+		{
+			msh->exit_status = 2;
+			return (write(STDERR_FILENO, " numeric argument required\n", 27), 2);
+		}
+	}
 	if (msh->cmd_count == 2)
 		return (handle_two_commands(argv, msh));
 	else
