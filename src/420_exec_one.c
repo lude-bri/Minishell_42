@@ -64,6 +64,7 @@ void	handle_builtin_commands(t_msh *msh, t_tkn *tokens)
 		{
 			exec_bi(tokens, msh);
 			free_arg(msh->envp);
+			free_arg(msh->ex_envp);
 			free_msh(msh->cmds, msh, tokens);
 			exit(msh->exit_status);
 		}

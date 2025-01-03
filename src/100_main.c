@@ -12,31 +12,6 @@
 
 #include "../includes/minishell.h"
 
-static void	free_heredoc(t_heredoc *heredoc)
-{
-    t_heredoc *tmp;
-
-    while (heredoc)
-    {
-        tmp = heredoc->next; // Save the next node
-
-        if (heredoc->eof)
-        {
-            free(heredoc->eof);
-            heredoc->eof = NULL;
-        }
-        if (heredoc->fd_heredoc_path)
-        {
-            free(heredoc->fd_heredoc_path);
-            heredoc->fd_heredoc_path = NULL;
-        }
-		heredoc->i = 0;
-        free(heredoc->next); // Free the current node
-		heredoc->next = NULL;
-        heredoc = tmp; // Move to the next node
-    }
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	t_msh		msh;
@@ -64,7 +39,7 @@ int	msh_loop(t_msh *msh)
 		if (msh->cmd_count > NO_CMDS)
 			if (!to_execute(msh, tokens))
 				break ;
-		free_heredoc(&msh->heredoc);
+		// free_heredoc(&msh->heredoc);
 		free_msh(msh->cmds, msh, tokens);
 	}
 	return (0);

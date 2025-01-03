@@ -26,6 +26,7 @@ void	apply_pipe(t_tkn *dir, t_msh *msh, int *fd,
 	{
 		ft_close(fd);
 		free_arg(msh->envp);
+		free_arg(msh->ex_envp);
 		free_arg(msh->cmds->av);
 		exit(127);
 	}

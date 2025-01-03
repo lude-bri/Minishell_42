@@ -103,7 +103,7 @@ typedef enum e_cmd_group
 //heredoc struct
 typedef struct s_heredoc
 {
-	bool				exist;
+	// bool				exist;
 	int					i;
 	int					fd_heredoc;
 	char				*fd_heredoc_path;
@@ -480,6 +480,7 @@ int		free_array(char **str, int error);
 void	free_arg(char **argv);
 void	free_msh(t_command *command, t_msh *msh, t_tkn *token);
 void	free_vector(t_vector *vector);
+void	free_heredoc(t_heredoc *heredoc);
 
 //910_close.c
 void	ft_close(int *fd);

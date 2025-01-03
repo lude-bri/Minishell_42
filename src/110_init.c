@@ -16,7 +16,7 @@ static void	increment_shlvl(char **envp);
 
 static void	init_heredoc(t_heredoc *heredoc)
 {
-	ft_calloc(1, sizeof(t_heredoc));
+	// calloc(1, sizeof(t_heredoc));
 	heredoc->i = 0;
 	heredoc->count_hd = 0;
 	heredoc->fd_heredoc_path = NULL;

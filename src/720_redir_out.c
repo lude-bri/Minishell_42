@@ -26,6 +26,7 @@ void	redir_out(t_tkn *tokens, t_msh *msh)
 		free_msh(msh->cmds, msh, tokens);
 		free_arg(msh->arg);
 		free_arg(msh->envp);
+		free_arg(msh->ex_envp);
 		exit(EXIT_FAILURE);
 	}
 	dup2(fd, STDOUT_FILENO);

@@ -21,6 +21,7 @@ char	*build_prompt(t_msh *msh)
 	{
 		printf("exit\n");
 		free_arg(msh->envp);
+		free_arg(msh->ex_envp);
 		exit (0);
 	}
 	else if (line[0] == '\0')

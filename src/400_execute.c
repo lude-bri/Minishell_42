@@ -68,6 +68,7 @@ void	exec_special(t_tkn *tokens, t_msh *msh)
 		write(STDERR_FILENO, " command not found\n", 19);
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
+		free_arg(msh->ex_envp);
 		exit(127);
 	}
 	if (msh->flag_redir == true)
@@ -79,6 +80,7 @@ void	exec_special(t_tkn *tokens, t_msh *msh)
 			free_arg(msh->cmds->av);
 			free_msh(msh->cmds, msh, tokens);
 			free_array(msh->envp, 0);
+			free_arg(msh->ex_envp);
 			exit(126);
 		}
 	}
@@ -98,6 +100,7 @@ void	execute(t_msh *msh, t_tkn *tokens)
 		write(STDERR_FILENO, " command not found\n", 19);
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
+		free_arg(msh->ex_envp);
 		free_arg(args);
 		exit(127);
 	}
@@ -108,6 +111,7 @@ void	execute(t_msh *msh, t_tkn *tokens)
 		free_arg(args);
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
+		free_arg(msh->ex_envp);
 		exit(126);
 	}
 }

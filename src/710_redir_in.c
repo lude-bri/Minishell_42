@@ -23,6 +23,7 @@ void	redir_in(t_tkn *tokens, t_msh *msh)
 		perror(tokens->name);
 		free_msh(msh->cmds, msh, tokens);
 		free_arg(msh->envp);
+		free_arg(msh->ex_envp);
 		free_arg(msh->arg);
 		exit(EXIT_FAILURE);
 	}

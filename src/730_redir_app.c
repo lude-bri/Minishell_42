@@ -24,6 +24,7 @@ void	redir_append(t_tkn *tokens, t_msh *msh)
 		free_msh(msh->cmds, msh, tokens);
 		free_arg(msh->arg);
 		free_arg(msh->envp);
+		free_arg(msh->ex_envp);
 		exit(EXIT_FAILURE);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)

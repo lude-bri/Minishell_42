@@ -12,6 +12,31 @@
 
 #include "../includes/minishell.h"
 
+void	free_heredoc(t_heredoc *heredoc)
+{
+    t_heredoc *tmp;
+
+    while (heredoc)
+    {
+        tmp = heredoc->next;
+
+        if (heredoc->eof)
+        {
+            free(heredoc->eof);
+            heredoc->eof = NULL;
+        }
+        if (heredoc->fd_heredoc_path)
+        {
+            free(heredoc->fd_heredoc_path);
+            heredoc->fd_heredoc_path = NULL;
+        }
+		heredoc->i = 0;
+        free(heredoc->next);
+		heredoc->next = NULL;
+        heredoc = tmp;
+    }
+}
+
 void	free_vector(t_vector *vector)
 {
 	int		i;
@@ -68,6 +93,7 @@ void	free_arg(char **argv)
 
 void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 {
+	free_heredoc(&msh->heredoc);
 	if (msh->cmds->av)
 		free_arg(msh->cmds->av);
 	if (msh->line)
@@ -76,4 +102,5 @@ void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 		free_vector(&msh->tokens);
 	if (command)
 		free(command);
+	// free_heredoc(&msh->heredoc);
 }

@@ -43,6 +43,7 @@ void	handle_left_child(t_tkn *tokens, t_msh *msh, int *fd)
 	// 	handle_heredoc(tokens, msh, fd);
 	apply_pipe(tokens->left, msh, fd, 1);
 	free_arg(msh->envp);
+	free_arg(msh->ex_envp);
 	free_msh(msh->cmds, msh, tokens->left);
 	exit(msh->exit_status);
 }
@@ -52,6 +53,7 @@ void	handle_right_child(t_tkn *tokens, t_msh *msh, int *fd)
 	close(fd[1]);
 	apply_pipe(tokens->right, msh, fd, 0);
 	free_arg(msh->envp);
+	free_arg(msh->ex_envp);
 	free_msh(msh->cmds, msh, tokens->left);
 	exit(msh->exit_status);
 }

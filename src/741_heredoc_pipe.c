@@ -24,5 +24,6 @@ int	heredoc_pipe(t_tkn *tokens, t_msh *msh, char *arg, int flag)
 		dup2(pipe_fd[0], STDIN_FILENO);
 	signal(SIGINT, SIG_DFL);
 	free_arg(msh->envp);
+	free_arg(msh->ex_envp);
 	return (pipe_fd[0]);
 }
