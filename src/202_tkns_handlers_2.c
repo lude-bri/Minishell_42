@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 23:13:00 by mde-agui          #+#    #+#             */
-/*   Updated: 2024/12/22 01:34:36 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/03 14:05:49 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ char	*handle_double_quotes(const char *input, int *i, t_msh *msh)
 {
 	msh->word_size = ft_strlen(input) * 1024;
 	msh->word = (char *)malloc(msh->word_size);
+	if (!msh->word)
+		return (NULL);
 	msh->word[0] = '\0';
 	while (input[*i] && input[*i] != '"')
 	{
@@ -44,16 +46,6 @@ char	*handle_single_quotes(const char *input, int *i)
 	if (input[*i] == '\'')
 		(*i)++;
 	return (word);
-}
-
-void	handle_words(const char *input, t_tkn_op *sp)
-{
-	sp->start = sp->i;
-	while (input[sp->i] && input[sp->i] != '\'' && input[sp->i] != '"'
-		&& input[sp->i] != '|' && input[sp->i] != '>' && input[sp->i] != '<'
-		&& !is_whitespace(input[sp->i]))
-		(sp->i)++;
-	sp->argv[(sp->j)++] = copy_word(input, sp->start, sp->i);
 }
 
 void	handle_double_in_redir(const char *input, t_tkn_op *sp)
