@@ -36,6 +36,7 @@
 
 //Max
 # define PATH_MAX 4096
+# define BUF_SIZE 4096
 
 //Error
 # define INIT_ERROR			"msh: Init Error\n"
@@ -208,6 +209,14 @@ typedef struct s_exp
 	int		start;
 }				t_exp;
 
+//to handle quotes
+typedef struct s_quote
+{
+	char	*buffer;
+	int		*buf_i;
+	int		*i;
+}				t_quote;
+
 /* ************************************************************************** */
 /*                                 FUNCTIONS                                  */
 /* ************************************************************************** */
@@ -256,13 +265,14 @@ void	handle_quotes(const char *input, t_tkn_op *sp, t_msh *msh);
 //202_tkns_handlers_2.c
 char	*handle_double_quotes(const char *input, int *i, t_msh *msh);
 char	*handle_single_quotes(const char *input, int *i);
-void	handle_words(const char *input, t_tkn_op *sp);
+//void	handle_words(const char *input, t_tkn_op *sp);
 void	handle_double_in_redir(const char *input, t_tkn_op *sp);
 void	handle_single_in_redir(const char *input, t_tkn_op *sp, t_msh *msh);
 
 //203_tkns_handlers_3.c
 void	handle_double_out_redir(const char *input, t_tkn_op *sp);
 void	handle_single_out_redir(const char *input, t_tkn_op *sp, t_msh *msh);
+void	handle_words(const char *input, t_tkn_op *sp, t_msh *msh);
 
 //204_tkns_misc.c
 int		quote_helper(const char *input, int i);

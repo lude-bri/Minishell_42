@@ -63,6 +63,8 @@ int	count_words(const char *input)
 
 void	process_input(const char *input, t_tkn_op *sp, t_msh *msh)
 {
+	while (*input && is_whitespace(*input))
+		input++;
 	while (input[sp->i])
 	{
 		while (input[sp->i] && is_whitespace(input[sp->i]))
@@ -78,7 +80,7 @@ void	process_input(const char *input, t_tkn_op *sp, t_msh *msh)
 		else if (input[sp->i] == '>')
 			handle_output_redir(input, sp, msh);
 		else if (input[sp->i] && !is_whitespace(input[sp->i]))
-			handle_words(input, sp);
+			handle_words(input, sp, msh);
 		if (sp->j > 0 && !sp->argv[sp->j - 1])
 		{
 			printf("Error: Memory allocation failed for token %d\n", sp->j - 1);
