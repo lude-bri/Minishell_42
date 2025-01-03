@@ -229,6 +229,7 @@ char	**init_env(char **envp);
 
 //111_init_var.c
 char	*get_variable(char *v, char **envp);
+void	increment_shlvl(char **envp);
 
 //120_prompt.c
 char	*build_prompt(t_msh *msh);

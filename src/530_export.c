@@ -35,9 +35,9 @@ static int	add_new_variable_env(char ***envp, t_exp *exp, const char *new_var)
 	exp->new_envp[i + 1] = NULL;
 	free(*envp);
 	*envp = exp->new_envp;
+	free(exp->var);
 	return (0);
 }
-
 
 int	sort_envp(char **envp)
 {
@@ -111,12 +111,13 @@ int	msh_export(t_msh *msh, char ***envp, const char *new_var)
 	t_exp	exp;
 	int		update_var;
 
+	(void)envp;
 	if (parse_variable(new_var, &exp))
 	{
 		perror(" not a valid identifier\n");
 		return (1);
 	}
-	update_var = update_existing_variable(envp, &exp);
+	update_var = update_existing_variable(&msh->envp, &exp);
 	if (update_var == 1)
 		return (1);
 	if (update_var == 0)

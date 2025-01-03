@@ -16,8 +16,6 @@ int	heredoc_pipe(t_tkn *tokens, t_msh *msh, char *arg, int flag)
 {
 	int	pipe_fd[2];
 
-	// setup_pipe_and_signals(tokens, msh, pipe_fd);
-	// read_n_write_lines(tokens, msh, arg, pipe_fd);
 	(void)tokens;
 	(void)arg;
 	if (flag == 0)

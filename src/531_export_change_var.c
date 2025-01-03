@@ -35,7 +35,6 @@ int	add_new_variable(char ***envp, t_exp *exp, const char *new_var)
 	exp->new_envp[i + 1] = NULL;
 	free(*envp);
 	*envp = exp->new_envp;
-	// free(exp->var);
 	return (0);
 }
 

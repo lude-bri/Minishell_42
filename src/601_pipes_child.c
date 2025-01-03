@@ -38,9 +38,6 @@
 void	handle_left_child(t_tkn *tokens, t_msh *msh, int *fd)
 {
 	close(fd[0]);
-	// if (tokens->left->type == TKN_HEREDOC
-	// 	|| tokens->left->next->type == TKN_HEREDOC)
-	// 	handle_heredoc(tokens, msh, fd);
 	apply_pipe(tokens->left, msh, fd, 1);
 	free_arg(msh->envp);
 	free_arg(msh->ex_envp);

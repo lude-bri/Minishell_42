@@ -48,6 +48,8 @@ char	*check_direct_path(char *cmd)
 				return (ft_strdup(cmd));
 			return (NULL);
 		}
+		if (cmd[0] == '<')
+			return ("FOUND_IN");
 	}
 	return (NULL);
 }

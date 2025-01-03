@@ -12,6 +12,21 @@
 
 #include "../includes/minishell.h"
 
+static void	handle_w_equal_sign(char *env_var, char *equal_sign)
+{
+	int		j;
+
+	j = 0;
+	write(1, "declare -x ", 11);
+	while (env_var[j] != '=')
+	{
+		if (write(1, &env_var[j], 1) == -1)
+			return ;
+		j++;
+	}
+	printf("=\"%s\"\n", equal_sign + 1);
+}
+
 void	print_env_var(char *env_var)
 {
 	char	*equal_sign;
@@ -19,19 +34,9 @@ void	print_env_var(char *env_var)
 
 	equal_sign = ft_strchr(env_var, '=');
 	if (equal_sign)
-	{
-		j = 0;
-		write(1, "declare -x ", 11);
-		while (env_var[j] != '=')
-		{
-			if (write(1, &env_var[j], 1) == -1)
-				return ;
-			j++;
-		}
-		printf("=\"%s\"\n", equal_sign + 1);
-	}
+		handle_w_equal_sign(env_var, equal_sign);
 	else
-	{	
+	{
 		j = 0;
 		write(1, "declare -x ", 11);
 		while (env_var[j])

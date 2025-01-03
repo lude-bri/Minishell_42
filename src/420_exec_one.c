@@ -81,9 +81,6 @@ void	handle_builtin_commands(t_msh *msh, t_tkn *tokens)
 
 void	exec_one_redirs(t_msh *msh, t_tkn *tokens)
 {
-	// if (tokens->type == TKN_HEREDOC && tokens->next != NULL)
-	// 	heredoc(tokens, msh, tokens->next->name, 1);
-	// else if (tokens->next != NULL)
 	exec_exe(tokens, msh);
 }
 
@@ -101,7 +98,7 @@ int	exec_one(t_msh *msh, t_tkn *tokens)
 			exec_exe(tokens, msh);
 	}
 	else if (tokens->type == TKN_IN || tokens->type == TKN_OUT
-		|| tokens->type == TKN_APPEND || tokens->type == TKN_HEREDOC)
+		|| tokens->type == TKN_APPEND)
 		exec_one_redirs(msh, tokens);
 	return (SUCCESS);
 }

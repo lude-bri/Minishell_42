@@ -88,11 +88,25 @@ static int	fill_fd_heredoc(int temp_fd, char *eof)
 	return (0);
 }
 
-static void	heredoc_child_process(char *eof, char *temp_path)
+static void	free_all_heredoc(t_msh *msh)
+{
+	free_arg(msh->envp);
+	free_arg(msh->ex_envp);
+	free_arg(msh->cmds->av);
+	free(msh->line);
+	free(msh->cmds);
+	free_vector(&msh->tokens);
+	if (msh->heredoc.fd_heredoc_path)
+		free_heredoc(&msh->heredoc);
+}
+
+static void	heredoc_child_process(char *eof, char *temp_path,
+								  t_msh *msh, t_tkn *tokens)
 {
 	int		status;
 	int		temp_fd;
 
+	(void) tokens;
 	set_signals_to_here_doc();
 	while (1)
 	{
@@ -101,6 +115,7 @@ static void	heredoc_child_process(char *eof, char *temp_path)
 		if (status == 1)
 			printf("msh: warning: here-document delimited\n");
 		close(temp_fd);
+		free_all_heredoc(msh);
 		if (status == 0 || status == 1)
 			exit (0);
 		else if (status == 2)
@@ -205,10 +220,9 @@ void	heredoc_exec(t_msh *msh, t_tkn *tokens)
 		free(i);
 		pid = fork();
 		if (pid == 0)
-			heredoc_child_process(heredoc->eof, heredoc->fd_heredoc_path);
+			heredoc_child_process(heredoc->eof, heredoc->fd_heredoc_path, msh, tokens);
 		waitpid(pid, &status, 0);
 		transform(tokens, heredoc->fd_heredoc_path);
 		heredoc = heredoc->next;
-		// printf("heredoc len [%i]\n", len);
 	}
 }

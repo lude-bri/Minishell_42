@@ -51,11 +51,6 @@ int	exec_redirs(t_tkn *tokens, t_msh *msh)
 	tkn = tokens;
 	while (tkn)
 	{
-		// if (tkn->type == TKN_HEREDOC && !redir_found(tkn))
-		// {
-		// 	heredoc(tokens, msh, tkn->next->name, 0);
-		// 	return (SUCCESS);
-		// }
 		if (tkn->type == TKN_IN || tkn->type == TKN_OUT
 			|| tkn->type == TKN_APPEND)
 		{

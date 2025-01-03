@@ -58,46 +58,54 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 	return (SUCCESS);
 }
 
-void	exec_special(t_tkn *tokens, t_msh *msh)
-{
-	char	*path;
-
-	path = find_path(msh->cmds->av[0], msh->envp);
-	if (!path)
-	{
-		write(STDERR_FILENO, " command not found\n", 19);
-		free_msh(msh->cmds, msh, tokens);
-		free_array(msh->envp, 0);
-		free_arg(msh->ex_envp);
-		exit(127);
-	}
-	if (msh->flag_redir == true)
-	{
-		if (execve(path, msh->cmds->av, msh->envp) == -1)
-		{
-			perror(path);
-			free(path);
-			free_arg(msh->cmds->av);
-			free_msh(msh->cmds, msh, tokens);
-			free_array(msh->envp, 0);
-			free_arg(msh->ex_envp);
-			exit(126);
-		}
-	}
-}
+// void	exec_special(t_tkn *tokens, t_msh *msh)
+// {
+// 	char	*path;
+//
+// 	path = find_path(msh->cmds->av[0], msh->envp);
+// 	if (!path)
+// 	{
+// 		write(STDERR_FILENO, " command not found\n", 19);
+// 		free_msh(msh->cmds, msh, tokens);
+// 		free_array(msh->envp, 0);
+// 		free_arg(msh->ex_envp);
+// 		exit(127);
+// 	}
+// 	if (msh->flag_redir == true)
+// 	{
+// 		if (execve(path, msh->cmds->av, msh->envp) == -1)
+// 		{
+// 			perror(path);
+// 			free(path);
+// 			free_arg(msh->cmds->av);
+// 			free_msh(msh->cmds, msh, tokens);
+// 			free_array(msh->envp, 0);
+// 			free_arg(msh->ex_envp);
+// 			exit(126);
+// 		}
+// 	}
+// }
 
 void	execute(t_msh *msh, t_tkn *tokens)
 {
 	char	*path;
 	char	**args;
 
-	if (msh->flag_redir == true)
-		exec_special(tokens, msh);
+	// if (msh->flag_redir == true)
+	// 	exec_special(tokens, msh);
 	path = find_path(tokens->name, msh->envp);
 	args = build_args(tokens);
 	if (!path)
 	{
 		write(STDERR_FILENO, " command not found\n", 19);
+		free_msh(msh->cmds, msh, tokens);
+		free_array(msh->envp, 0);
+		free_arg(msh->ex_envp);
+		free_arg(args);
+		exit(127);
+	}
+	if (ft_strcmp(path, "FOUND_IN") == 0)
+	{
 		free_msh(msh->cmds, msh, tokens);
 		free_array(msh->envp, 0);
 		free_arg(msh->ex_envp);
