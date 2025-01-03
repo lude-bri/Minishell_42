@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:40:02 by luigi             #+#    #+#             */
-/*   Updated: 2024/12/23 00:19:52 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/02 16:13:30 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ void	handle_builtin_commands(t_msh *msh, t_tkn *tokens)
 
 void	exec_one_redirs(t_msh *msh, t_tkn *tokens)
 {
-	if (tokens->type == TKN_HEREDOC && tokens->next != NULL)
-		heredoc(tokens, msh, tokens->next->name, 1);
-	else if (tokens->next != NULL)
-		exec_exe(tokens, msh);
+	// if (tokens->type == TKN_HEREDOC && tokens->next != NULL)
+	// 	heredoc(tokens, msh, tokens->next->name, 1);
+	// else if (tokens->next != NULL)
+	exec_exe(tokens, msh);
 }
 
 int	exec_one(t_msh *msh, t_tkn *tokens)

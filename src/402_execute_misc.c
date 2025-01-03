@@ -14,6 +14,8 @@
 
 int	to_execute(t_msh *msh, t_tkn *tokens)
 {
+	if (find_heredoc(tokens))
+		heredoc_exec(msh, tokens);
 	msh->tree_head = create_bin_tree(tokens);
 	tokens->cmdargs = msh->cmds->av;
 	if (msh->tree_head->type != TKN_PIPE)

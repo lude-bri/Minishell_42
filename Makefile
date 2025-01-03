@@ -80,6 +80,7 @@ FILES += 720_redir_out.c
 FILES += 730_redir_app.c
 FILES += 740_heredoc.c
 FILES += 741_heredoc_pipe.c
+FILES += 742_heredoc_utils.c
 FILES += 900_free.c
 FILES += 910_close.c
 

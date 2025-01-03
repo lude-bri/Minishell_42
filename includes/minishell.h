@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 15:40:26 by mde-agui          #+#    #+#             */
-/*   Updated: 2024/12/24 12:17:40 by luigi            ###   ########.fr       */
+/*   Updated: 2025/01/02 16:11:06 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,18 @@ typedef enum e_cmd_group
 /*                                  STRUCTS                                   */
 /* ************************************************************************** */
 
+//heredoc struct
+typedef struct s_heredoc
+{
+	bool				exist;
+	int					i;
+	int					fd_heredoc;
+	char				*fd_heredoc_path;
+	char				*eof;
+	int					count_hd;
+	struct s_heredoc	*next;
+}						t_heredoc;
+
 //struct to deal with operations when tokenizing
 //used in 200_tokenization.c
 typedef struct s_tkn_op
@@ -168,6 +180,7 @@ typedef struct s_msh
 	bool		flag_redir;
 	bool		flag_exit;
 	t_vector	tokens;
+	t_heredoc	heredoc;
 	size_t		word_size;
 
 }				t_msh;
@@ -440,13 +453,17 @@ void	redir_out(t_tkn *tokens, t_msh *msh);
 void	redir_append(t_tkn *tokens, t_msh *msh);
 
 //740_heredoc.c
-void	setup_pipe_and_signals(t_tkn *tokens, t_msh *msh, int *pipe_fd);
-void	read_n_write_lines(t_tkn *tokens, t_msh *msh, char *arg, int *pipe_fd);
-void	read_n_write_lines2(t_tkn *tokens, t_msh *msh, char *arg, int *pipe_fd);
+// void	setup_pipe_and_signals(t_tkn *tokens, t_msh *msh, int *pipe_fd);
+// void	read_n_write_lines(t_tkn *tokens, t_msh *msh, char *arg, int *pipe_fd);
+// void	read_n_write_lines2(t_tkn *tokens, t_msh *msh, char *arg, int *pipe_fd);
 void	heredoc(t_tkn *tokens, t_msh *msh, char *arg, int flag);
+void	heredoc_exec(t_msh *msh, t_tkn *tokens);
 
 //741_heredoc_pipe.c
 int		heredoc_pipe(t_tkn *tokens, t_msh *msh, char *arg, int flag);
+
+//742_heredoc_utils.c
+int		find_heredoc(t_tkn *tokens);
 
 /* **************** */
 /*      800        */

@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 09:09:40 by luigi             #+#    #+#             */
-/*   Updated: 2024/12/23 02:50:09 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/02 16:14:12 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ void	redirs(t_tkn *tokens, t_msh *msh)
 		redir_append(tkn_exec, msh);
 }
 
-static int	redir_found(t_tkn *tokens)
-{
-	return ((tokens->type == TKN_IN || tokens->type == TKN_OUT
-			|| tokens->type == TKN_APPEND));
-}
+// static int	redir_found(t_tkn *tokens)
+// {
+// 	return ((tokens->type == TKN_IN || tokens->type == TKN_OUT
+// 			|| tokens->type == TKN_APPEND));
+// }
 
 int	exec_redirs(t_tkn *tokens, t_msh *msh)
 {
@@ -51,11 +51,11 @@ int	exec_redirs(t_tkn *tokens, t_msh *msh)
 	tkn = tokens;
 	while (tkn)
 	{
-		if (tkn->type == TKN_HEREDOC && !redir_found(tkn))
-		{
-			heredoc(tokens, msh, tkn->next->name, 0);
-			return (SUCCESS);
-		}
+		// if (tkn->type == TKN_HEREDOC && !redir_found(tkn))
+		// {
+		// 	heredoc(tokens, msh, tkn->next->name, 0);
+		// 	return (SUCCESS);
+		// }
 		if (tkn->type == TKN_IN || tkn->type == TKN_OUT
 			|| tkn->type == TKN_APPEND)
 		{

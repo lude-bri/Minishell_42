@@ -6,13 +6,23 @@
 /*   By: luigi <luigi@student.42porto.com>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 12:34:09 by luigi             #+#    #+#             */
-/*   Updated: 2024/11/18 10:20:17 by luigi            ###   ########.fr       */
+/*   Updated: 2025/01/02 16:08:05 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 static void	increment_shlvl(char **envp);
+
+static void	init_heredoc(t_heredoc *heredoc)
+{
+	ft_calloc(1, sizeof(t_heredoc));
+	heredoc->i = 0;
+	heredoc->count_hd = 0;
+	heredoc->fd_heredoc_path = NULL;
+	heredoc->eof = NULL;
+	heredoc->next = NULL;
+}
 
 void	init_msh(t_msh *msh, char **envp)
 {
@@ -24,6 +34,7 @@ void	init_msh(t_msh *msh, char **envp)
 	msh->cmds = NULL;
 	msh->tree_head = NULL;
 	init_vector(&msh->tokens, 100);
+	init_heredoc(&msh->heredoc);
 	increment_shlvl(msh->envp);
 }
 

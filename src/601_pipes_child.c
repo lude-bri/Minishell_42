@@ -12,35 +12,35 @@
 
 #include "../includes/minishell.h"
 
-void	handle_heredoc(t_tkn *tokens, t_msh *msh, int *fd)
-{
-	int	heredoc_fd;
-
-	if (tokens->left->type == TKN_HEREDOC)
-	{
-		heredoc_fd = heredoc_pipe(tokens, msh, tokens->left->next->name, 1);
-		dup2(heredoc_fd, STDIN_FILENO);
-		if (tokens->next->left != NULL)
-			apply_pipe(tokens->next->left, msh, fd, heredoc_fd);
-		free_msh(msh->cmds, msh, tokens->left);
-		exit(msh->exit_status);
-	}
-	else
-	{
-		heredoc_fd = heredoc_pipe(tokens, msh,
-				tokens->left->next->next->name, 0);
-		dup2(heredoc_fd, STDIN_FILENO);
-		apply_pipe(tokens->left, msh, fd, heredoc_fd);
-		exit(msh->exit_status);
-	}
-}
+// void	handle_heredoc(t_tkn *tokens, t_msh *msh, int *fd)
+// {
+// 	int	heredoc_fd;
+//
+// 	if (tokens->left->type == TKN_HEREDOC)
+// 	{
+// 		heredoc_fd = heredoc_pipe(tokens, msh, tokens->left->next->name, 1);
+// 		dup2(heredoc_fd, STDIN_FILENO);
+// 		if (tokens->next->left != NULL)
+// 			apply_pipe(tokens->next->left, msh, fd, heredoc_fd);
+// 		free_msh(msh->cmds, msh, tokens->left);
+// 		exit(msh->exit_status);
+// 	}
+// 	else
+// 	{
+// 		heredoc_fd = heredoc_pipe(tokens, msh,
+// 				tokens->left->next->next->name, 0);
+// 		dup2(heredoc_fd, STDIN_FILENO);
+// 		apply_pipe(tokens->left, msh, fd, heredoc_fd);
+// 		exit(msh->exit_status);
+// 	}
+// }
 
 void	handle_left_child(t_tkn *tokens, t_msh *msh, int *fd)
 {
 	close(fd[0]);
-	if (tokens->left->type == TKN_HEREDOC
-		|| tokens->left->next->type == TKN_HEREDOC)
-		handle_heredoc(tokens, msh, fd);
+	// if (tokens->left->type == TKN_HEREDOC
+	// 	|| tokens->left->next->type == TKN_HEREDOC)
+	// 	handle_heredoc(tokens, msh, fd);
 	apply_pipe(tokens->left, msh, fd, 1);
 	free_arg(msh->envp);
 	free_msh(msh->cmds, msh, tokens->left);

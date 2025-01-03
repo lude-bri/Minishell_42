@@ -90,6 +90,41 @@ void	process_input(const char *input, t_tkn_op *sp, t_msh *msh)
 	}
 }
 
+// static int	is_delimiter(char c)
+// {
+// 	return (c == ' ' || c == '|' || c == '<' || c == '>'
+// 	|| c == '\"');
+// }
+
+// static char	**ultimate_split(const char *input, char **av, t_msh *msh)
+// {
+// 	int		i;
+// 	int		j;
+// 	int		k;
+// 	char	**new;
+// 	
+// 	//tem que botar tudo,
+// 	//se for um delimitador, cria um novo index;
+// 	//repete
+// 	new = malloc(sizeof(char *) * (msh->len + 1));
+// 	if (!new)
+// 		return (NULL);
+// 	i = -1;
+// 	j = 0;
+// 	k = 0;
+// 	new[k] = NULL;
+// 	while (input[++i] && av[j])
+// 	{
+// 		while (input[i] != is_delimiter(input[i]))
+// 		{
+// 			new[k] = ft_strjoin(new[k], (char *)input);
+// 			i++;
+// 		}
+// 	}
+// 	new[k] = NULL;
+// 	return (new);
+// }
+
 char	**split_input(const char *input, t_msh *msh)
 {
 	t_tkn_op	sp;
@@ -102,5 +137,6 @@ char	**split_input(const char *input, t_msh *msh)
 		return (NULL);
 	process_input(input, &sp, msh);
 	sp.argv[sp.j] = NULL;
+	// sp.argv = ultimate_split(input, sp.argv, msh);
 	return (sp.argv);
 }
