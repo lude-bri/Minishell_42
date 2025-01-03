@@ -64,7 +64,6 @@ static int	verify_arg(char **argv, t_msh *msh, t_tkn *tokens)
 
 	(void)tokens;
 	if (!argv[1])
-		// msh->exit_status = exit_msh(argv, msh, tokens);
 		msh->exit_status = exit_msh(msh);
 	if (is_num(argv[1]))
 	{

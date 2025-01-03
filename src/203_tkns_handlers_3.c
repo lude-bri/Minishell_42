@@ -81,6 +81,7 @@ void	handle_words(const char *input, t_tkn_op *sp, t_msh *msh)
 	char	buffer[BUF_SIZE];
 	int		buf_i;
 	t_quote	qd;
+	char	*expanded;
 
 	ft_memset(buffer, 0, BUF_SIZE);
 	buf_i = 0;
@@ -91,6 +92,17 @@ void	handle_words(const char *input, t_tkn_op *sp, t_msh *msh)
 		{
 			qd = (t_quote){buffer, &buf_i, &sp->i};
 			pr_quote(input, &qd, msh, input[sp->i]);
+		}
+		else if (input[sp->i] == '$')
+		{
+			qd = (t_quote){buffer, &buf_i, &sp->i};
+			expanded = expand_var(input, qd.i, msh);
+			if (expanded)
+			{
+				ft_strncat(qd.buffer, expanded, BUF_SIZE - *qd.buf_i - 1);
+				*qd.buf_i = ft_strlen(qd.buffer);
+				free(expanded);
+			}
 		}
 		else
 			buffer[buf_i++] = input[sp->i++];
