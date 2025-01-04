@@ -39,7 +39,9 @@ void	error_syntax(t_msh *msh)
 
 int	is_operator(char *line)
 {
-	if (!*line)
+	if (ft_strcmp(line, "") == 0)
+		return (FAILURE);
+	if (*line == '\0')
 		return (FAILURE);
 	if (*line == '|' || *line == '<' || *line == '>')
 		return (SUCCESS);

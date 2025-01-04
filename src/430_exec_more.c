@@ -26,7 +26,7 @@ int	exec_more(t_msh *msh, t_tkn *tokens)
 	}
 	else
 	{
-		if (is_bi(tokens))
+		if (is_bi(tokens) == SUCCESS)
 		{
 			exec_bi(tokens, msh);
 			return (SUCCESS);

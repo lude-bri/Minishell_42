@@ -14,20 +14,25 @@
 
 int	is_bi(t_tkn *tokens)
 {
-	if (tokens->cmd_type == CMD_CD)
-		return (SUCCESS);
-	if (tokens->cmd_type == CMD_PWD)
-		return (SUCCESS);
-	if (tokens->cmd_type == CMD_ENV)
-		return (SUCCESS);
-	if (tokens->cmd_type == CMD_ECHO)
-		return (SUCCESS);
-	if (tokens->cmd_type == CMD_EXIT)
-		return (SUCCESS);
-	if (tokens->cmd_type == CMD_UNSET)
-		return (SUCCESS);
-	if (tokens->cmd_type == CMD_EXPORT)
-		return (SUCCESS);
+	if (tokens->cmd_type)
+	{
+		if (tokens->cmd_type == CMD_CD)
+			return (SUCCESS);
+		if (tokens->cmd_type == CMD_PWD)
+			return (SUCCESS);
+		if (tokens->cmd_type == CMD_ENV)
+			return (SUCCESS);
+		if (tokens->cmd_type == CMD_ECHO)
+			return (SUCCESS);
+		if (tokens->cmd_type == CMD_EXIT)
+			return (SUCCESS);
+		if (tokens->cmd_type == CMD_UNSET)
+			return (SUCCESS);
+		if (tokens->cmd_type == CMD_EXPORT)
+			return (SUCCESS);
+		else
+			return (FAILURE);
+	}
 	else
 		return (FAILURE);
 }

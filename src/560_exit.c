@@ -14,8 +14,8 @@
 
 static int	verify_arg(char **argv, t_msh *msh, t_tkn *tokens);
 int			msh_exit(char **argv, t_msh *msh, t_tkn *tokens);
-// static int	exit_msh(char **argv, t_msh *msh, t_tkn *tokens);
-static int	exit_msh(t_msh *msh);
+static int	exit_msh(char **argv, t_msh *msh, t_tkn *tokens);
+// static int	exit_msh(t_msh *msh);
 
 static int	handle_two_commands(char **argv, t_msh *msh)
 {
@@ -64,7 +64,7 @@ static int	verify_arg(char **argv, t_msh *msh, t_tkn *tokens)
 
 	(void)tokens;
 	if (!argv[1])
-		msh->exit_status = exit_msh(msh);
+		msh->exit_status = exit_msh(argv, msh, tokens);
 	if (is_num(argv[1]))
 	{
 		ll = ft_atoll(argv[1]);
@@ -82,34 +82,34 @@ static int	verify_arg(char **argv, t_msh *msh, t_tkn *tokens)
 }
 
 //OG VERSION
-// static int	exit_msh(char **argv, t_msh *msh, t_tkn *tokens)
-// {
-// 	printf("exit\n");
-// 	(void)argv;
-// 	free_array(msh->envp, 0);
-// 	free_array(msh->ex_envp, 0);
-// 	free_msh(msh->cmds, msh, tokens);
-// 	exit(msh->exit_status);
-// }
-
-static int	exit_msh(t_msh *msh)
+static int	exit_msh(char **argv, t_msh *msh, t_tkn *tokens)
 {
 	printf("exit\n");
-	free_arg(msh->envp);
-	free_arg(msh->ex_envp);
-	free_arg(msh->cmds->av);
-	free(msh->line);
-	free(msh->cmds);
-	free_vector(&msh->tokens);
-	free_heredoc(&msh->heredoc);
+	(void)argv;
+	free_array(msh->envp, 0);
+	free_array(msh->ex_envp, 0);
+	free_msh(msh->cmds, msh, tokens);
 	exit(msh->exit_status);
 }
+
+// static int	exit_msh(t_msh *msh)
+// {
+// 	printf("exit\n");
+// 	free_arg(msh->envp);
+// 	free_arg(msh->ex_envp);
+// 	free_arg(msh->cmds->av);
+// 	free(msh->line);
+// 	free(msh->cmds);
+// 	free_vector(&msh->tokens);
+// 	free_heredoc(&msh->heredoc);
+// 	exit(msh->exit_status);
+// }
 
 int	msh_exit(char **argv, t_msh *msh, t_tkn *tokens)
 {
 	if (msh->cmd_count >= 2)
 		msh->exit_status = verify_arg(argv, msh, tokens);
 	if (msh->flag_exit == false)
-		msh->exit_status = exit_msh(msh);
+		msh->exit_status = exit_msh(argv, msh, tokens);
 	return (msh->exit_status);
 }

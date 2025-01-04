@@ -107,6 +107,7 @@ static void	heredoc_child_process(char *eof, char *temp_path,
 	int		temp_fd;
 
 	(void) tokens;
+	// (void) msh;
 	set_signals_to_here_doc();
 	while (1)
 	{

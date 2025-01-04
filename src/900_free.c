@@ -111,7 +111,13 @@ void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 	if (command)
 		free(command);
 	if (msh->heredoc.fd_heredoc_path)
+	{
 		free_heredoc(&msh->heredoc);
+		msh->heredoc.fd_heredoc_path = NULL;
+	}
 	if (msh->heredoc.eof)
+	{
 		free_eof(msh->heredoc.eof);
+		msh->heredoc.eof = NULL;
+	}
 }

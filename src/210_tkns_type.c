@@ -39,6 +39,7 @@ t_tkn	*tkn_new(t_msh *msh, char *content)
 	node->next = NULL;
 	node->left = NULL;
 	node->right = NULL;
+	node->cmd_type = 0;
 	vector_push(&msh->tokens, node);
 	return (node);
 }

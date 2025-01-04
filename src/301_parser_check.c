@@ -74,9 +74,12 @@ int	check_line_syntax(t_msh *msh, char *line)
 			if (is_operator(&line[i]) == SUCCESS)
 				return (error_syntax(msh), FAILURE);
 		}
-		if (is_operator(&line[i + 1]) == SUCCESS)
-			return (error_syntax(msh), FAILURE);
-		i++;
+		if (line[i] && line[i + 1])
+		{
+			if (is_operator(&line[i + 1]) == SUCCESS)
+				return (error_syntax(msh), FAILURE);
+			i++;
+		}
 	}
 	return (SUCCESS);
 }
@@ -104,6 +107,7 @@ int	detailed_syntax_checks(t_msh *msh, char *str, char *line)
 {
 	int	i;
 
+	// (void)msh;
 	i = 0;
 	if (str[i] == '<')
 	{
