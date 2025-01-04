@@ -63,8 +63,8 @@ void	handle_quotes(const char *input, t_tkn_op *sp, t_msh *msh)
 		sp->argv[sp->j++] = handle_single_quotes(input, &sp->i);
 	else if (input[sp->i] == '"')
 	{
-		if (sp->i == 0)
-			handle_words(input, sp, msh);
+		// if (sp->i == 0)
+		// 	handle_words(input, sp, msh);
 		sp->start = ++(sp->i);
 		if (input[sp->i] == '"')
 			sp->argv[sp->j++] = ft_strdup("");

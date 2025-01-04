@@ -28,11 +28,6 @@ void	free_heredoc(t_heredoc *heredoc)
 	while (heredoc)
 	{
 		tmp = heredoc->next;
-		// if (heredoc->eof)
-		// {
-		// 	free(heredoc->eof);
-		// 	heredoc->eof = NULL;
-		// }
 		if (heredoc->fd_heredoc_path)
 		{
 			free(heredoc->fd_heredoc_path);
@@ -100,6 +95,31 @@ void	free_arg(char **argv)
 	argv = NULL;
 }
 
+// static void free_hd(t_heredoc *heredoc)
+// {
+//     t_heredoc *tmp;
+//
+//     while (heredoc)
+//     {
+//         tmp = heredoc->next;
+//
+//         // Liberar campos e o nó atual
+//         if (heredoc->eof)
+//         {
+// 			free(heredoc->eof);
+// 			heredoc->eof = NULL;
+// 		}
+//         if (heredoc->fd_heredoc_path)
+// 		{
+// 			free(heredoc->fd_heredoc_path);
+// 			heredoc->fd_heredoc_path = NULL;
+// 		}
+// 		// free(heredoc);
+//         // Avançar para o próximo nó
+//         heredoc = tmp;
+//     }
+// }
+
 void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 {
 	if (msh->cmds->av)
@@ -110,6 +130,8 @@ void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 		free_vector(&msh->tokens);
 	if (command)
 		free(command);
+	// if (msh->heredoc.len >= 2)
+		// free_hd(&msh->heredoc);
 	if (msh->heredoc.fd_heredoc_path)
 	{
 		free_heredoc(&msh->heredoc);

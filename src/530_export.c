@@ -86,7 +86,7 @@ int	msh_export_no_var(char **envp)
 
 int	parse_variable(const char *new_var, t_exp *exp)
 {
-	if (is_alpha(new_var))
+	if (ft_isdigit(new_var[0]))
 		return (1);
 	exp->len = ft_strlen(new_var);
 	exp->no_sign = ft_strnstr(new_var, "", exp->len);

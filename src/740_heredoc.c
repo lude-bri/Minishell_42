@@ -88,17 +88,97 @@ static int	fill_fd_heredoc(int temp_fd, char *eof)
 	return (0);
 }
 
+static void free_hd(t_heredoc *heredoc)
+{
+    t_heredoc *tmp;
+
+    while (heredoc)
+    {
+        tmp = heredoc->next;
+
+        // Liberar campos e o nó atual
+        if (heredoc->eof)
+        {
+			free(heredoc->eof);
+			heredoc->eof = NULL;
+		}
+        if (heredoc->fd_heredoc_path)
+		{
+			free(heredoc->fd_heredoc_path);
+			heredoc->fd_heredoc_path = NULL;
+		}
+		// free(heredoc->next);
+        // Avançar para o próximo nó
+        heredoc = tmp;
+    }
+}
+
+static void	free_vector_2(t_vector *vector, t_msh *msh)
+{
+	int		i;
+	t_tkn	*token;
+
+	i = 0;
+	while (i < vector->count)
+	{
+		token = vector->buffer[i];
+		if (token != NULL)
+		{
+			free(token->name);
+			token->name = NULL;
+			msh->heredoc.eof = NULL;
+			free(token);
+			token = NULL;
+		}
+		i++;
+	}
+	if (vector->buffer != NULL)
+		free(vector->buffer);
+	vector->buffer = NULL;
+	vector->count = 0;
+	vector->size = 0;
+}
+
 static void	free_all_heredoc(t_msh *msh)
 {
-	free_arg(msh->envp);
-	free_arg(msh->ex_envp);
-	free_arg(msh->cmds->av);
-	free(msh->line);
-	free(msh->cmds);
-	free_vector(&msh->tokens);
-	if (msh->heredoc.fd_heredoc_path)
-		free_heredoc(&msh->heredoc);
+    if (msh->envp)
+        free_arg(msh->envp);
+    if (msh->ex_envp)
+        free_arg(msh->ex_envp);
+    if (msh->cmds)
+    {
+        if (msh->cmds->av)
+            free_arg(msh->cmds->av);
+        free(msh->cmds);
+    }
+    if (msh->line)
+        free(msh->line);
+    free_vector_2(&msh->tokens, msh);
+    if (msh->heredoc.fd_heredoc_path)
+    {
+		free_hd(&msh->heredoc);
+        // free(msh->heredoc.fd_heredoc_path);
+		free(msh->heredoc.next);
+        msh->heredoc.fd_heredoc_path = NULL;
+    }
+    // if (msh->heredoc.eof)
+    // {
+    //     free(msh->heredoc.eof);
+    //     msh->heredoc.eof = NULL;
+    // }
 }
+
+// static void	free_all_heredoc(t_msh *msh)
+// {
+// 	free_arg(msh->envp);
+// 	free_arg(msh->ex_envp);
+// 	free_arg(msh->cmds->av);
+// 	free(msh->line);
+// 	free(msh->cmds);
+// 	free_vector(&msh->tokens);
+// 	if (msh->heredoc.fd_heredoc_path)
+// 		free_heredoc(&msh->heredoc);
+// }
 
 static void	heredoc_child_process(char *eof, char *temp_path,
 								  t_msh *msh, t_tkn *tokens)
@@ -213,6 +293,7 @@ void	heredoc_exec(t_msh *msh, t_tkn *tokens)
 
 	start_heredoc(msh, tokens);
 	heredoc = &msh->heredoc;
+	msh->heredoc.len = heredoc_len(heredoc);
 	len = heredoc_len(heredoc);
 	while (heredoc && len--)
 	{

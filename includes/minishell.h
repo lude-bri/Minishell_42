@@ -106,6 +106,7 @@ typedef struct s_heredoc
 {
 	// bool				exist;
 	int					i;
+	int					len;
 	int					fd_heredoc;
 	char				*fd_heredoc_path;
 	char				*eof;
@@ -491,6 +492,7 @@ int		free_array(char **str, int error);
 void	free_arg(char **argv);
 void	free_msh(t_command *command, t_msh *msh, t_tkn *token);
 void	free_vector(t_vector *vector);
+// void	free_vector_2(t_vector *vector, t_msh *msh);
 void	free_heredoc(t_heredoc *heredoc);
 
 //910_close.c
