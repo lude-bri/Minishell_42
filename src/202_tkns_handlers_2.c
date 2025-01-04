@@ -6,32 +6,36 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 23:13:00 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/01/03 14:05:49 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/04 20:49:46 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-char	*handle_double_quotes(const char *input, int *i, t_msh *msh)
+char    *handle_double_quotes(const char *input, int *i, t_msh *msh)
 {
-	msh->word_size = ft_strlen(input) * 1024;
-	msh->word = (char *)malloc(msh->word_size);
-	if (!msh->word)
-		return (NULL);
-	msh->word[0] = '\0';
-	while (input[*i] && input[*i] != '"')
-	{
-		if (input[*i] == '$' && input[*i + 1] != ' ' && input[*i + 2] != '\0')
-		{
-			if (!expand_helper(input, i, msh))
-				break ;
-		}
-		else
-			append_char_to_word(input, i, msh);
-	}
-	if (input[*i] == '"')
-		(*i)++;
-	return (msh->word);
+    msh->word_size = ft_strlen(input) * 1024;
+    msh->word = (char *)malloc(msh->word_size);
+    if (!msh->word)
+        return (NULL);
+    msh->word[0] = '\0';
+    
+    while (input[*i] && input[*i] != '"')
+    {
+        if (input[*i] == '$' && input[*i + 1] && input[*i + 1] != ' ' 
+            && input[*i + 1] != '"')
+        {
+            if (!expand_helper(input, i, msh))
+                break;
+        }
+        else
+            append_char_to_word(input, i, msh);
+    }
+    
+    if (input[*i] == '"')
+        (*i)++;
+        
+    return (msh->word);
 }
 
 char	*handle_single_quotes(const char *input, int *i)
