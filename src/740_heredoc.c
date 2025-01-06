@@ -81,7 +81,7 @@ static int	fill_fd_heredoc(int temp_fd, char *eof)
 			free(line);
 			return (0);
 		}
-		write(temp_fd, line, strlen(line));
+		write(temp_fd, line, ft_strlen(line));
 		write(temp_fd, "\n", 1);
 		free(line);
 	}
