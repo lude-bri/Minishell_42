@@ -91,24 +91,26 @@ static int	fill_fd_heredoc(int temp_fd, char *eof)
 static void free_hd(t_heredoc *heredoc)
 {
     t_heredoc *tmp;
+	int		i = 0;
 
     while (heredoc)
     {
         tmp = heredoc->next;
 
         // Liberar campos e o nó atual
-        if (heredoc->eof)
-        {
-			free(heredoc->eof);
-			heredoc->eof = NULL;
-		}
+  //       if (heredoc->eof)
+  //       {
+		// 	free(heredoc->eof);
+		// 	heredoc->eof = NULL;
+		// }
         if (heredoc->fd_heredoc_path)
 		{
 			free(heredoc->fd_heredoc_path);
 			heredoc->fd_heredoc_path = NULL;
 		}
-		// free(heredoc->next);
+		free(heredoc);
         // Avançar para o próximo nó
+		printf("contagem de heredoc %i\n", i++);
         heredoc = tmp;
     }
 }
@@ -118,6 +120,7 @@ static void	free_vector_2(t_vector *vector, t_msh *msh)
 	int		i;
 	t_tkn	*token;
 
+	(void)msh;
 	i = 0;
 	while (i < vector->count)
 	{
@@ -125,8 +128,8 @@ static void	free_vector_2(t_vector *vector, t_msh *msh)
 		if (token != NULL)
 		{
 			free(token->name);
-			token->name = NULL;
-			msh->heredoc.eof = NULL;
+			//token->name = NULL;
+			//msh->heredoc->eof = NULL;
 			free(token);
 			token = NULL;
 		}
@@ -154,12 +157,13 @@ static void	free_all_heredoc(t_msh *msh)
     if (msh->line)
         free(msh->line);
     free_vector_2(&msh->tokens, msh);
-    if (msh->heredoc.fd_heredoc_path)
+    if (msh->heredoc->fd_heredoc_path)
     {
-		free_hd(&msh->heredoc);
+		free_hd(msh->heredoc);
         // free(msh->heredoc.fd_heredoc_path);
-		free(msh->heredoc.next);
-        msh->heredoc.fd_heredoc_path = NULL;
+		//free(msh->heredoc->next);
+		//free(msh->heredoc);
+        //msh->heredoc->fd_heredoc_path = NULL;
     }
     // if (msh->heredoc.eof)
     // {
@@ -228,6 +232,7 @@ static void	transform(t_tkn *tokens, char *path)
 	if (tkn)
 	{
 		tkn->type = TKN_REDIR_ARG;
+		free(tkn->name);
 		tkn->name = ft_strdup(path);
 	}
 }
@@ -242,7 +247,8 @@ static void	assign_heredoc(t_heredoc **heredoc, char *eof)
 	tmp_hd->next = ft_calloc(1, sizeof(t_heredoc));
 	tmp_hd->next->i = tmp_hd->i + 1;
 	tmp_hd->next->count_hd = tmp_hd->count_hd;
-	tmp_hd->next->eof = ft_strdup(eof);
+	// tmp_hd->next->eof = ft_strdup(eof);
+	tmp_hd->next->eof = eof;
 	tmp_hd->next->next = NULL;
 }
 
@@ -252,12 +258,12 @@ static void	start_heredoc(t_msh *msh, t_tkn *tokens)
 	t_heredoc	*hd;
 
 	tkn = tokens;
-	hd = &msh->heredoc;
+	hd = msh->heredoc;
 	while (tkn)
 	{
 		if (tkn->next && tkn->type == TKN_HEREDOC)
 		{
-			hd = &msh->heredoc;
+			hd = msh->heredoc;
 			if (hd->i == 0)
 			{
 				hd->i = 1;
@@ -292,8 +298,8 @@ void	heredoc_exec(t_msh *msh, t_tkn *tokens)
 	t_heredoc	*heredoc;
 
 	start_heredoc(msh, tokens);
-	heredoc = &msh->heredoc;
-	msh->heredoc.len = heredoc_len(heredoc);
+	heredoc = msh->heredoc;
+	msh->heredoc->len = heredoc_len(heredoc);
 	len = heredoc_len(heredoc);
 	while (heredoc && len--)
 	{

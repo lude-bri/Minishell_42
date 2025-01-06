@@ -131,6 +131,7 @@ typedef struct s_tkn
 	t_token_group	type;
 	t_cmd_group		cmd_type;
 	char			*name;
+	char			*hd_path;
 	char			**cmdargs; // need to create
 	int				len;
 	struct s_tkn	*tokens;
@@ -182,7 +183,7 @@ typedef struct s_msh
 	bool		flag_redir;
 	bool		flag_exit;
 	t_vector	tokens;
-	t_heredoc	heredoc;
+	t_heredoc	*heredoc;
 	size_t		word_size;
 
 }				t_msh;

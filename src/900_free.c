@@ -12,14 +12,14 @@
 
 #include "../includes/minishell.h"
 
-static void	free_eof(char *eof)
-{
-	if (eof)
-	{
-		free(eof);
-		eof = NULL;
-	}
-}
+// static void	free_eof(char *eof)
+// {
+// 	if (eof)
+// 	{
+// 		free(eof);
+// 		eof = NULL;
+// 	}
+// }
 
 void	free_heredoc(t_heredoc *heredoc)
 {
@@ -33,9 +33,8 @@ void	free_heredoc(t_heredoc *heredoc)
 			free(heredoc->fd_heredoc_path);
 			heredoc->fd_heredoc_path = NULL;
 		}
-		heredoc->i = 0;
-		free(heredoc->next);
-		heredoc->next = NULL;
+		free(heredoc);
+		heredoc = NULL;
 		heredoc = tmp;
 	}
 }
@@ -52,7 +51,7 @@ void	free_vector(t_vector *vector)
 		if (token != NULL)
 		{
 			free(token->name);
-			token->name = NULL;
+			//token->name = NULL;
 			free(token);
 			token = NULL;
 		}
@@ -130,16 +129,6 @@ void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 		free_vector(&msh->tokens);
 	if (command)
 		free(command);
-	// if (msh->heredoc.len >= 2)
-		// free_hd(&msh->heredoc);
-	if (msh->heredoc.fd_heredoc_path)
-	{
-		free_heredoc(&msh->heredoc);
-		msh->heredoc.fd_heredoc_path = NULL;
-	}
-	if (msh->heredoc.eof)
-	{
-		free_eof(msh->heredoc.eof);
-		msh->heredoc.eof = NULL;
-	}
+	// if (msh->heredoc->fd_heredoc_path)
+	free_heredoc(msh->heredoc);
 }

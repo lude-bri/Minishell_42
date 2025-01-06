@@ -33,7 +33,8 @@ void	init_msh(t_msh *msh, char **envp)
 	msh->cmds = NULL;
 	msh->tree_head = NULL;
 	init_vector(&msh->tokens, 100);
-	init_heredoc(&msh->heredoc);
+	msh->heredoc = ft_calloc(1, sizeof(t_heredoc));
+	init_heredoc(msh->heredoc);
 	increment_shlvl(msh->envp);
 }
 
