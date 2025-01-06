@@ -33,8 +33,8 @@ void	init_msh(t_msh *msh, char **envp)
 	msh->cmds = NULL;
 	msh->tree_head = NULL;
 	init_vector(&msh->tokens, 100);
-	msh->heredoc = ft_calloc(1, sizeof(t_heredoc));
-	init_heredoc(msh->heredoc);
+	// msh->heredoc = ft_calloc(1, sizeof(t_heredoc));
+	// init_heredoc(msh->heredoc);
 	increment_shlvl(msh->envp);
 }
 
@@ -45,6 +45,8 @@ void	init_struct(t_msh *msh)
 	msh->flag_redir = false;
 	msh->flag_exit = false;
 	msh->arg = NULL;
+	msh->heredoc = ft_calloc(1, sizeof(t_heredoc));
+	init_heredoc(msh->heredoc);
 }
 
 void	init_vector(t_vector *vector, size_t size)
