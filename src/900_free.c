@@ -129,6 +129,9 @@ void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 		free_vector(&msh->tokens);
 	if (command)
 		free(command);
-	// if (msh->heredoc->fd_heredoc_path)
-	free_heredoc(msh->heredoc);
+	if (msh->heredoc)
+	{
+		free_heredoc(msh->heredoc);
+		msh->heredoc = NULL;
+	}
 }
