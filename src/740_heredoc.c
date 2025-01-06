@@ -31,36 +31,6 @@ static void	set_signals_to_here_doc(void)
 	signal(SIGQUIT, SIG_DFL);
 }
 
-// static void	heredoc_child_process(char *eof, char *temp_path)
-// {
-// 	int		temp_fd;
-// 	char	*line;
-//
-// 	temp_fd = open(temp_path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-// 	if (temp_fd < 0)
-// 		exit(EXIT_FAILURE);
-// 	set_signals_to_here_doc();
-// 	while (1)
-// 	{
-// 		line = readline("> ");
-// 		if (!line)
-// 		{
-// 			free(line);
-// 			if (g_heredoc_interrupted == SIGINT)
-// 				break ;
-// 		}
-// 		if (!line || ft_strcmp(line, eof) == 0)
-// 			break ;
-// 		write(temp_fd, line, strlen(line));
-// 		write(temp_fd, "\n", 1);
-// 		free(line);
-// 	}
-// 	free(line);
-// 	close(temp_fd);
-// 	exit (EXIT_SUCCESS);
-// }
-
-
 static int	fill_fd_heredoc(int temp_fd, char *eof)
 {
 	char	*line;
@@ -91,26 +61,16 @@ static int	fill_fd_heredoc(int temp_fd, char *eof)
 static void free_hd(t_heredoc *heredoc)
 {
     t_heredoc *tmp;
-	int		i = 0;
 
     while (heredoc)
     {
         tmp = heredoc->next;
-
-        // Liberar campos e o nó atual
-  //       if (heredoc->eof)
-  //       {
-		// 	free(heredoc->eof);
-		// 	heredoc->eof = NULL;
-		// }
         if (heredoc->fd_heredoc_path)
 		{
 			free(heredoc->fd_heredoc_path);
 			heredoc->fd_heredoc_path = NULL;
 		}
 		free(heredoc);
-        // Avançar para o próximo nó
-		printf("contagem de heredoc %i\n", i++);
         heredoc = tmp;
     }
 }
@@ -128,8 +88,6 @@ static void	free_vector_2(t_vector *vector, t_msh *msh)
 		if (token != NULL)
 		{
 			free(token->name);
-			//token->name = NULL;
-			//msh->heredoc->eof = NULL;
 			free(token);
 			token = NULL;
 		}
@@ -158,31 +116,8 @@ static void	free_all_heredoc(t_msh *msh)
         free(msh->line);
     free_vector_2(&msh->tokens, msh);
     if (msh->heredoc->fd_heredoc_path)
-    {
 		free_hd(msh->heredoc);
-        // free(msh->heredoc.fd_heredoc_path);
-		//free(msh->heredoc->next);
-		//free(msh->heredoc);
-        //msh->heredoc->fd_heredoc_path = NULL;
-    }
-    // if (msh->heredoc.eof)
-    // {
-    //     free(msh->heredoc.eof);
-    //     msh->heredoc.eof = NULL;
-    // }
 }
-
-// static void	free_all_heredoc(t_msh *msh)
-// {
-// 	free_arg(msh->envp);
-// 	free_arg(msh->ex_envp);
-// 	free_arg(msh->cmds->av);
-// 	free(msh->line);
-// 	free(msh->cmds);
-// 	free_vector(&msh->tokens);
-// 	if (msh->heredoc.fd_heredoc_path)
-// 		free_heredoc(&msh->heredoc);
-// }
 
 static void	heredoc_child_process(char *eof, char *temp_path,
 								  t_msh *msh, t_tkn *tokens)
@@ -247,7 +182,6 @@ static void	assign_heredoc(t_heredoc **heredoc, char *eof)
 	tmp_hd->next = ft_calloc(1, sizeof(t_heredoc));
 	tmp_hd->next->i = tmp_hd->i + 1;
 	tmp_hd->next->count_hd = tmp_hd->count_hd;
-	// tmp_hd->next->eof = ft_strdup(eof);
 	tmp_hd->next->eof = eof;
 	tmp_hd->next->next = NULL;
 }

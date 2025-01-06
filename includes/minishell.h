@@ -175,6 +175,9 @@ typedef struct s_msh
 	char		*line;
 	char		*word;
 
+	int			fd_in;
+	int			fd_out;
+
 	int			pid;
 	int			cmd_count;
 	int			pipe_count;

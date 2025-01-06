@@ -63,7 +63,9 @@ static int	verify_arg(char **argv, t_msh *msh, t_tkn *tokens)
 	long long	ll;
 
 	(void)tokens;
-	if (!argv[1])
+	if (!argv || !*argv)
+		msh->exit_status = exit_msh(NULL, msh, tokens);
+	if (!argv[1] || ft_strcmp(argv[1], "|") == 0)
 		msh->exit_status = exit_msh(argv, msh, tokens);
 	if (is_num(argv[1]))
 	{
@@ -84,11 +86,13 @@ static int	verify_arg(char **argv, t_msh *msh, t_tkn *tokens)
 //OG VERSION
 static int	exit_msh(char **argv, t_msh *msh, t_tkn *tokens)
 {
-	printf("exit\n");
-	(void)argv;
+	if (argv != NULL)
+		printf("exit\n");
 	free_array(msh->envp, 0);
 	free_array(msh->ex_envp, 0);
 	free_msh(msh->cmds, msh, tokens);
+	close(msh->fd_in);
+	close(msh->fd_out);
 	exit(msh->exit_status);
 }
 

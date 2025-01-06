@@ -33,8 +33,12 @@ int	to_execute(t_msh *msh, t_tkn *tokens)
 
 void	handle_redirections(t_tkn *tokens, t_msh *msh, int *fd_in, int *fd_out)
 {
-	*fd_in = dup(STDIN_FILENO);
-	*fd_out = dup(STDOUT_FILENO);
+	(void)fd_in;
+	(void)fd_out;
+	msh->fd_in = 0;
+	msh->fd_out = 0;
+	msh->fd_in = dup(STDIN_FILENO);
+	msh->fd_out = dup(STDOUT_FILENO);
 	exec_redirs(tokens, msh);
 }
 

@@ -88,7 +88,7 @@ int	initial_syntax_checks(t_msh *msh, char *line, char *str)
 {
 	int	len;
 
-	len = ft_strlen(str);
+	len = ft_strlen(line);
 	if (check_initial_syntax(msh, line) == FAILURE)
 		return (FAILURE);
 	if (check_str_syntax(msh, line) == FAILURE)
