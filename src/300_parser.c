@@ -74,7 +74,7 @@ t_tkn	*to_parse(t_msh *msh)
 		return (NULL);
 	msh->cmds->av = split_input(line, msh);
 	if (!msh->cmds->av || !*msh->cmds->av)
-		return (free_arg(msh->cmds->av), free(msh->cmds), NULL);
+		return (free_arg(msh->cmds->av), free(msh->cmds), free(msh->heredoc), NULL);
 	if (syntax(msh, line) == FAILURE)
 		return (free_arg(msh->cmds->av), free(msh->cmds), NULL);
 	msh->cmd_count = ft_matrixlen(msh->cmds->av);
