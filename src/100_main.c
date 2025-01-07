@@ -12,6 +12,8 @@
 
 #include "../includes/minishell.h"
 
+volatile int g_signal = 0;
+
 int	main(int ac, char **av, char **envp)
 {
 	t_msh		msh;

@@ -12,15 +12,12 @@
 
 #include "../includes/minishell.h"
 
-// Flag global para indicar interrupção do heredoc
-static volatile int	g_heredoc_interrupted = 0;
-
 static void	handle_heredoc_signal(int signal)
 {
 	if (signal == SIGINT)
 	{
 		ft_putstr_fd("\n", 1);
-		g_heredoc_interrupted = SIGINT;
+		g_signal = SIGINT;
 		close(STDIN_FILENO);
 	}
 }
@@ -41,7 +38,7 @@ int	fill_fd_heredoc(int temp_fd, char *eof)
 		if (!line)
 		{
 			free(line);
-			if (g_heredoc_interrupted == SIGINT)
+			if (g_signal == SIGINT)
 				return (2);
 			else
 				return (1);

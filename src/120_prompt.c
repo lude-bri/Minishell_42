@@ -17,6 +17,11 @@ char	*build_prompt(t_msh *msh)
 	char	*line;
 
 	line = readline("\001\033[1;32m\002msh$ \001\033[0m\002");
+	if (g_signal == SIGINT)
+	{
+		msh->exit_status = 130;
+		g_signal = 0;
+	}
 	if (!line)
 	{
 		printf("exit\n");

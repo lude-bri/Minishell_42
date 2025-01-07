@@ -57,6 +57,9 @@
 # define NO_PATH 0
 # define NO_CMDS 0
 
+//Global Variable to handle signals
+extern volatile int	g_signal;
+
 /* ************************************************************************** */
 /*                                  ENUMS								  	  */
 /* ************************************************************************** */

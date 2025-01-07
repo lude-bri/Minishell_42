@@ -85,6 +85,8 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 	int	fd_in;
 	int	fd_out;
 
+	fd_in = 0;
+	fd_out = 0;
 	handle_redirections(tokens, msh, &fd_in, &fd_out);
 	execute_builtin_commands(tokens, msh);
 	dup2(fd_in, STDIN_FILENO);
