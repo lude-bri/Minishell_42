@@ -6,32 +6,29 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 08:11:30 by luigi             #+#    #+#             */
-/*   Updated: 2025/01/07 17:34:39 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/08 17:26:57 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// Flag global para indicar interrupção do heredoc
-static volatile int	g_heredoc_interrupted = 0;
 
 static void	handle_heredoc_signal(int signal)
 {
 	if (signal == SIGINT)
 	{
 		ft_putstr_fd("\n", 1);
-		g_heredoc_interrupted = SIGINT;
+		g_signal = SIGINT;
 		close(STDIN_FILENO);
 	}
 }
 
-void	set_signals_to_here_doc(void)
+void	set_heredoc_signals(void)
 {
 	signal(SIGINT, handle_heredoc_signal);
 	signal(SIGQUIT, SIG_DFL);
 }
 
-int	fill_fd_heredoc(int temp_fd, char *eof)
+int	fill_heredoc(int temp_fd, char *eof)
 {
 	char	*line;
 
@@ -41,7 +38,7 @@ int	fill_fd_heredoc(int temp_fd, char *eof)
 		if (!line)
 		{
 			free(line);
-			if (g_heredoc_interrupted == SIGINT)
+			if (g_signal == SIGINT)
 				return (2);
 			else
 				return (1);
@@ -102,7 +99,7 @@ void	heredoc_exec(t_msh *msh, t_tkn *tokens)
 		pid = fork();
 		if (pid == 0)
 			heredoc_child_process(heredoc->eof, heredoc->fd_heredoc_path,
-				msh, tokens);
+				msh);
 		waitpid(pid, &status, 0);
 		transform(tokens, heredoc->fd_heredoc_path);
 		heredoc = heredoc->next;

@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:49:02 by luigi             #+#    #+#             */
-/*   Updated: 2024/12/23 01:24:34 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/08 17:21:45 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static int	add_new_variable_env(char ***envp, t_exp *exp, const char *new_var)
 	exp->new_envp[i + 1] = NULL;
 	free(*envp);
 	*envp = exp->new_envp;
-	free(exp->var);
 	return (0);
 }
 
@@ -126,5 +125,5 @@ int	msh_export(t_msh *msh, char ***envp, const char *new_var)
 		return (1);
 	if (exp.equal_sign)
 		add_new_variable_env(&msh->envp, &exp, new_var);
-	return (0);
+	return (free(exp.var), 0);
 }

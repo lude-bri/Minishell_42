@@ -70,7 +70,7 @@ int	msh_cd(char **argv, char **envp)
 			return (perror("msh: cd"), 1);
 	}
 	else if (argv[2])
-		return (write(STDERR_FILENO, " too many arguments\n", 19), 1);
+		return (write(STDERR_FILENO, " too many arguments\n", 20), 1);
 	else if (chdir(argv[1]) != 0)
 		return (perror("msh: cd"), 1);
 	if (getcwd(new_path, sizeof(new_path)) == NULL)

@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:28:36 by luigi             #+#    #+#             */
-/*   Updated: 2024/12/22 23:26:37 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/08 17:12:59 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ t_tkn	*to_parse(t_msh *msh)
 		return (NULL);
 	msh->cmds->av = split_input(line, msh);
 	if (!msh->cmds->av || !*msh->cmds->av)
-		return (free_arg(msh->cmds->av), free(msh->cmds), free(msh->heredoc), NULL);
+		return (free_parse(msh), NULL);
 	if (syntax(msh, line) == FAILURE)
-		return (free_arg(msh->cmds->av), free(msh->cmds), NULL);
+		return (free_parse(msh), NULL);
 	msh->cmd_count = ft_matrixlen(msh->cmds->av);
 	msh->line = ft_strdup(line);
 	tokens = tokenizer(msh, msh->cmds->av);

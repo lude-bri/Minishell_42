@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 15:40:26 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/01/07 19:41:01 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/08 17:38:56 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,6 @@
 //Max
 # define PATH_MAX 4096
 # define BUF_SIZE 4096
-
-//Error
-# define INIT_ERROR			"msh: Init Error\n"
-# define ENV_INIT_ERROR		"msh: Env Init Error\n"
-# define ENV_VAR_ERROR		"msh: Env Variable Error\n"
-# define TKN_ERROR			"msh: Token Error\n"
-# define TKNZ_ERROR			"msh: Tokenizer Error\n"
-# define PRS_ERROR			"msh: Parse Error\n"
-# define PRSN_ERROR			"msh: Parsing Error\n"
-# define MALLOC_ERROR		"msh: Malloc Error\n"
-# define CMD_ERROR			"msh: Command not found\n"
-# define ARG_ERROR			"msh: Invalid Arguments\n"
 
 //Semantics
 # define NO_ENV -1
@@ -381,7 +369,7 @@ int		to_execute(t_msh *msh, t_tkn *tokens);
 void	handle_redirections(t_tkn *tokens, t_msh *msh, int *fd_in, int *fd_out);
 char	*check_direct_path(char *cmd);
 char	*search_in_env_path(char *cmd, char **envp);
-char	*find_path(char *cmd, char **envp);
+char	*find_path(char *cmd, char **envp, t_tkn *tokens);
 
 //403_execute_misc2.c
 void	handle_command_not_found(t_msh *msh, t_tkn *tokens, char **args);
@@ -412,7 +400,7 @@ int		find_env_var(char **envp, const char *var);
 void	update_env_var(char **envp, const char *var, const char *value);
 
 //520_pwd.c
-int		msh_pwd(void);
+int		msh_pwd(t_msh *msh, t_tkn *tokens);
 
 //530_export.c
 int		sort_envp(char **envp);
@@ -437,7 +425,7 @@ int		is_variable_match(const char *env_var, const char *var_name);
 int		msh_unset(char **argv, char ***envp);
 
 //550_env.c
-int		msh_env(char **envp);
+int		msh_env(char **envp, t_msh *msh, t_tkn *tkn);
 
 //560_exit.c
 int		msh_exit(char **argv, t_msh *msh, t_tkn *tokens);
@@ -488,14 +476,13 @@ void	redir_out(t_tkn *tokens, t_msh *msh);
 void	redir_append(t_tkn *tokens, t_msh *msh);
 
 //740_heredoc.c
-void	set_signals_to_here_doc(void);
-int		fill_fd_heredoc(int temp_fd, char *eof);
+void	set_heredoc_signals(void);
+int		fill_heredoc(int temp_fd, char *eof);
 void	start_heredoc(t_msh *msh, t_tkn *tokens);
 void	heredoc_exec(t_msh *msh, t_tkn *tokens);
 
 //741_heredoc_pipe.c
-void	heredoc_child_process(char *eof, char *temp_path,
-			t_msh *msh, t_tkn *tokens);
+void	heredoc_child_process(char *eof, char *temp_path, t_msh *msh);
 
 //742_heredoc_utils.c
 void	transform(t_tkn *tokens, char *path);
@@ -525,6 +512,9 @@ void	free_heredoc(t_heredoc *heredoc);
 void	free_hd(t_heredoc *heredoc);
 void	free_vector_2(t_vector *vector, t_msh *msh);
 void	free_all_heredoc(t_msh *msh);
+
+//902_free_parse.c
+void	free_parse(t_msh *msh);
 
 //910_close.c
 void	ft_close(int *fd);

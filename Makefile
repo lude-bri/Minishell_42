@@ -87,6 +87,7 @@ FILES += 741_heredoc_pipe.c
 FILES += 742_heredoc_utils.c
 FILES += 900_free.c
 FILES += 901_free_heredocs.c
+FILES += 902_free_parse.c
 FILES += 910_close.c
 
 

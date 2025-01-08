@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:40:02 by luigi             #+#    #+#             */
-/*   Updated: 2025/01/02 16:13:30 by luigi            ###   ########.fr       */
+/*   Updated: 2025/01/08 17:19:23 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ void	handle_builtin_commands(t_msh *msh, t_tkn *tokens)
 			free_arg(msh->envp);
 			free_arg(msh->ex_envp);
 			free_msh(msh->cmds, msh, tokens);
+			close(msh->fd_in);
+			close(msh->fd_out);
 			exit(msh->exit_status);
 		}
 		else if (pid > 0)

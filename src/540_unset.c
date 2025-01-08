@@ -47,6 +47,16 @@ int	remove_variable(char ***envp, char *var)
 	return (found);
 }
 
+static int	verify_unset_options(char **av)
+{
+	while (ft_strcmp(*av, "unset") != 0)
+		av++;
+	av++;
+	if (ft_strncmp(*av, "-", 1) == 0)
+		return (1);
+	return (0);
+}
+
 int	msh_unset(char **argv, char ***envp)
 {
 	int	i;
@@ -54,6 +64,9 @@ int	msh_unset(char **argv, char ***envp)
 
 	found = 0;
 	if (!argv || !envp || !*envp)
+		return (1);
+	found = verify_unset_options(argv);
+	if (found == 1)
 		return (1);
 	i = 1;
 	while (argv[i])

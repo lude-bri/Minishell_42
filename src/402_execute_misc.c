@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/22 23:47:58 by mde-agui          #+#    #+#             */
-/*   Updated: 2024/12/23 00:01:19 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/08 17:21:37 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*check_direct_path(char *cmd)
 				return (ft_strdup(cmd));
 			return (NULL);
 		}
-		if (cmd[0] == '<')
+		if (cmd[0] == '<' && cmd[1] == '<')
 			return ("FOUND_IN");
 	}
 	return (NULL);
@@ -85,12 +85,14 @@ char	*search_in_env_path(char *cmd, char **envp)
 	return (free_arg(full_path), NULL);
 }
 
-char	*find_path(char *cmd, char **envp)
+char	*find_path(char *cmd, char **envp, t_tkn *tokens)
 {
 	char	*path;
 
 	path = check_direct_path(cmd);
 	if (path)
 		return (path);
-	return (search_in_env_path(cmd, envp));
+	while (tokens->type != TKN_CMD)
+		tokens = tokens->next;
+	return (search_in_env_path(tokens->name, envp));
 }

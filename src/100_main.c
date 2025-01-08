@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-volatile int g_signal = 0;
+volatile int	g_signal = 0;
 
 int	main(int ac, char **av, char **envp)
 {
@@ -37,7 +37,10 @@ int	msh_loop(t_msh *msh)
 		init_struct(msh);
 		tokens = to_parse(msh);
 		if (!tokens)
+		{
+			free(msh->heredoc);
 			continue ;
+		}
 		if (msh->cmd_count > NO_CMDS)
 			if (!to_execute(msh, tokens))
 				break ;

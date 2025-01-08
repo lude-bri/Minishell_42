@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:32:38 by luigi             #+#    #+#             */
-/*   Updated: 2025/01/07 17:12:56 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/08 17:39:19 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	execute_builtin_commands(t_tkn *tokens, t_msh *msh)
 	if (tokens->cmd_type == CMD_CD)
 		msh->exit_status = msh_cd(tokens->cmdargs, msh->envp);
 	else if (tokens->cmd_type == CMD_ENV)
-		msh_env(msh->envp);
+		msh_env(msh->envp, msh, tokens);
 	else if (tokens->cmd_type == CMD_PWD)
-		msh_pwd();
+		msh_pwd(msh, tokens);
 	else if (tokens->cmd_type == CMD_ECHO)
 		msh_echo(msh->cmds->av, msh, tokens);
 	else if (tokens->cmd_type == CMD_EXIT)
@@ -92,8 +92,6 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 	execute_builtin_commands(tokens, msh);
 	dup2(fd_in, STDIN_FILENO);
 	dup2(fd_out, STDOUT_FILENO);
-	// close(fd_in);
-	// close(fd_out);
 	return (SUCCESS);
 }
 
@@ -115,7 +113,7 @@ void	execute(t_msh *msh, t_tkn *tokens)
 	char	*path;
 	char	**args;
 
-	path = find_path(tokens->name, msh->envp);
+	path = find_path(tokens->name, msh->envp, tokens);
 	args = build_args(tokens);
 	if (!path)
 	{
