@@ -420,6 +420,7 @@ int		update_existing_variable(char ***envp, t_exp *exp);
 void	print_env_var(char *env_var);
 int		find_existing_variable(char ***envp, t_exp *exp);
 int		is_alpha(const char *str);
+int		update_existing_variable_env(char ***envp, t_exp *exp);
 
 //540_unset.c
 int		is_variable_match(const char *env_var, const char *var_name);
