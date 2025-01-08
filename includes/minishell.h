@@ -182,6 +182,7 @@ typedef struct s_msh
 //struct for export, there were too many variables needed
 typedef struct s_exp
 {
+	bool	flag;
 	size_t	len;
 	size_t	prefix_len;
 	char	*no_sign;

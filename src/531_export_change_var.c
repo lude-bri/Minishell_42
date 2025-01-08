@@ -87,7 +87,8 @@ int	update_variable_entry(char ***envp, t_exp *exp, int i)
 	free((*envp)[i]);
 	(*envp)[i] = exp->new_entry;
 	free(exp->updated_value);
-	free(exp->var);
+	if (exp->flag == false)
+		free(exp->var);
 	return (0);
 }
 
@@ -95,6 +96,7 @@ int	update_existing_variable(char ***envp, t_exp *exp)
 {
 	int	i;
 
+	exp->flag = true;
 	i = find_existing_variable(envp, exp);
 	if (i == -1)
 		return (2);

@@ -16,6 +16,4 @@ void	free_parse(t_msh *msh)
 {
 	free_arg(msh->cmds->av);
 	free(msh->cmds);
-	// if (msh->heredoc)
-	// 	free(msh->heredoc);
 }

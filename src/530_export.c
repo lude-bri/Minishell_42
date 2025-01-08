@@ -87,6 +87,7 @@ int	parse_variable(const char *new_var, t_exp *exp)
 {
 	if (ft_isdigit(new_var[0]))
 		return (1);
+	exp->flag = false;
 	exp->len = ft_strlen(new_var);
 	exp->no_sign = ft_strnstr(new_var, "", exp->len);
 	exp->equal_sign = ft_strnstr(new_var, "=", exp->len);
@@ -105,10 +106,41 @@ int	parse_variable(const char *new_var, t_exp *exp)
 	return (exp->var == NULL);
 }
 
+static int	update_existing_variable_env(char ***envp, t_exp *exp)
+{
+	int	i;
+
+	exp->flag = false;
+	i = find_existing_variable(envp, exp);
+	if (i == -1)
+		return (2);
+	if (exp->add_sign)
+	{
+		if (handle_addition(exp))
+			return (free(exp->var), 1);
+	}
+	else if (exp->remove_sign)
+	{
+		if (handle_removal(exp))
+			return (free(exp->var), 1);
+	}
+	else
+	{
+		exp->updated_value = ft_strdup(exp->equal_sign + 1);
+		if (!exp->updated_value)
+			return (free(exp->var), 1);
+	}
+	if (update_variable_entry(envp, exp, i))
+		return (1);
+	return (0);
+}
+
+
 int	msh_export(t_msh *msh, char ***envp, const char *new_var)
 {
 	t_exp	exp;
 	int		update_var;
+	int		update_var_ex;
 
 	(void)envp;
 	if (parse_variable(new_var, &exp))
@@ -117,9 +149,10 @@ int	msh_export(t_msh *msh, char ***envp, const char *new_var)
 		return (1);
 	}
 	update_var = update_existing_variable(&msh->envp, &exp);
-	if (update_var == 1)
+	update_var_ex = update_existing_variable_env(&msh->ex_envp, &exp);
+	if (update_var == 1 && update_var_ex == 1)
 		return (1);
-	if (update_var == 0)
+	if (update_var == 0 && update_var_ex == 0)
 		return (0);
 	if (add_new_variable(&msh->ex_envp, &exp, new_var))
 		return (1);
