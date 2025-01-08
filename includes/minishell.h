@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 15:40:26 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/01/08 17:38:56 by luigi            ###   ########.fr       */
+/*   Updated: 2025/01/08 19:29:37 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -518,5 +518,6 @@ void	free_parse(t_msh *msh);
 
 //910_close.c
 void	ft_close(int *fd);
+void	free_and_close_all(t_msh *msh, t_tkn *tokens);
 
 #endif

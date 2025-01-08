@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:32:38 by luigi             #+#    #+#             */
-/*   Updated: 2025/01/08 17:39:19 by luigi            ###   ########.fr       */
+/*   Updated: 2025/01/08 19:25:51 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,38 +49,6 @@ void	execute_builtin_commands(t_tkn *tokens, t_msh *msh)
 		execute_export_command(tokens, msh);
 }
 
-// void	execute_builtin_commands(t_tkn *tokens, t_msh *msh)
-// {
-// 	if (tokens->cmd_type == CMD_CD)
-// 		msh->exit_status = msh_cd(tokens->cmdargs, msh->envp);
-// 	else if (tokens->cmd_type == CMD_ENV)
-// 		msh_env(msh->envp);
-// 	else if (tokens->cmd_type == CMD_PWD)
-// 		msh_pwd();
-// 	else if (tokens->cmd_type == CMD_ECHO)
-// 		msh_echo(msh->cmds->av, msh, tokens);
-// 	else if (tokens->cmd_type == CMD_EXIT)
-// 		msh_exit(tokens->cmdargs, msh, tokens);
-// 	else if (tokens->cmd_type == CMD_UNSET)
-// 	{
-// 		msh_unset(msh->cmds->av, &(msh->envp));
-// 		msh_unset(msh->cmds->av, &(msh->ex_envp));
-// 	}
-// 	else if (tokens->cmd_type == CMD_EXPORT)
-// 	{
-// 		if (msh->cmds->av[1]
-// 			&& ((ft_strcmp(msh->cmds->av[1], ">") != 0)
-// 				&& (ft_strcmp(msh->cmds->av[1], ">>") != 0)
-// 				&& (ft_strcmp(msh->cmds->av[1], "|") != 0)))
-// 		{
-// 			if (msh_export(msh, &(msh->ex_envp), msh->cmds->av[1]) == 1)
-// 				msh->exit_status = 1;
-// 		}
-// 		else
-// 			msh_export_no_var(msh->ex_envp);
-// 	}
-// }
-
 int	exec_bi(t_tkn *tokens, t_msh *msh)
 {
 	int	fd_in;
@@ -95,19 +63,6 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 	return (SUCCESS);
 }
 
-// void	execute(t_msh *msh, t_tkn *tokens)
-// {
-// 	char	*path;
-// 	char	**args;
-//
-// 	path = find_path(tokens->name, msh->envp);
-// 	args = build_args(tokens);
-// 	if (!path || ft_strcmp(path, "FOUND_IN") == 0)
-// 		handle_command_not_found(msh, tokens, args);
-// 	if (execve(path, args, msh->envp) == -1)
-// 		handle_execve_error(path, args, msh, tokens);
-// }
-
 void	execute(t_msh *msh, t_tkn *tokens)
 {
 	char	*path;
@@ -116,14 +71,7 @@ void	execute(t_msh *msh, t_tkn *tokens)
 	path = find_path(tokens->name, msh->envp, tokens);
 	args = build_args(tokens);
 	if (!path)
-	{
-		write(STDERR_FILENO, " command not found\n", 19);
-		free_msh(msh->cmds, msh, tokens);
-		free_array(msh->envp, 0);
-		free_arg(msh->ex_envp);
-		free_arg(args);
-		exit(127);
-	}
+		handle_command_not_found(msh, tokens, args);
 	if (ft_strcmp(path, "FOUND_IN") == 0)
 	{
 		free_msh(msh->cmds, msh, tokens);
@@ -133,15 +81,7 @@ void	execute(t_msh *msh, t_tkn *tokens)
 		exit(127);
 	}
 	if (execve(path, args, msh->envp) == -1)
-	{
-		perror(path);
-		free(path);
-		free_arg(args);
-		free_msh(msh->cmds, msh, tokens);
-		free_array(msh->envp, 0);
-		free_arg(msh->ex_envp);
-		exit(126);
-	}
+		handle_execve_error(path, args, msh, tokens);
 }
 
 int	exec_exe(t_tkn *tokens, t_msh *msh)

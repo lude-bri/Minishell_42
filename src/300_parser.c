@@ -76,7 +76,7 @@ t_tkn	*to_parse(t_msh *msh)
 	if (!msh->cmds->av || !*msh->cmds->av)
 		return (free_parse(msh), NULL);
 	if (syntax(msh, line) == FAILURE)
-		return (free_parse(msh), NULL);
+		return (free_arg(msh->cmds->av), free(msh->cmds), NULL);
 	msh->cmd_count = ft_matrixlen(msh->cmds->av);
 	msh->line = ft_strdup(line);
 	tokens = tokenizer(msh, msh->cmds->av);

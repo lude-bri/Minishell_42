@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:40:02 by luigi             #+#    #+#             */
-/*   Updated: 2025/01/08 17:19:23 by luigi            ###   ########.fr       */
+/*   Updated: 2025/01/08 19:29:18 by luigi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,7 @@ void	handle_builtin_commands(t_msh *msh, t_tkn *tokens)
 		if (pid == 0)
 		{
 			exec_bi(tokens, msh);
-			free_arg(msh->envp);
-			free_arg(msh->ex_envp);
-			free_msh(msh->cmds, msh, tokens);
-			close(msh->fd_in);
-			close(msh->fd_out);
+			free_and_close_all(msh, tokens);
 			exit(msh->exit_status);
 		}
 		else if (pid > 0)
@@ -86,13 +82,32 @@ void	handle_builtin_commands(t_msh *msh, t_tkn *tokens)
 	}
 }
 
-void	exec_one_redirs(t_msh *msh, t_tkn *tokens)
+static int	verify_only_null(t_tkn *tokens)
 {
-	exec_exe(tokens, msh);
+	t_tkn	*tkn;
+	int		flag;
+	int		len;
+
+	tkn = tokens;
+	len = tokens->len;
+	while (tkn && len--)
+	{
+		if (tkn->type == TKN_NULL)
+			flag = 1;
+		else
+			flag = 0;
+		tkn = tkn->next;
+	}
+	return (flag);
 }
 
 int	exec_one(t_msh *msh, t_tkn *tokens)
 {
+	if (verify_only_null(tokens) == 1)
+	{
+		write(2, " command not found\n", 19);
+		msh->exit_status = 127;
+	}
 	while (tokens && tokens->type == TKN_NULL)
 		tokens = tokens->next;
 	if (!tokens)
@@ -106,6 +121,6 @@ int	exec_one(t_msh *msh, t_tkn *tokens)
 	}
 	else if (tokens->type == TKN_IN || tokens->type == TKN_OUT
 		|| tokens->type == TKN_APPEND)
-		exec_one_redirs(msh, tokens);
+		exec_exe(tokens, msh);
 	return (SUCCESS);
 }

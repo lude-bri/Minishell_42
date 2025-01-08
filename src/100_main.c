@@ -38,7 +38,8 @@ int	msh_loop(t_msh *msh)
 		tokens = to_parse(msh);
 		if (!tokens)
 		{
-			free(msh->heredoc);
+			if (msh->heredoc)
+				free(msh->heredoc);
 			continue ;
 		}
 		if (msh->cmd_count > NO_CMDS)
