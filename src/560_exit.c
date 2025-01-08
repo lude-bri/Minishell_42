@@ -20,7 +20,7 @@ static int	exit_msh(char **argv, t_msh *msh, t_tkn *tokens);
 static int	handle_two_commands(char **argv, t_msh *msh)
 {
 	if (is_letter(argv[1]))
-		return (write(STDERR_FILENO, " numeric argument required\n", 26), 2);
+		return (write(STDERR_FILENO, " numeric argument required\n", 27), 2);
 	else
 	{
 		if (is_sign(argv[1]))

@@ -24,7 +24,6 @@ char	*build_prompt(t_msh *msh)
 	}
 	if (!line)
 	{
-		printf("line -> %s\n", line);
 		printf("exit\n");
 		free_arg(msh->envp);
 		free_arg(msh->ex_envp);
