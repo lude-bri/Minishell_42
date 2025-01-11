@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:32:38 by luigi             #+#    #+#             */
-/*   Updated: 2025/01/08 19:25:51 by luigi            ###   ########.fr       */
+/*   Updated: 2025/01/11 16:37:07 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,17 @@ void	execute(t_msh *msh, t_tkn *tokens)
 
 int	exec_exe(t_tkn *tokens, t_msh *msh)
 {
-	int	status;
+	int					status;
+	struct sigaction	sa_default;
 
 	if (ft_strcmp(tokens->name, "sudo") == 0)
 		return (printf("msh: permission denied: sudo\n"), msh->exit_status = 126
 			, SUCCESS);
+	sa_default.sa_handler = SIG_DFL;
+	sigemptyset(&sa_default.sa_mask);
+	sa_default.sa_flags = 0;
+	sigaction(SIGINT, &sa_default, NULL);
+	sigaction(SIGQUIT, &sa_default, NULL);
 	msh->pid = fork();
 	if (msh->pid == 0)
 	{
@@ -99,11 +105,16 @@ int	exec_exe(t_tkn *tokens, t_msh *msh)
 	}
 	else if (msh->pid > 0)
 	{
+		setup_signals();
 		waitpid(msh->pid, &status, 0);
 		if (WIFEXITED(status))
 			msh->exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
+		{
 			msh->exit_status = 128 + WTERMSIG(status);
+			if (WTERMSIG(status) == SIGINT)
+				write(1, "\n", 1);
+		}
 	}
 	else
 	{

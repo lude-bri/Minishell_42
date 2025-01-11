@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 01:07:26 by mde-agui          #+#    #+#             */
-/*   Updated: 2024/12/23 03:20:43 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:44:11 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,24 +67,25 @@ int	find_existing_variable(char ***envp, t_exp *exp)
 	return (-1);
 }
 
-int	is_alpha(const char *str)
+int	variable_exists(char ***envp, const char *var)
 {
-	int	i;
+	int		i;
+	size_t	var_len;
 
 	i = 0;
-	if (str[i] == '=')
-		return (1);
-	while (str[i])
+	var_len = ft_strlen(var);
+	while ((*envp)[i])
 	{
-		if ((str[i] >= 'a' && str[i] <= 'z')
-			|| (str[i] >= 'A' && str[i] <= 'Z'))
-			i++;
-		else if (str[i] == '+' || str[i] == '=' || (str[i] == '-'
-				&& str[i + 1] == '='))
-			break ;
-		else
+		printf("Comparing: '%s' with '%s'\n", (*envp)[i], var);
+		if (ft_strncmp((*envp)[i], var, var_len) == 0 &&
+			((*envp)[i][var_len] == '\0' || (*envp)[i][var_len] == '='))
+		{
+			printf("Match found!\n");
 			return (1);
+		}
+		i++;
 	}
+	printf("No match found for '%s'\n", var);
 	return (0);
 }
 

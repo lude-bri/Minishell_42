@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:49:02 by luigi             #+#    #+#             */
-/*   Updated: 2025/01/08 17:21:45 by luigi            ###   ########.fr       */
+/*   Updated: 2025/01/11 16:41:33 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int	parse_variable(const char *new_var, t_exp *exp)
 		return (1);
 	exp->flag = false;
 	exp->len = ft_strlen(new_var);
-	exp->no_sign = ft_strnstr(new_var, "", exp->len);
 	exp->equal_sign = ft_strnstr(new_var, "=", exp->len);
 	exp->add_sign = ft_strnstr(new_var, "+=", exp->len);
 	exp->remove_sign = ft_strnstr(new_var, "-=", exp->len);
@@ -99,10 +98,8 @@ int	parse_variable(const char *new_var, t_exp *exp)
 		exp->var = ft_substr(new_var, 0, exp->remove_sign - new_var);
 	else if (exp->equal_sign)
 		exp->var = ft_substr(new_var, 0, exp->equal_sign - new_var);
-	else if (exp->no_sign)
-		exp->var = ft_substr(new_var, 0, exp->no_sign - new_var);
 	else
-		return (1);
+		exp->var = ft_strdup(new_var);
 	return (exp->var == NULL);
 }
 
@@ -117,6 +114,15 @@ int	msh_export(t_msh *msh, char ***envp, const char *new_var)
 	{
 		perror(" not a valid identifier\n");
 		return (1);
+	}
+	if (!exp.equal_sign && !exp.add_sign && !exp.remove_sign)
+	{
+		if (!variable_exists(&msh->ex_envp, exp.var))
+		{
+			if (add_new_variable(&msh->ex_envp, &exp, new_var))
+				return (free(exp.var), 1);
+		}
+		return (free(exp.var), 0);
 	}
 	update_var = update_existing_variable(&msh->envp, &exp);
 	update_var_ex = update_existing_variable_env(&msh->ex_envp, &exp);

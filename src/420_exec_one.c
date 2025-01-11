@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:40:02 by luigi             #+#    #+#             */
-/*   Updated: 2025/01/08 19:29:18 by luigi            ###   ########.fr       */
+/*   Updated: 2025/01/11 16:37:31 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,19 @@ static int	is_special_bi(t_tkn *tokens)
 
 void	handle_builtin_commands(t_msh *msh, t_tkn *tokens)
 {
-	int	pid;
-	int	status;
+	int					pid;
+	int					status;
+	struct sigaction	sa_default;
 
 	if (is_special_bi(tokens) == SUCCESS)
 		exec_bi(tokens, msh);
 	else
 	{
+		sa_default.sa_handler = SIG_DFL;
+		sigemptyset(&sa_default.sa_mask);
+		sa_default.sa_flags = 0;
+		sigaction(SIGINT, &sa_default, NULL);
+		sigaction(SIGQUIT, &sa_default, NULL);
 		pid = fork();
 		if (pid == 0)
 		{
@@ -73,11 +79,16 @@ void	handle_builtin_commands(t_msh *msh, t_tkn *tokens)
 		}
 		else if (pid > 0)
 		{
+			setup_signals();
 			waitpid(pid, &status, 0);
 			if (WIFEXITED(status))
 				msh->exit_status = WEXITSTATUS(status);
 			else if (WIFSIGNALED(status))
+			{
 				msh->exit_status = 128 + WTERMSIG(status);
+				if (WTERMSIG(status) == SIGINT)
+					write(1, "\n", 1);
+			}
 		}
 	}
 }

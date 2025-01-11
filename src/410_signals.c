@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:15:51 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/01/07 19:42:44 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/11 15:47:27 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@ void	sigquit_handler(int sig)
 void	sigint_handler(int sig)
 {
 	(void)sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (waitpid(-1, NULL, WNOHANG) == -1)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 	g_signal = 130;
 }
 
