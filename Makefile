@@ -71,6 +71,7 @@ FILES += 520_pwd.c
 FILES += 530_export.c
 FILES += 531_export_change_var.c
 FILES += 532_export_misc.c
+FILES += 533_export_misc2.c
 FILES += 540_unset.c
 FILES += 550_env.c
 FILES += 560_exit.c
