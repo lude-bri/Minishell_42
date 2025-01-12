@@ -77,6 +77,30 @@ void	print_echo_arguments(char **argv, int i, int space)
 	}
 }
 
+static int	verify_sanity_quotes(char *str)
+{
+	int		found;
+	int		i;
+
+	i = 0;
+	found = 0;
+	while (str[i])
+	{
+		if (str[i] == '\"' || str[i] == '\'')
+		{
+			if (found == 1)
+				found = 0;
+			else
+				found = 1;
+		}
+		i++;
+	}
+	if (found == 1)
+		return (SUCCESS);
+	else
+		return (FAILURE);
+}
+
 int	msh_echo(char **argv, t_msh *msh, t_tkn *tokens)
 {
 	int	i;
@@ -84,9 +108,17 @@ int	msh_echo(char **argv, t_msh *msh, t_tkn *tokens)
 	int	space;
 
 	(void)tokens;
+	while (ft_strcmp(*argv, "echo") != 0)
+		argv++;
 	if (!argv[1])
 		return (printf("\n"), 0);
 	i = handle_echo_options(argv, &newline);
+	if (verify_sanity_quotes(msh->line) == SUCCESS)
+	{
+		write(2, "msh: unexpected EOF while looking for matching quotes\n", 54);
+		msh->exit_status = 2;
+		return (0);
+	}
 	if (verify_whitespaces(msh->line) == SUCCESS)
 		space = 1;
 	else

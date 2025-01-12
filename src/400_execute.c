@@ -15,13 +15,19 @@
 void	execute_export_command(t_tkn *tokens, t_msh *msh)
 {
 	(void)tokens;
+	int		i;
+
+	i = 0;
 	if (msh->cmds->av[1]
 		&& ((ft_strcmp(msh->cmds->av[1], ">") != 0)
 			&& (ft_strcmp(msh->cmds->av[1], ">>") != 0)
 			&& (ft_strcmp(msh->cmds->av[1], "|") != 0)))
 	{
-		if (msh_export(msh, &(msh->ex_envp), msh->cmds->av[1]) == 1)
+		while (msh->cmds->av[++i])
+		{
+			if (msh_export(msh, &(msh->ex_envp), msh->cmds->av[i]) == 1)
 			msh->exit_status = 1;
+		}
 	}
 	else
 		msh_export_no_var(msh->ex_envp);

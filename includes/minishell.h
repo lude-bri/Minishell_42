@@ -424,6 +424,7 @@ int		update_existing_variable_env(char ***envp, t_exp *exp);
 
 //533_export_misc2.c
 int		is_alpha(const char *str);
+int		sanity_check_export(const char *var);
 
 //540_unset.c
 int		remove_variable(char ***envp, char *var);

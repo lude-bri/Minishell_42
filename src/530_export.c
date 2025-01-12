@@ -85,7 +85,9 @@ int	msh_export_no_var(char **envp)
 
 int	parse_variable(const char *new_var, t_exp *exp)
 {
-	if (ft_isdigit(new_var[0]))
+	// if (ft_isdigit(new_var[0]))
+	// 	return (1);
+	if (sanity_check_export(new_var) == FAILURE)
 		return (1);
 	exp->flag = false;
 	exp->len = ft_strlen(new_var);

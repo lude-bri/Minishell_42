@@ -12,6 +12,23 @@
 
 #include "../includes/minishell.h"
 
+int	sanity_check_export(const char *var)
+{
+	int		i;
+
+	i = 0;
+	if (ft_isdigit(var[0]))
+		return(FAILURE);
+	while (var[i])
+	{
+		if (var[i] == '.' || var[i] == '/')
+			return (FAILURE);
+		else
+			i++;
+	}
+	return (SUCCESS);
+}
+
 int	is_alpha(const char *str)
 {
 	int	i;

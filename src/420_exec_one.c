@@ -106,7 +106,10 @@ static int	verify_only_null(t_tkn *tokens)
 		if (tkn->type == TKN_NULL)
 			flag = 1;
 		else
+		{
 			flag = 0;
+			return (flag);
+		}
 		tkn = tkn->next;
 	}
 	return (flag);
