@@ -37,7 +37,7 @@ void	execute_export_command(t_tkn *tokens, t_msh *msh)
 void	execute_builtin_commands(t_tkn *tokens, t_msh *msh)
 {
 	if (tokens->cmd_type == CMD_CD)
-		msh->exit_status = msh_cd(tokens->cmdargs, msh->envp);
+		msh->exit_status = msh_cd(tokens->cmdargs, msh);
 	else if (tokens->cmd_type == CMD_ENV)
 		msh_env(msh->envp, msh, tokens);
 	else if (tokens->cmd_type == CMD_PWD)

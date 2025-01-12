@@ -396,7 +396,7 @@ int		exec_more(t_msh *msh, t_tkn *tokens);
 int		msh_echo(char **argv, t_msh *msh, t_tkn *tokens);
 
 //510_cd.c
-int		msh_cd(char **argv, char **envp);
+int		msh_cd(char **argv, t_msh *msh);
 int		find_env_var(char **envp, const char *var);
 void	update_env_var(char **envp, const char *var, const char *value);
 
