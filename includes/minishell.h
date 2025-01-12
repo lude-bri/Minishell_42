@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 15:40:26 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/01/11 16:44:45 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/11 20:41:47 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -413,12 +413,12 @@ int		msh_export(t_msh *msh, char ***envp, const char *new_var);
 int		add_new_variable(char ***envp, t_exp *exp, const char *new_var);
 int		handle_addition(t_exp *exp);
 int		handle_removal(t_exp *exp);
-int		update_variable_entry(char ***envp, t_exp *exp, int i);
+int		update_variable_entry(char ***envp, t_exp **exp, int i);
 int		update_existing_variable(char ***envp, t_exp *exp);
 
 //532_ export_misc.c
 void	print_env_var(char *env_var);
-int		find_existing_variable(char ***envp, t_exp *exp);
+int		find_existing_variable(char ***envp, t_exp **exp);
 int		variable_exists(char ***envp, const char *var);
 int		update_existing_variable_env(char ***envp, t_exp *exp);
 
@@ -426,6 +426,7 @@ int		update_existing_variable_env(char ***envp, t_exp *exp);
 int		is_alpha(const char *str);
 
 //540_unset.c
+int		remove_variable(char ***envp, char *var);
 int		is_variable_match(const char *env_var, const char *var_name);
 int		msh_unset(char **argv, char ***envp);
 
