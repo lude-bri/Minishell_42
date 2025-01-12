@@ -95,6 +95,7 @@ int	exec_exe(t_tkn *tokens, t_msh *msh)
 	int					status;
 	struct sigaction	sa_default;
 
+	status = 0;
 	if (ft_strcmp(tokens->name, "sudo") == 0)
 		return (printf("msh: permission denied: sudo\n"), msh->exit_status = 126
 			, SUCCESS);
