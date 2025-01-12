@@ -64,6 +64,7 @@ FILES += 402_execute_misc.c
 FILES += 403_execute_misc2.c
 FILES += 410_signals.c
 FILES += 420_exec_one.c
+FILES += 421_exec_one_misc.c
 FILES += 430_exec_more.c
 FILES += 500_echo.c
 FILES += 510_cd.c
