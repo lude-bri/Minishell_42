@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 15:40:26 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/01/11 20:41:47 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/12 12:02:28 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,8 +221,8 @@ typedef struct s_params
 	bool		is_first_word;
 }				t_params;
 
-
-extern volatile int g_signal;
+//Global_variable
+extern volatile int	g_signal;
 /* ************************************************************************** */
 /*                                 FUNCTIONS                                  */
 /* ************************************************************************** */
@@ -373,6 +373,8 @@ char	*search_in_env_path(char *cmd, char **envp);
 char	*find_path(char *cmd, char **envp, t_tkn *tokens);
 
 //403_execute_misc2.c
+void	handle_child_process(t_tkn *tokens, t_msh *msh);
+void	handle_parent_process(t_msh *msh, int status);
 void	handle_command_not_found(t_msh *msh, t_tkn *tokens, char **args);
 void	handle_execve_error(char *path, char **args, t_msh *msh, t_tkn *tokens);
 
@@ -383,6 +385,10 @@ void	sigint_handler(int sig);
 //420_exec_one.c
 int		exec_one(t_msh *msh, t_tkn *tokens);
 int		is_bi(t_tkn *tokens);
+
+//421_exec_more_misc.c
+void	handle_child_builtin(t_msh *msh, t_tkn *tokens);
+void	handle_parent_builtin(int pid, t_msh *msh);
 
 //430_exec_more.c
 int		exec_more(t_msh *msh, t_tkn *tokens);
@@ -396,7 +402,7 @@ int		exec_more(t_msh *msh, t_tkn *tokens);
 int		msh_echo(char **argv, t_msh *msh, t_tkn *tokens);
 
 //510_cd.c
-int		msh_cd(char **argv, t_msh *msh);
+int		msh_cd(char **argv, char **envp);
 int		find_env_var(char **envp, const char *var);
 void	update_env_var(char **envp, const char *var, const char *value);
 
@@ -404,9 +410,9 @@ void	update_env_var(char **envp, const char *var, const char *value);
 int		msh_pwd(t_msh *msh, t_tkn *tokens);
 
 //530_export.c
-int		sort_envp(char **envp);
 int		msh_export_no_var(char **envp);
 int		parse_variable(const char *new_var, t_exp *exp);
+int		handle_variable_update(t_msh *msh, t_exp *exp, const char *new_var);
 int		msh_export(t_msh *msh, char ***envp, const char *new_var);
 
 //531_export_change_var.c
@@ -423,6 +429,7 @@ int		variable_exists(char ***envp, const char *var);
 int		update_existing_variable_env(char ***envp, t_exp *exp);
 
 //533_export_misc2.c
+int		sort_envp(char **envp);
 int		is_alpha(const char *str);
 int		sanity_check_export(const char *var);
 
