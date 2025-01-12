@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 01:07:26 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/01/11 16:44:11 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/12 10:51:29 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,32 @@ void	print_env_var(char *env_var)
 	}
 }
 
-int	find_existing_variable(char ***envp, t_exp *exp)
+// Update find_existing_variable in export_misc.c
+int find_existing_variable(char ***envp, t_exp **exp)
 {
-	int	i;
+    int i;
+    size_t var_len;
+    char *equal_pos;
 
-	i = 0;
-	while ((*envp)[i])
-	{
-		if (ft_strncmp((*envp)[i], exp->var, ft_strlen(exp->var)) == 0 &&
-			(*envp)[i][ft_strlen(exp->var)] == '=')
-		{
-			exp->existing_value = ft_strchr((*envp)[i], '=') + 1;
-			return (i);
-		}
-		i++;
-	}
-	return (-1);
+    i = 0;
+    var_len = ft_strlen((*exp)->var);
+    while ((*envp)[i])
+    {
+        // Match either exact variable name or variable with =
+        if (ft_strncmp((*envp)[i], (*exp)->var, var_len) == 0 && 
+            ((*envp)[i][var_len] == '\0' || (*envp)[i][var_len] == '='))
+        {
+            // If variable has a value, store it
+            equal_pos = ft_strchr((*envp)[i], '=');
+            if (equal_pos)
+                (*exp)->existing_value = equal_pos + 1;
+            else
+                (*exp)->existing_value = NULL;
+            return i;
+        }
+        i++;
+    }
+    return -1;
 }
 
 int	variable_exists(char ***envp, const char *var)
@@ -94,7 +104,7 @@ int	update_existing_variable_env(char ***envp, t_exp *exp)
 	int	i;
 
 	exp->flag = false;
-	i = find_existing_variable(envp, exp);
+	i = find_existing_variable(envp, &exp);
 	if (i == -1)
 		return (2);
 	if (exp->add_sign)
@@ -113,7 +123,7 @@ int	update_existing_variable_env(char ***envp, t_exp *exp)
 		if (!exp->updated_value)
 			return (free(exp->var), 1);
 	}
-	if (update_variable_entry(envp, exp, i))
+	if (update_variable_entry(envp, &exp, i))
 		return (1);
 	return (0);
 }

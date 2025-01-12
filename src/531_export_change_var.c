@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 01:05:22 by mde-agui          #+#    #+#             */
-/*   Updated: 2024/12/23 03:20:13 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/12 10:51:14 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,22 +74,39 @@ int	handle_removal(t_exp *exp)
 	return (0);
 }
 
-int	update_variable_entry(char ***envp, t_exp *exp, int i)
+// Update update_variable_entry in export_change_var.c
+int update_variable_entry(char ***envp, t_exp **exp, int i)
 {
-	exp->new_entry = malloc(ft_strlen(exp->var)
-			+ ft_strlen(exp->updated_value) + 2);
-	if (!exp->new_entry)
-		return (1);
-	ft_strlcpy(exp->new_entry, exp->var, ft_strlen(exp->var) + 1);
-	ft_strncat(exp->new_entry, "=", 2);
-	ft_strncat(exp->new_entry, exp->updated_value,
-		ft_strlen(exp->updated_value) + 1);
-	free((*envp)[i]);
-	(*envp)[i] = exp->new_entry;
-	free(exp->updated_value);
-	if (exp->flag == false)
-		free(exp->var);
-	return (0);
+    if ((*exp)->equal_sign)
+    {
+        // Creating entry with value
+        (*exp)->new_entry = malloc(ft_strlen((*exp)->var) + 
+            ft_strlen((*exp)->updated_value) + 2);
+        if (!(*exp)->new_entry)
+            return 1;
+        
+        ft_strlcpy((*exp)->new_entry, (*exp)->var, ft_strlen((*exp)->var) + 1);
+        ft_strncat((*exp)->new_entry, "=", 2);
+        ft_strncat((*exp)->new_entry, (*exp)->updated_value,
+            ft_strlen((*exp)->updated_value) + 1);
+    }
+    else
+    {
+        // Creating entry without value
+        (*exp)->new_entry = ft_strdup((*exp)->var);
+        if (!(*exp)->new_entry)
+            return 1;
+    }
+
+    free((*envp)[i]);
+    (*envp)[i] = (*exp)->new_entry;
+    
+    if ((*exp)->updated_value)
+        free((*exp)->updated_value);
+    /* if ((*exp)->flag == false)
+        free((*exp)->var); */
+        
+    return 0;
 }
 
 int	update_existing_variable(char ***envp, t_exp *exp)
@@ -97,7 +114,7 @@ int	update_existing_variable(char ***envp, t_exp *exp)
 	int	i;
 
 	exp->flag = true;
-	i = find_existing_variable(envp, exp);
+	i = find_existing_variable(envp, &exp);
 	if (i == -1)
 		return (2);
 	if (exp->add_sign)
@@ -116,7 +133,7 @@ int	update_existing_variable(char ***envp, t_exp *exp)
 		if (!exp->updated_value)
 			return (free(exp->var), 1);
 	}
-	if (update_variable_entry(envp, exp, i))
+	if (update_variable_entry(envp, &exp, i))
 		return (1);
 	return (0);
 }

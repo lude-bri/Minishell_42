@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:49:02 by luigi             #+#    #+#             */
-/*   Updated: 2025/01/11 16:41:33 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/12 01:35:00 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,7 @@ int	msh_export(t_msh *msh, char ***envp, const char *new_var)
 
 	(void)envp;
 	if (parse_variable(new_var, &exp))
-	{
-		perror(" not a valid identifier\n");
-		return (1);
-	}
+		return (perror(" not a valid identifier\n"), 1);
 	if (!exp.equal_sign && !exp.add_sign && !exp.remove_sign)
 	{
 		if (!variable_exists(&msh->ex_envp, exp.var))
@@ -124,15 +121,25 @@ int	msh_export(t_msh *msh, char ***envp, const char *new_var)
 		}
 		return (free(exp.var), 0);
 	}
-	update_var = update_existing_variable(&msh->envp, &exp);
 	update_var_ex = update_existing_variable_env(&msh->ex_envp, &exp);
-	if (update_var == 1 && update_var_ex == 1)
-		return (1);
-	if (update_var == 0 && update_var_ex == 0)
-		return (0);
-	if (add_new_variable(&msh->ex_envp, &exp, new_var))
-		return (1);
+	if (update_var_ex == 1)
+		return (free(exp.var), 1);
 	if (exp.equal_sign)
-		add_new_variable_env(&msh->envp, &exp, new_var);
-	return (free(exp.var), 0);
+	{
+		update_var = update_existing_variable(&msh->envp, &exp);
+		if (update_var == 1)
+			return (free(exp.var), 1);
+		if (update_var == 2)
+		{
+			if (add_new_variable_env(&msh->envp, &exp, new_var))
+				return (free(exp.var), 1);
+		}
+	}
+	if (update_var_ex == 2)
+	{
+		if (add_new_variable(&msh->ex_envp, &exp, new_var))
+			return (free(exp.var), 1);
+	}
+	free(exp.var);
+	return 0;
 }
