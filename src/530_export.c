@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 12:49:02 by luigi             #+#    #+#             */
-/*   Updated: 2025/01/12 01:35:00 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/12 11:57:04 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,34 +38,6 @@ static int	add_new_variable_env(char ***envp, t_exp *exp, const char *new_var)
 	return (0);
 }
 
-int	sort_envp(char **envp)
-{
-	int		i;
-	int		swap;
-	char	*temp;
-
-	if (!envp)
-		return (1);
-	swap = 1;
-	while (swap)
-	{
-		swap = 0;
-		i = 0;
-		while (envp[i] && envp[i + 1])
-		{
-			if (ft_strcmp(envp[i], envp[i + 1]) > 0)
-			{
-				temp = envp[i];
-				envp[i] = envp[i + 1];
-				envp[i + 1] = temp;
-				swap = 1;
-			}
-			i++;
-		}
-	}
-	return (0);
-}
-
 int	msh_export_no_var(char **envp)
 {
 	int	i;
@@ -85,8 +57,6 @@ int	msh_export_no_var(char **envp)
 
 int	parse_variable(const char *new_var, t_exp *exp)
 {
-	// if (ft_isdigit(new_var[0]))
-	// 	return (1);
 	if (sanity_check_export(new_var) == FAILURE)
 		return (1);
 	exp->flag = false;
@@ -105,11 +75,36 @@ int	parse_variable(const char *new_var, t_exp *exp)
 	return (exp->var == NULL);
 }
 
+int	handle_variable_update(t_msh *msh, t_exp *exp, const char *new_var)
+{
+	int	update_var;
+	int	update_var_ex;
+
+	update_var_ex = update_existing_variable_env(&msh->ex_envp, exp);
+	if (update_var_ex == 1)
+		return (free(exp->var), 1);
+	if (exp->equal_sign)
+	{
+		update_var = update_existing_variable(&msh->envp, exp);
+		if (update_var == 1)
+			return (free(exp->var), 1);
+		if (update_var == 2)
+		{
+			if (add_new_variable_env(&msh->envp, exp, new_var))
+				return (free(exp->var), 1);
+		}
+	}
+	if (update_var_ex == 2)
+	{
+		if (add_new_variable(&msh->ex_envp, exp, new_var))
+			return (free(exp->var), 1);
+	}
+	return (0);
+}
+
 int	msh_export(t_msh *msh, char ***envp, const char *new_var)
 {
 	t_exp	exp;
-	int		update_var;
-	int		update_var_ex;
 
 	(void)envp;
 	if (parse_variable(new_var, &exp))
@@ -123,25 +118,8 @@ int	msh_export(t_msh *msh, char ***envp, const char *new_var)
 		}
 		return (free(exp.var), 0);
 	}
-	update_var_ex = update_existing_variable_env(&msh->ex_envp, &exp);
-	if (update_var_ex == 1)
-		return (free(exp.var), 1);
-	if (exp.equal_sign)
-	{
-		update_var = update_existing_variable(&msh->envp, &exp);
-		if (update_var == 1)
-			return (free(exp.var), 1);
-		if (update_var == 2)
-		{
-			if (add_new_variable_env(&msh->envp, &exp, new_var))
-				return (free(exp.var), 1);
-		}
-	}
-	if (update_var_ex == 2)
-	{
-		if (add_new_variable(&msh->ex_envp, &exp, new_var))
-			return (free(exp.var), 1);
-	}
+	if (handle_variable_update(msh, &exp, new_var))
+		return (1);
 	free(exp.var);
-	return 0;
+	return (0);
 }

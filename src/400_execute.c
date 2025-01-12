@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:32:38 by luigi             #+#    #+#             */
-/*   Updated: 2025/01/11 16:37:07 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/12 11:44:30 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	execute_export_command(t_tkn *tokens, t_msh *msh)
 {
-	(void)tokens;
-	int		i;
+	int	i;
 
+	(void)tokens;
 	i = 0;
 	if (msh->cmds->av[1]
 		&& ((ft_strcmp(msh->cmds->av[1], ">") != 0)
@@ -26,7 +26,7 @@ void	execute_export_command(t_tkn *tokens, t_msh *msh)
 		while (msh->cmds->av[++i])
 		{
 			if (msh_export(msh, &(msh->ex_envp), msh->cmds->av[i]) == 1)
-			msh->exit_status = 1;
+				msh->exit_status = 1;
 		}
 	}
 	else
@@ -37,7 +37,7 @@ void	execute_export_command(t_tkn *tokens, t_msh *msh)
 void	execute_builtin_commands(t_tkn *tokens, t_msh *msh)
 {
 	if (tokens->cmd_type == CMD_CD)
-		msh->exit_status = msh_cd(tokens->cmdargs, msh);
+		msh->exit_status = msh_cd(tokens->cmdargs, msh->envp);
 	else if (tokens->cmd_type == CMD_ENV)
 		msh_env(msh->envp, msh, tokens);
 	else if (tokens->cmd_type == CMD_PWD)
@@ -97,8 +97,8 @@ int	exec_exe(t_tkn *tokens, t_msh *msh)
 
 	status = 0;
 	if (ft_strcmp(tokens->name, "sudo") == 0)
-		return (printf("msh: permission denied: sudo\n"), msh->exit_status = 126
-			, SUCCESS);
+		return (printf("msh: permission denied: sudo\n")
+			, msh->exit_status = 126, SUCCESS);
 	sa_default.sa_handler = SIG_DFL;
 	sigemptyset(&sa_default.sa_mask);
 	sa_default.sa_flags = 0;
@@ -106,23 +106,9 @@ int	exec_exe(t_tkn *tokens, t_msh *msh)
 	sigaction(SIGQUIT, &sa_default, NULL);
 	msh->pid = fork();
 	if (msh->pid == 0)
-	{
-		exec_redirs(tokens, msh);
-		execute(msh, tokens);
-	}
+		handle_child_process(tokens, msh);
 	else if (msh->pid > 0)
-	{
-		setup_signals();
-		waitpid(msh->pid, &status, 0);
-		if (WIFEXITED(status))
-			msh->exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-		{
-			msh->exit_status = 128 + WTERMSIG(status);
-			if (WTERMSIG(status) == SIGINT)
-				write(1, "\n", 1);
-		}
-	}
+		handle_parent_process(msh, status);
 	else
 	{
 		perror("fork");

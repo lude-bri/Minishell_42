@@ -79,24 +79,26 @@ void	print_echo_arguments(char **argv, int i, int space)
 
 static int	verify_sanity_quotes(char *str)
 {
-	int		_single;
-	int		_double;
+	int		found;
 	int		i;
 
 	i = 0;
-	_double = 0;
-	_single = 0;
+	found = 0;
 	while (str[i])
 	{
-		if (str[i] == '\"' && _single == 0)
-			_double = !_double;
-		else if (str[i] == '\'' && _double == 0)
-			_single = !_single;
+		if (str[i] == '\"' || str[i] == '\'')
+		{
+			if (found == 1)
+				found = 0;
+			else
+				found = 1;
+		}
 		i++;
 	}
-	if (_double || _single)
+	if (found == 1)
 		return (SUCCESS);
-	return (FAILURE);
+	else
+		return (FAILURE);
 }
 
 int	msh_echo(char **argv, t_msh *msh, t_tkn *tokens)

@@ -51,21 +51,13 @@ void	update_env_var(char **envp, const char *var, const char *value)
 	}
 }
 
-static void	update_env(t_msh *msh, char *new_path, char *current_path)
-{
-	update_env_var(msh->envp, "OLDPWD", current_path);
-	update_env_var(msh->ex_envp, "OLDPWD", current_path);
-	update_env_var(msh->envp, "PWD", new_path);
-	update_env_var(msh->ex_envp, "PWD", new_path);
-}
-
-int	msh_cd(char **argv, t_msh *msh)
+int	msh_cd(char **argv, char **envp)
 {
 	char	current_path[PATH_MAX];
 	char	new_path[PATH_MAX];
 	char	*home;
 
-	if (!argv || !msh->envp || !msh->ex_envp)
+	if (!argv || !envp)
 		return (1);
 	if (getcwd(current_path, sizeof(current_path)) == NULL)
 		return (perror("msh: getcwd"), 1);
@@ -83,6 +75,7 @@ int	msh_cd(char **argv, t_msh *msh)
 		return (perror("msh: cd"), 1);
 	if (getcwd(new_path, sizeof(new_path)) == NULL)
 		return (perror("msh: getcwd"), 1);
-	update_env(msh, new_path, current_path);
+	update_env_var(envp, "OLDPWD", current_path);
+	update_env_var(envp, "PWD", new_path);
 	return (0);
 }

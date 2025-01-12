@@ -6,7 +6,7 @@
 /*   By: mde-agui <mde-agui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 01:07:26 by mde-agui          #+#    #+#             */
-/*   Updated: 2025/01/12 10:51:29 by mde-agui         ###   ########.fr       */
+/*   Updated: 2025/01/12 12:00:24 by mde-agui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,32 +49,29 @@ void	print_env_var(char *env_var)
 	}
 }
 
-// Update find_existing_variable in export_misc.c
-int find_existing_variable(char ***envp, t_exp **exp)
+int	find_existing_variable(char ***envp, t_exp **exp)
 {
-    int i;
-    size_t var_len;
-    char *equal_pos;
+	int		i;
+	size_t	var_len;
+	char	*equal_pos;
 
-    i = 0;
-    var_len = ft_strlen((*exp)->var);
-    while ((*envp)[i])
-    {
-        // Match either exact variable name or variable with =
-        if (ft_strncmp((*envp)[i], (*exp)->var, var_len) == 0 && 
-            ((*envp)[i][var_len] == '\0' || (*envp)[i][var_len] == '='))
-        {
-            // If variable has a value, store it
-            equal_pos = ft_strchr((*envp)[i], '=');
-            if (equal_pos)
-                (*exp)->existing_value = equal_pos + 1;
-            else
-                (*exp)->existing_value = NULL;
-            return i;
-        }
-        i++;
-    }
-    return -1;
+	i = 0;
+	var_len = ft_strlen((*exp)->var);
+	while ((*envp)[i])
+	{
+		if (ft_strncmp((*envp)[i], (*exp)->var, var_len) == 0
+			&& ((*envp)[i][var_len] == '\0' || (*envp)[i][var_len] == '='))
+		{
+			equal_pos = ft_strchr((*envp)[i], '=');
+			if (equal_pos)
+				(*exp)->existing_value = equal_pos + 1;
+			else
+				(*exp)->existing_value = NULL;
+			return (i);
+		}
+		i++;
+	}
+	return (-1);
 }
 
 int	variable_exists(char ***envp, const char *var)
@@ -86,16 +83,13 @@ int	variable_exists(char ***envp, const char *var)
 	var_len = ft_strlen(var);
 	while ((*envp)[i])
 	{
-		printf("Comparing: '%s' with '%s'\n", (*envp)[i], var);
 		if (ft_strncmp((*envp)[i], var, var_len) == 0 &&
 			((*envp)[i][var_len] == '\0' || (*envp)[i][var_len] == '='))
 		{
-			printf("Match found!\n");
 			return (1);
 		}
 		i++;
 	}
-	printf("No match found for '%s'\n", var);
 	return (0);
 }
 
