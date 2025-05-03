@@ -12,6 +12,15 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Handles the `export` built-in command.
+ *
+ * If arguments are provided and not invalid tokens (`>`, `>>`, `|`), it exports them to `ex_envp`.
+ * If no variable is provided, it lists the current exported variables.
+ *
+ * @param tokens Pointer to the token representing the command.
+ * @param msh Pointer to the shell state.
+ */
 void	execute_export_command(t_tkn *tokens, t_msh *msh)
 {
 	int	i;
@@ -33,7 +42,14 @@ void	execute_export_command(t_tkn *tokens, t_msh *msh)
 		msh_export_no_var(msh->ex_envp);
 }
 
-//NEW_FUNC
+/**
+ * @brief Executes built-in commands such as `cd`, `echo`, `exit`, etc.
+ *
+ * Determines the built-in type from `cmd_type` and calls the appropriate handler function.
+ *
+ * @param tokens Pointer to the current command token.
+ * @param msh Pointer to the shell state.
+ */
 void	execute_builtin_commands(t_tkn *tokens, t_msh *msh)
 {
 	if (tokens->cmd_type == CMD_CD)
@@ -55,6 +71,17 @@ void	execute_builtin_commands(t_tkn *tokens, t_msh *msh)
 		execute_export_command(tokens, msh);
 }
 
+/**
+ * @brief Executes a built-in command with proper redirection handling.
+ *
+ * - Applies input/output redirections.
+ * - Calls the built-in command.
+ * - Restores original file descriptors using `dup2`.
+ *
+ * @param tokens Pointer to the token representing the command.
+ * @param msh Pointer to the shell state.
+ * @return Always returns SUCCESS.
+ */
 int	exec_bi(t_tkn *tokens, t_msh *msh)
 {
 	int	fd_in;
@@ -69,6 +96,17 @@ int	exec_bi(t_tkn *tokens, t_msh *msh)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Executes an external binary using `execve`.
+ *
+ * - Resolves the binary path.
+ * - Builds the argument array.
+ * - Handles execution errors (e.g., command not found, permission denied).
+ * - Frees memory and exits in child if necessary.
+ *
+ * @param msh Pointer to the shell state.
+ * @param tokens Pointer to the command token.
+ */
 void	execute(t_msh *msh, t_tkn *tokens)
 {
 	char	*path;
@@ -90,6 +128,19 @@ void	execute(t_msh *msh, t_tkn *tokens)
 		handle_execve_error(path, args, msh, tokens);
 }
 
+/**
+ * @brief Executes an external command by forking and calling `execve` in the child.
+ *
+ * - Handles special case for `sudo`, blocking its use with an error.
+ * - Configures signal handling to default.
+ * - Forks the process.
+ *   - Child: handles command execution via `handle_child_process()`.
+ *   - Parent: waits and sets the exit status via `handle_parent_process()`.
+ *
+ * @param tokens Pointer to the command token.
+ * @param msh Pointer to the shell state.
+ * @return Always returns SUCCESS.
+ */
 int	exec_exe(t_tkn *tokens, t_msh *msh)
 {
 	int					status;
