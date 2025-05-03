@@ -12,6 +12,21 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Executes a command tree with one or more piped commands.
+ *
+ * - If the root token is a pipe (`TKN_PIPE`), ensures the syntax is valid
+ *   and delegates to `exec_pipe()` for recursive pipe execution.
+ * - If the token is a single non-piped command:
+ *   - Executes builtin commands directly via `exec_bi()`
+ *   - Executes external commands via `exec_exe()`
+ *
+ * This function operates on a binary tree built by `create_bin_tree()`.
+ *
+ * @param msh Pointer to the shell state.
+ * @param tokens Pointer to the root of the command tree.
+ * @return SUCCESS if all commands execute successfully; FAILURE otherwise.
+ */
 int	exec_more(t_msh *msh, t_tkn *tokens)
 {
 	if (tokens->type == TKN_PIPE)
