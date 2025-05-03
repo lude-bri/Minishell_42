@@ -12,6 +12,20 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Handles output redirection in append mode (`>>`) for a command.
+ *
+ * Opens (or creates) the file specified by the next token in write-only append mode.
+ * If the file doesn't exist, it is created with permissions 0775. The file descriptor
+ * is then duplicated to `STDOUT_FILENO` using `dup2()`, so the command output is appended
+ * to the file. If `open()` or `dup2()` fails, an error is printed, all resources are freed,
+ * and the shell exits with failure.
+ *
+ * @param tokens Pointer to the current token (should be of type TKN_APPEND).
+ *               The next token must contain the filename for redirection.
+ * @param msh Pointer to the main shell structure holding the current environment,
+ *            command list, and arguments.
+ */
 void	redir_append(t_tkn *tokens, t_msh *msh)
 {
 	int	fd;
