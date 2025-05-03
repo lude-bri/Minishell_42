@@ -12,6 +12,15 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Checks if an environment variable matches a given variable name.
+ *
+ * A match occurs if the prefix matches and is followed by `=` or null terminator.
+ *
+ * @param env_var The full environment string (e.g. "PATH=/usr/bin").
+ * @param var_name The variable name to match (e.g. "PATH").
+ * @return 1 if it's a match; 0 otherwise.
+ */
 int	is_variable_match(const char *env_var, const char *var_name)
 {
 	int	len;
@@ -21,6 +30,15 @@ int	is_variable_match(const char *env_var, const char *var_name)
 			|| env_var[len] == '\0'));
 }
 
+/**
+ * @brief Removes a variable from the environment array.
+ *
+ * If a match is found, it frees the string and shifts remaining elements.
+ *
+ * @param envp Pointer to the environment variable array.
+ * @param var The name of the variable to remove.
+ * @return 1 if a variable was removed; 0 if not found.
+ */
 int	remove_variable(char ***envp, char *var)
 {
 	int	j;
@@ -47,6 +65,14 @@ int	remove_variable(char ***envp, char *var)
 	return (found);
 }
 
+/**
+ * @brief Verifies if an invalid option was passed to `unset`.
+ *
+ * Returns an error if the first argument after `unset` starts with `-`.
+ *
+ * @param av Argument vector (may include earlier tokens).
+ * @return 1 if an invalid option is detected; 0 otherwise.
+ */
 static int	verify_unset_options(char **av)
 {
 	while (ft_strcmp(*av, "unset") != 0)
@@ -57,6 +83,17 @@ static int	verify_unset_options(char **av)
 	return (0);
 }
 
+/**
+ * @brief Executes the `unset` builtin command.
+ *
+ * - Validates arguments and options.
+ * - Removes all matching variables from `envp`.
+ * - Operates in-place and handles memory cleanup.
+ *
+ * @param argv The full argument list (`argv[0] = "unset"`).
+ * @param envp Double pointer to the environment array.
+ * @return 0 on success; 1 on failure or no variable found.
+ */
 int	msh_unset(char **argv, char ***envp)
 {
 	int	i;
