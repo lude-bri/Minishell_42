@@ -12,6 +12,18 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Handles parsing of a double-quoted string, with environment variable expansion.
+ *
+ * Allocates a large buffer for the quoted string, then iterates through the input,
+ * appending characters and expanding variables (e.g., "$USER") as needed.
+ * Stops at the closing double quote.
+ *
+ * @param input The raw input string.
+ * @param i Pointer to the current index, which is incremented during parsing.
+ * @param msh Pointer to the shell state structure, used for buffer storage and env access.
+ * @return A newly allocated string with the processed content, or NULL on allocation failure.
+ */
 char	*handle_double_quotes(const char *input, int *i, t_msh *msh)
 {
 	msh->word_size = ft_strlen(input) * 1024;
@@ -35,6 +47,15 @@ char	*handle_double_quotes(const char *input, int *i, t_msh *msh)
 	return (msh->word);
 }
 
+/**
+ * @brief Handles parsing of a single-quoted string (no variable expansion).
+ *
+ * Copies characters between single quotes `'...'` as a literal string.
+ *
+ * @param input The raw input string.
+ * @param i Pointer to the current index, which is incremented during parsing.
+ * @return A newly allocated string containing the content between single quotes.
+ */
 char	*handle_single_quotes(const char *input, int *i)
 {
 	int		start;
@@ -49,6 +70,15 @@ char	*handle_single_quotes(const char *input, int *i)
 	return (word);
 }
 
+/**
+ * @brief Handles the heredoc redirection token ('<<').
+ *
+ * Adds the token `"<<"` to the token array, optionally quoted
+ * as `"\"<<\""` if surrounded by double quotes in the original input.
+ *
+ * @param input The raw input string.
+ * @param sp Pointer to the token operation structure.
+ */
 void	handle_double_in_redir(const char *input, t_tkn_op *sp)
 {
 	if (sp->i > 0 && input[sp->i - 1] == '"')
@@ -58,6 +88,17 @@ void	handle_double_in_redir(const char *input, t_tkn_op *sp)
 	(sp->i) += 2;
 }
 
+/**
+ * @brief Handles the single input redirection token ('<').
+ *
+ * Considers special edge cases when the command line is very short
+ * or the token is surrounded by null characters or quotes.
+ * Appends the `<` token to the token list accordingly.
+ *
+ * @param input The raw input string.
+ * @param sp Pointer to the token operation structure.
+ * @param msh Pointer to the main shell state structure.
+ */
 void	handle_single_in_redir(const char *input, t_tkn_op *sp, t_msh *msh)
 {
 	if (msh->len == 1)
