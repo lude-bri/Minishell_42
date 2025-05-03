@@ -12,6 +12,15 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Checks if the input line starts with a properly quoted `echo` command.
+ *
+ * This is used como um caso especial para permitir `echo "..."` ou `echo '...'`
+ * mesmo quando há operadores que normalmente causariam erro de sintaxe.
+ *
+ * @param line The raw input line.
+ * @return SUCCESS if `echo` is quoted properly; FAILURE otherwise.
+ */
 int	check_echo_command(char *line)
 {
 	if ((ft_strncmp(line, "echo \"", 6) == 0)
@@ -20,6 +29,17 @@ int	check_echo_command(char *line)
 	return (FAILURE);
 }
 
+/**
+ * @brief Verifica a validade da sequência de operadores em uma linha.
+ *
+ * Permite apenas operadores válidos e impede casos como `<<<`, `>>|`, `>|`, etc.
+ * Também avança o índice da linha conforme consome os tokens.
+ *
+ * @param msh Pointer to the shell state.
+ * @param line The raw input line.
+ * @param i Pointer to the current index within the line.
+ * @return SUCCESS if the current operator syntax is valid; FAILURE otherwise.
+ */
 int	check_operators(t_msh *msh, char *line, int *i)
 {
 	if (is_operator(&line[*i]) == FAILURE)
@@ -43,6 +63,16 @@ int	check_operators(t_msh *msh, char *line, int *i)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Performs a final pass to validate the full input line's operator logic.
+ *
+ * - Bypasses further checks if the command is a quoted `echo`.
+ * - Iterates through the input line and validates operator usage via `check_operators()`.
+ *
+ * @param msh Pointer to the shell state.
+ * @param line The full user input line.
+ * @return SUCCESS if line syntax is valid; FAILURE otherwise.
+ */
 int	check_line_syntax(t_msh *msh, char *line)
 {
 	int	i;
