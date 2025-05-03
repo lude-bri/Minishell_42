@@ -12,29 +12,19 @@
 
 #include "../includes/minishell.h"
 
-// void	handle_heredoc(t_tkn *tokens, t_msh *msh, int *fd)
-// {
-// 	int	heredoc_fd;
-//
-// 	if (tokens->left->type == TKN_HEREDOC)
-// 	{
-// 		heredoc_fd = heredoc_pipe(tokens, msh, tokens->left->next->name, 1);
-// 		dup2(heredoc_fd, STDIN_FILENO);
-// 		if (tokens->next->left != NULL)
-// 			apply_pipe(tokens->next->left, msh, fd, heredoc_fd);
-// 		free_msh(msh->cmds, msh, tokens->left);
-// 		exit(msh->exit_status);
-// 	}
-// 	else
-// 	{
-// 		heredoc_fd = heredoc_pipe(tokens, msh,
-// 				tokens->left->next->next->name, 0);
-// 		dup2(heredoc_fd, STDIN_FILENO);
-// 		apply_pipe(tokens->left, msh, fd, heredoc_fd);
-// 		exit(msh->exit_status);
-// 	}
-// }
-
+/**
+ * @brief Executes the left side of a pipe (`|`) in a child process.
+ *
+ * - Closes the unused read-end of the pipe.
+ * - Redirects STDOUT to the pipe write-end using `dup2`.
+ * - Calls `exec_more()` recursively for left-side execution.
+ *
+ * Cleans up allocated memory and exits with the current shell status.
+ *
+ * @param tokens The current pipe token node.
+ * @param msh The shell context.
+ * @param fd Pipe file descriptor array [2].
+ */
 void	handle_left_child(t_tkn *tokens, t_msh *msh, int *fd)
 {
 	close(fd[0]);
@@ -45,6 +35,19 @@ void	handle_left_child(t_tkn *tokens, t_msh *msh, int *fd)
 	exit(msh->exit_status);
 }
 
+/**
+ * @brief Executes the right side of a pipe (`|`) in a child process.
+ *
+ * - Closes the unused write-end of the pipe.
+ * - Redirects STDIN to the pipe read-end using `dup2`.
+ * - Calls `exec_more()` recursively for right-side execution.
+ *
+ * Cleans up memory and exits with the current shell status.
+ *
+ * @param tokens The current pipe token node.
+ * @param msh The shell context.
+ * @param fd Pipe file descriptor array [2].
+ */
 void	handle_right_child(t_tkn *tokens, t_msh *msh, int *fd)
 {
 	close(fd[1]);
@@ -55,6 +58,17 @@ void	handle_right_child(t_tkn *tokens, t_msh *msh, int *fd)
 	exit(msh->exit_status);
 }
 
+/**
+ * @brief Waits for both child processes created for pipe execution.
+ *
+ * - Waits on `pid_left` and `pid_right`.
+ * - Updates `msh->exit_status` with the right child’s exit code.
+ * - Handles signal-based exits (e.g., SIGINT).
+ *
+ * @param msh The shell context.
+ * @param pid_left PID of the left child process.
+ * @param pid_right PID of the right child process.
+ */
 void	wait_for_child(t_msh *msh, pid_t pid_left, pid_t pid_right)
 {
 	int	status_left;
