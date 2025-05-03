@@ -12,6 +12,13 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Frees a linked list of heredoc structures.
+ *
+ * Frees the memory for each heredoc node, including the temporary file path.
+ *
+ * @param heredoc Pointer to the head of the t_heredoc list.
+ */
 void	free_hd(t_heredoc *heredoc)
 {
 	t_heredoc	*tmp;
@@ -29,6 +36,14 @@ void	free_hd(t_heredoc *heredoc)
 	}
 }
 
+/**
+ * @brief Frees the token vector and its contents.
+ *
+ * Similar to free_vector, but receives t_msh as a parameter (though it's unused).
+ *
+ * @param vector Pointer to the token vector.
+ * @param msh Unused parameter (can be removed or used if needed in the future).
+ */
 void	free_vector_2(t_vector *vector, t_msh *msh)
 {
 	int		i;
@@ -54,6 +69,14 @@ void	free_vector_2(t_vector *vector, t_msh *msh)
 	vector->size = 0;
 }
 
+/**
+ * @brief Frees all minishell resources used during heredoc execution.
+ *
+ * This includes environment variables, command arguments, input line,
+ * token vector, and heredoc list.
+ *
+ * @param msh Pointer to the main shell state structure.
+ */
 void	free_all_heredoc(t_msh *msh)
 {
 	if (msh->envp)
