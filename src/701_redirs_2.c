@@ -12,6 +12,15 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Executes the appropriate redirection based on the token type.
+ *
+ * Dispatches the redirection to the correct function: `redir_in`, `redir_out`, or `redir_append`.
+ * For append operations, it additionally flags the following argument token as a redirection argument.
+ *
+ * @param tokens The current redirection token.
+ * @param msh The minishell context structure.
+ */
 void	process_redirection(t_tkn *tokens, t_msh *msh)
 {
 	if (tokens->type == TKN_IN)
@@ -26,6 +35,13 @@ void	process_redirection(t_tkn *tokens, t_msh *msh)
 	}
 }
 
+/**
+ * @brief Updates the type of the next token to indicate it belongs to a redirection.
+ *
+ * Changes the token type to `TKN_REDIR_ARG`, unless the next token is a pipe.
+ *
+ * @param tokens The current redirection token.
+ */
 void	update_token_types(t_tkn *tokens)
 {
 	if (tokens->next != NULL)
@@ -37,6 +53,14 @@ void	update_token_types(t_tkn *tokens)
 	}
 }
 
+/**
+ * @brief Iterates through tokens and processes all redirections before the next pipe.
+ *
+ * Handles input, output, and append redirections by calling `process_redirection()` and updating token types.
+ *
+ * @param tokens The list of tokens to scan.
+ * @param msh The minishell context structure.
+ */
 void	handle_redirs(t_tkn *tokens, t_msh *msh)
 {
 	while (tokens)
@@ -53,6 +77,15 @@ void	handle_redirs(t_tkn *tokens, t_msh *msh)
 	}
 }
 
+/**
+ * @brief Reconstructs the command argument array (`cmds->av`) from TKN_CMD tokens.
+ *
+ * Collects command arguments up to the next pipe and builds a new argument list.
+ * Marks `msh->flag_redir` to signal that redirection affected the command.
+ *
+ * @param tokens The list of tokens to scan.
+ * @param msh The minishell context structure.
+ */
 void	handle_command_arguments(t_tkn *tokens, t_msh *msh)
 {
 	int	i;
@@ -76,6 +109,16 @@ void	handle_command_arguments(t_tkn *tokens, t_msh *msh)
 	msh->flag_redir = true;
 }
 
+/**
+ * @brief Main entry point to apply redirections and rebuild command arguments.
+ *
+ * Combines `handle_redirs()` and `handle_command_arguments()` to:
+ * 1. Execute redirections (`<`, `>`, `>>`)
+ * 2. Update `cmds->av` to reflect only the actual command and its arguments.
+ *
+ * @param tokens The list of tokens to process.
+ * @param msh The minishell context structure.
+ */
 void	redirs_2(t_tkn *tokens, t_msh *msh)
 {
 	handle_redirs(tokens, msh);
