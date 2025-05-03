@@ -12,6 +12,17 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Adds a new variable to the environment array.
+ *
+ * Creates a new envp array one element larger, copies existing variables,
+ * adds the new variable, and frees the old array.
+ *
+ * @param envp Pointer to the environment array.
+ * @param exp Pointer to the t_exp helper structure.
+ * @param new_var The variable string to add (e.g., "VAR=value").
+ * @return 0 on success; 1 on allocation or copy failure.
+ */
 static int	add_new_variable_env(char ***envp, t_exp *exp, const char *new_var)
 {
 	int	i;
@@ -38,6 +49,15 @@ static int	add_new_variable_env(char ***envp, t_exp *exp, const char *new_var)
 	return (0);
 }
 
+/**
+ * @brief Handles the `export` command when no arguments are provided.
+ *
+ * - Sorts and prints the environment variables in export format.
+ * - Excludes non-exported values (i.e., `envp` vs `ex_envp` logic).
+ *
+ * @param envp The environment variable array.
+ * @return 0 on success; 1 on failure.
+ */
 int	msh_export_no_var(char **envp)
 {
 	int	i;
@@ -55,6 +75,21 @@ int	msh_export_no_var(char **envp)
 	return (0);
 }
 
+/**
+ * @brief Parses a new variable string and extracts relevant parts.
+ *
+ * Handles syntax like:
+ * - `VAR=val`
+ * - `VAR+=val`
+ * - `VAR-=val`
+ * - `VAR`
+ *
+ * Saves the variable name into `exp->var` and tracks whether it's an update.
+ *
+ * @param new_var The full input string to parse.
+ * @param exp Pointer to the `t_exp` structure to populate.
+ * @return 0 on success; 1 on failure or invalid syntax.
+ */
 int	parse_variable(const char *new_var, t_exp *exp)
 {
 	if (sanity_check_export(new_var) == FAILURE)
@@ -75,6 +110,17 @@ int	parse_variable(const char *new_var, t_exp *exp)
 	return (exp->var == NULL);
 }
 
+/**
+ * @brief Handles updating or appending to an existing variable.
+ *
+ * - Attempts to update `envp` and `ex_envp` depending on `exp`.
+ * - Falls back to `add_new_variable_env()` if the variable doesn't exist.
+ *
+ * @param msh Pointer to the shell state.
+ * @param exp Pointer to the parsed export struct.
+ * @param new_var The original variable input string.
+ * @return 0 on success; 1 on failure.
+ */
 int	handle_variable_update(t_msh *msh, t_exp *exp, const char *new_var)
 {
 	int	update_var;
@@ -102,6 +148,18 @@ int	handle_variable_update(t_msh *msh, t_exp *exp, const char *new_var)
 	return (0);
 }
 
+/**
+ * @brief Main handler for the `export` builtin command.
+ *
+ * - Parses the new variable and validates its format.
+ * - If no assignment/operator is found, adds it only to `ex_envp`.
+ * - Otherwise, tries to update both `envp` and `ex_envp`.
+ *
+ * @param msh Pointer to the shell state.
+ * @param envp Double pointer to the environment (unused directly).
+ * @param new_var The user input variable (e.g. `VAR=value`).
+ * @return 0 on success; 1 on failure.
+ */
 int	msh_export(t_msh *msh, char ***envp, const char *new_var)
 {
 	t_exp	exp;
