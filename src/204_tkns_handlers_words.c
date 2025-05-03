@@ -12,6 +12,17 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Handles quoted substrings within a word and performs variable expansion if needed.
+ *
+ * This function parses a quoted string and optionally expands environment variables
+ * if the quote character is a double quote (`"`). It appends the result into a buffer.
+ *
+ * @param input The full input string being parsed.
+ * @param qd Pointer to a t_quote structure tracking positions and buffer.
+ * @param msh Pointer to the main shell state (used for env lookup).
+ * @param quote The quote character used (`'` or `"`).
+ */
 static void	pr_quote(const char *input, t_quote *qd, t_msh *msh, char quote)
 {
 	char	*expanded;
@@ -37,6 +48,17 @@ static void	pr_quote(const char *input, t_quote *qd, t_msh *msh, char quote)
 		(*qd->i)++;
 }
 
+/**
+ * @brief Parses a fully quoted word and stores it as a single token.
+ *
+ * Assumes the quote has already been detected and handles characters
+ * up to the closing quote. Appends the word to the token array.
+ *
+ * @param input The input string.
+ * @param sp Pointer to the token operation structure.
+ * @param buffer Temporary buffer used to build the token.
+ * @param buf_i Pointer to the current index in the buffer.
+ */
 static void	handle_quoted_word(const char *input, t_tkn_op *sp, char *buffer
 														, int *buf_i)
 {
@@ -52,6 +74,14 @@ static void	handle_quoted_word(const char *input, t_tkn_op *sp, char *buffer
 	sp->argv[sp->j++] = ft_strdup(buffer);
 }
 
+/**
+ * @brief Handles environment variable expansion within a word.
+ *
+ * Expands the variable (if valid) and appends its value into the parsing buffer.
+ * Skips appending if it's the first word and the result is an empty string.
+ *
+ * @param p Pointer to a t_params struct containing context and buffers.
+ */
 static void	handle_variable_expansion(t_params *p)
 {
 	t_quote	qd;
@@ -70,6 +100,14 @@ static void	handle_variable_expansion(t_params *p)
 	}
 }
 
+/**
+ * @brief Handles a word with no surrounding quotes.
+ *
+ * Parses characters until a special character or whitespace is found,
+ * handling embedded quotes or variable expansions as necessary.
+ *
+ * @param p Pointer to a t_params struct containing parsing context and state.
+ */
 static void	handle_unquoted_word(t_params *p)
 {
 	t_quote	qd;
@@ -90,6 +128,16 @@ static void	handle_unquoted_word(t_params *p)
 	}
 }
 
+/**
+ * @brief Main entry point to parse a word token from the input.
+ *
+ * Handles both quoted and unquoted words, performs expansions,
+ * and appends the final word to the token array.
+ *
+ * @param input The raw input string.
+ * @param sp Pointer to the token operation structure.
+ * @param msh Pointer to the shell state.
+ */
 void	handle_words(const char *input, t_tkn_op *sp, t_msh *msh)
 {
 	char		buffer[BUF_SIZE];
