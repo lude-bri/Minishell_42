@@ -12,6 +12,17 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Adds a new variable entry to the environment array.
+ *
+ * Allocates a new environment array, copies the old values, adds the new one,
+ * and replaces the old array with the new one.
+ *
+ * @param envp Pointer to the environment array.
+ * @param exp Pointer to the export context (`t_exp`).
+ * @param new_var The full string to add (e.g., "FOO=bar").
+ * @return 0 on success; 1 on failure.
+ */
 int	add_new_variable(char ***envp, t_exp *exp, const char *new_var)
 {
 	int	i;
@@ -38,6 +49,15 @@ int	add_new_variable(char ***envp, t_exp *exp, const char *new_var)
 	return (0);
 }
 
+/**
+ * @brief Handles `+=` syntax by appending a value to the existing one.
+ *
+ * - Extracts the portion after `+=` and appends it to the current variable value.
+ * - Stores the result in `exp->updated_value`.
+ *
+ * @param exp Pointer to the export context (`t_exp`).
+ * @return 0 on success; 1 on allocation failure.
+ */
 int	handle_addition(t_exp *exp)
 {
 	exp->to_add = exp->add_sign + 2;
@@ -51,6 +71,15 @@ int	handle_addition(t_exp *exp)
 	return (0);
 }
 
+/**
+ * @brief Handles `-=` syntax by removing a substring from the existing value.
+ *
+ * If the substring to remove is found, it constructs a new value without it.
+ * If not found, keeps the original value.
+ *
+ * @param exp Pointer to the export context (`t_exp`).
+ * @return 0 on success; 1 on allocation failure.
+ */
 int	handle_removal(t_exp *exp)
 {
 	exp->to_remove = exp->remove_sign + 2;
@@ -74,6 +103,18 @@ int	handle_removal(t_exp *exp)
 	return (0);
 }
 
+/**
+ * @brief Updates a variable in the environment with a new value.
+ *
+ * - Builds the new entry string (`VAR=value` or just `VAR`)
+ * - Replaces the old entry in `envp[i]`
+ * - Frees old memory where needed
+ *
+ * @param envp Pointer to the environment array.
+ * @param exp Double pointer to the export context.
+ * @param i Index of the variable to update.
+ * @return 0 on success; 1 on allocation failure.
+ */
 int	update_variable_entry(char ***envp, t_exp **exp, int i)
 {
 	if ((*exp)->equal_sign)
@@ -100,6 +141,16 @@ int	update_variable_entry(char ***envp, t_exp **exp, int i)
 	return (0);
 }
 
+/**
+ * @brief Updates an existing environment variable if it exists.
+ *
+ * - Supports value replacement (`=`), addition (`+=`), and removal (`-=`)
+ * - Uses `update_variable_entry()` to commit the final value
+ *
+ * @param envp Pointer to the environment array.
+ * @param exp Pointer to the export context (`t_exp`).
+ * @return 0 on success; 1 on error; 2 if the variable was not found.
+ */
 int	update_existing_variable(char ***envp, t_exp *exp)
 {
 	int	i;
