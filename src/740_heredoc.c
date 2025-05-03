@@ -12,6 +12,14 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Signal handler for heredoc SIGINT (Ctrl+C).
+ *
+ * Used to gracefully interrupt heredoc input and close stdin,
+ * allowing the shell to return to the prompt.
+ *
+ * @param signal The signal received (only SIGINT handled).
+ */
 static void	handle_heredoc_signal(int signal)
 {
 	if (signal == SIGINT)
@@ -22,12 +30,28 @@ static void	handle_heredoc_signal(int signal)
 	}
 }
 
+/**
+ * @brief Configures signal handling for heredoc child processes.
+ *
+ * Sets `SIGINT` to a custom handler and restores `SIGQUIT`
+ * to its default behavior.
+ */
 void	set_heredoc_signals(void)
 {
 	signal(SIGINT, handle_heredoc_signal);
 	signal(SIGQUIT, SIG_DFL);
 }
 
+/**
+ * @brief Reads user input until the EOF delimiter is reached.
+ *
+ * Called in the child process. Reads lines from stdin and writes
+ * them to a temporary file until the user inputs the specified `eof`.
+ *
+ * @param temp_fd File descriptor to write heredoc content to.
+ * @param eof End-of-file delimiter string.
+ * @return int 0 on success, 1 on EOF without input, 2 on interrupt (SIGINT).
+ */
 int	fill_heredoc(int temp_fd, char *eof)
 {
 	char	*line;
@@ -55,6 +79,15 @@ int	fill_heredoc(int temp_fd, char *eof)
 	return (0);
 }
 
+/**
+ * @brief Initializes heredoc structures from tokens.
+ *
+ * Iterates over tokens to find heredoc operators (`<<`) and stores
+ * their associated EOF markers in the shell's heredoc structure.
+ *
+ * @param msh Pointer to the shell state.
+ * @param tokens Token list containing possible heredoc entries.
+ */
 void	start_heredoc(t_msh *msh, t_tkn *tokens)
 {
 	t_tkn		*tkn;
@@ -79,6 +112,18 @@ void	start_heredoc(t_msh *msh, t_tkn *tokens)
 	}
 }
 
+/**
+ * @brief Executes the heredoc functionality (`<<`) for the given tokens.
+ *
+ * This function prepares and executes heredoc behavior by:
+ * - Starting the heredoc tracking structure.
+ * - Creating temporary files in `/tmp/` to store heredoc input.
+ * - Forking child processes to handle user input via `readline("> ")`.
+ * - Replacing heredoc tokens with temporary file redirections.
+ *
+ * @param msh Pointer to the shell's main state.
+ * @param tokens Pointer to the token list being parsed.
+ */
 void	heredoc_exec(t_msh *msh, t_tkn *tokens)
 {
 	pid_t		pid;
