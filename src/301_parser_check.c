@@ -12,6 +12,18 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Performs basic checks on the beginning of the input line.
+ *
+ * Validates whether the input starts with valid redirection operators (`<<`, `>>`, `<`),
+ * and ensures they are not used in invalid or incomplete contexts.
+ *
+ * Calls `error_syntax()` and sets `exit_status = 2` when necessary.
+ *
+ * @param msh Pointer to the shell state.
+ * @param line The full input line to analyze.
+ * @return SUCCESS if syntax is valid; FAILURE otherwise.
+ */
 int	check_initial_syntax(t_msh *msh, char *line)
 {
 	if ((ft_strncmp(line, "<<", 2) == 0) || ft_strncmp(line, ">>", 2) == 0)
@@ -33,6 +45,16 @@ int	check_initial_syntax(t_msh *msh, char *line)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Checks whether an operator appears at the end of the string.
+ *
+ * Ensures that characters like `|`, `>`, `<` are not the final character,
+ * which would indicate a syntax error.
+ *
+ * @param msh Pointer to the shell state.
+ * @param str A substring of the parsed command.
+ * @return SUCCESS if valid; FAILURE otherwise.
+ */
 int	check_str_syntax(t_msh *msh, char *str)
 {
 	int	i;
@@ -84,6 +106,19 @@ int	check_str_syntax(t_msh *msh, char *str)
 	return (SUCCESS);
 } */
 
+/**
+ * @brief Runs a series of initial syntax checks on the input.
+ *
+ * Delegates to helper functions for detailed verification:
+ * - Verifies the start of the input.
+ * - Checks for malformed operators.
+ * - Detects forbidden patterns such as `||`, `>>>`, `><`, etc.
+ *
+ * @param msh Pointer to the shell state.
+ * @param line Full input line.
+ * @param str Parsed first token (usually the command).
+ * @return SUCCESS if input is syntactically correct; FAILURE otherwise.
+ */
 int	initial_syntax_checks(t_msh *msh, char *line, char *str)
 {
 	int	len;
@@ -103,6 +138,19 @@ int	initial_syntax_checks(t_msh *msh, char *line, char *str)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Performs stricter and more contextual syntax checks.
+ *
+ * Ensures that operators like `>`, `<`, `|`, `&` are followed by valid tokens,
+ * and not by space, null terminator, or more operators.
+ *
+ * Handles some heredoc cases (`<<`) as valid.
+ *
+ * @param msh Pointer to the shell state.
+ * @param str Parsed command string.
+ * @param line Original input line.
+ * @return SUCCESS if syntax is valid; FAILURE otherwise.
+ */
 int	detailed_syntax_checks(t_msh *msh, char *str, char *line)
 {
 	int	i;
