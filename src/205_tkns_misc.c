@@ -12,6 +12,16 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Advances the index past a quoted string segment.
+ *
+ * Skips over characters inside a quote (`'...'` or `"..."`), including the
+ * closing quote if present. Used to ignore quoted segments when counting or parsing.
+ *
+ * @param input The full input string.
+ * @param i The index where the quote starts.
+ * @return The index right after the closing quote.
+ */
 int	quote_helper(const char *input, int i)
 {
 	char	quote;
@@ -24,6 +34,16 @@ int	quote_helper(const char *input, int i)
 	return (i);
 }
 
+/**
+ * @brief Checks whether the current character is a shell-special character.
+ *
+ * Specifically looks for pipe (`|`), redirections (`<`, `>`), or dollar (`$`).
+ * Advances the index if a match is found.
+ *
+ * @param input The input string.
+ * @param i Pointer to the current index; will be incremented if a match is found.
+ * @return true if a special character was found; false otherwise.
+ */
 bool	special_char_helper(const char *input, int *i)
 {
 	if (input[*i] == '|' || input[*i] == '>'
@@ -35,6 +55,15 @@ bool	special_char_helper(const char *input, int *i)
 	return (false);
 }
 
+/**
+ * @brief Advances the index through regular characters (non-special, non-quoted).
+ *
+ * Stops when a quote, special character, or whitespace is found.
+ *
+ * @param input The input string.
+ * @param i Pointer to the current index; will be incremented through valid characters.
+ * @return true if at least one character was consumed; false otherwise.
+ */
 bool	regular_char_helper(const char *input, int *i)
 {
 	bool	incr;
@@ -50,6 +79,15 @@ bool	regular_char_helper(const char *input, int *i)
 	return (incr);
 }
 
+/**
+ * @brief Appends a single character from the input to the current word buffer.
+ *
+ * Ensures that the buffer has space before appending, and then adds a null-terminator.
+ *
+ * @param input The input string.
+ * @param i Pointer to the current index in the input string; will be incremented.
+ * @param msh Pointer to the shell state (contains the word buffer and size).
+ */
 void	append_char_to_word(const char *input, int *i, t_msh *msh)
 {
 	size_t	len;
@@ -63,6 +101,15 @@ void	append_char_to_word(const char *input, int *i, t_msh *msh)
 	(*i)++;
 }
 
+/**
+ * @brief Calculates the logical length of the input string for token parsing.
+ *
+ * Skips initial whitespace, then returns the number of characters in the rest of the string.
+ * Used to determine allocation size for tokens (e.g., in `split_input`).
+ *
+ * @param input The input string.
+ * @return The number of characters after leading whitespace.
+ */
 int	take_len(const char *input)
 {
 	int	i;
