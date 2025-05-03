@@ -12,11 +12,32 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Dummy handler for SIGQUIT (Ctrl+\).
+ *
+ * This function does nothing but overrides the default behavior,
+ * effectively ignoring `SIGQUIT` in the shell.
+ *
+ * @param sig The signal number (unused).
+ */
 void	sigquit_handler(int sig)
 {
 	(void)sig;
 }
 
+/**
+ * @brief Handler for SIGINT (Ctrl+C) during user input.
+ *
+ * If no child process is running (`waitpid(-1, NULL, WNOHANG) == -1`),
+ * this means the shell is idle and waiting for user input:
+ * - A newline is printed
+ * - The current line is cleared and redisplayed via Readline
+ *
+ * Also sets the global signal flag `g_signal = 130`, which may be used
+ * elsewhere to track signal-triggered interrupts.
+ *
+ * @param sig The signal number (unused).
+ */
 void	sigint_handler(int sig)
 {
 	(void)sig;
@@ -30,6 +51,14 @@ void	sigint_handler(int sig)
 	g_signal = 130;
 }
 
+/**
+ * @brief Sets up signal handling for the shell prompt.
+ *
+ * - SIGINT is caught and handled by `sigint_handler`
+ * - SIGQUIT is ignored (`SIG_IGN`)
+ * - Uses `sigaction` for reliable handling with `SA_RESTART` to ensure
+ *   system calls are restarted after signal handling.
+ */
 void	setup_signals(void)
 {
 	struct sigaction	sa_int;
