@@ -12,6 +12,13 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Frees all nodes in the heredoc linked list.
+ *
+ * Also frees any allocated string used as the heredoc temporary file path.
+ *
+ * @param heredoc Pointer to the head of the t_heredoc list.
+ */
 void	free_heredoc(t_heredoc *heredoc)
 {
 	t_heredoc	*tmp;
@@ -30,6 +37,14 @@ void	free_heredoc(t_heredoc *heredoc)
 	}
 }
 
+/**
+ * @brief Frees all tokens stored in the dynamic token vector.
+ *
+ * Each token's `name` and the token itself are freed, followed by the vector buffer.
+ * Resets the vector's size and count to 0.
+ *
+ * @param vector Pointer to the t_vector structure holding tokens.
+ */
 void	free_vector(t_vector *vector)
 {
 	int		i;
@@ -54,6 +69,13 @@ void	free_vector(t_vector *vector)
 	vector->size = 0;
 }
 
+/**
+ * @brief Frees a NULL-terminated array of strings.
+ *
+ * @param str The array of strings to free.
+ * @param error Return value for consistency in error handling.
+ * @return int Returns the `error` parameter.
+ */
 int	free_array(char **str, int error)
 {
 	int		i;
@@ -67,6 +89,13 @@ int	free_array(char **str, int error)
 	return (error);
 }
 
+/**
+ * @brief Frees a NULL-terminated array of arguments.
+ *
+ * Each individual string is freed, then the array itself.
+ *
+ * @param argv Array of strings to be freed.
+ */
 void	free_arg(char **argv)
 {
 	int	i;
@@ -84,6 +113,15 @@ void	free_arg(char **argv)
 	argv = NULL;
 }
 
+/**
+ * @brief Frees all resources associated with the msh runtime context.
+ *
+ * Frees command arguments, input line, tokens vector, heredoc list, and command struct.
+ *
+ * @param command Pointer to the current command structure.
+ * @param msh Pointer to the main shell state structure.
+ * @param token Pointer to token list (used to determine if vector should be freed).
+ */
 void	free_msh(t_command *command, t_msh *msh, t_tkn *token)
 {
 	if (msh->cmds->av)
