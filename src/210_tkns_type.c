@@ -12,6 +12,14 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Calculates the length of a linked list of tokens.
+ *
+ * Iterates through the token list and counts how many nodes it contains.
+ *
+ * @param tokens Pointer to the head of the token list.
+ * @return The number of tokens in the list.
+ */
 int	token_len(t_tkn *tokens)
 {
 	int		i;
@@ -25,7 +33,16 @@ int	token_len(t_tkn *tokens)
 	return (i);
 }
 
-//create nodes for linked list -> token
+/**
+ * @brief Creates a new token node with the given content and default values.
+ *
+ * Allocates memory for a new `t_tkn` struct, initializes all fields,
+ * and adds it to the token vector in `msh`.
+ *
+ * @param msh Pointer to the shell state structure.
+ * @param content The string content of the token (e.g., a word or command).
+ * @return Pointer to the newly created token, or NULL on allocation failure.
+ */
 t_tkn	*tkn_new(t_msh *msh, char *content)
 {
 	t_tkn	*node;
@@ -44,7 +61,14 @@ t_tkn	*tkn_new(t_msh *msh, char *content)
 	return (node);
 }
 
-//verify and assign token type commands
+/**
+ * @brief Assigns a command type to a token based on its content.
+ *
+ * Compares the token's name to known built-in commands and sets its `cmd_type`
+ * accordingly. Defaults to `CMD_EXEC` if no match is found.
+ *
+ * @param token Pointer to the token to analyze and classify.
+ */
 void	verify_tkn_cmd(t_tkn *token)
 {
 	if (token->name && ft_strcmp(token->name, "exit") == 0)
@@ -65,6 +89,16 @@ void	verify_tkn_cmd(t_tkn *token)
 		token->cmd_type = CMD_EXEC;
 }
 
+/**
+ * @brief Assigns a type and additional properties to a token.
+ *
+ * Handles blank/null detection and passes the token to further
+ * processing logic if valid.
+ *
+ * @param token Pointer to the token to analyze.
+ * @param av Current position in the argument vector (used in token handling).
+ * @param msh Pointer to the shell state.
+ */
 void	assign_tkn(t_tkn *token, char **av, t_msh *msh)
 {
 	handle_blank_and_null(token);
@@ -73,7 +107,16 @@ void	assign_tkn(t_tkn *token, char **av, t_msh *msh)
 	handle_other_tokens(token, av, msh);
 }
 
-//create tokens
+/**
+ * @brief Converts a list of input arguments into a linked list of token nodes.
+ *
+ * For each word in `av`, creates a token, assigns its type, and detects if it is a command.
+ * Returns the head of the linked list of tokens.
+ *
+ * @param msh Pointer to the shell state (used for vector storage and context).
+ * @param av NULL-terminated array of strings (already parsed arguments).
+ * @return Pointer to the head of the newly constructed token list.
+ */
 t_tkn	*tokenizer(t_msh *msh, char **av)
 {
 	int		i;
