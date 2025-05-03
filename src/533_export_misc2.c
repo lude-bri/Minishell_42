@@ -12,6 +12,14 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Sorts the environment variable array in lexicographical order.
+ *
+ * Uses a basic bubble sort to order strings in-place.
+ *
+ * @param envp The array of environment variables.
+ * @return 0 on success; 1 if `envp` is NULL.
+ */
 int	sort_envp(char **envp)
 {
 	int		i;
@@ -40,6 +48,16 @@ int	sort_envp(char **envp)
 	return (0);
 }
 
+/**
+ * @brief Validates that a variable name is suitable for export.
+ *
+ * Rejects names that:
+ * - Start with a digit
+ * - Contain '.' or '/'
+ *
+ * @param var The variable string to check (e.g. `"1FOO"` or `"FOO.bar"`).
+ * @return SUCCESS if valid; FAILURE otherwise.
+ */
 int	sanity_check_export(const char *var)
 {
 	int		i;
@@ -57,6 +75,15 @@ int	sanity_check_export(const char *var)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Checks if a string contains only alphabetical characters.
+ *
+ * Stops at operators (`+`, `=`, `-=`). Returns failure if any other
+ * invalid character is encountered.
+ *
+ * @param str The string to check.
+ * @return 0 if valid; 1 if it contains non-alphabetic characters or starts with '='.
+ */
 int	is_alpha(const char *str)
 {
 	int	i;
