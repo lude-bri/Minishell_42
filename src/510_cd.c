@@ -12,6 +12,15 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Finds the index of an environment variable in the envp array.
+ *
+ * Compares the prefix of each environment string with the target variable name.
+ *
+ * @param envp The environment variable array.
+ * @param var The variable name to search for (e.g., "PWD").
+ * @return The index of the variable if found; -1 otherwise.
+ */
 int	find_env_var(char **envp, const char *var)
 {
 	int		i;
@@ -28,6 +37,16 @@ int	find_env_var(char **envp, const char *var)
 	return (-1);
 }
 
+/**
+ * @brief Updates or replaces an environment variable in the envp array.
+ *
+ * Constructs a new string of the format `VAR=value`, frees the previous
+ * value (if found), and replaces it in-place.
+ *
+ * @param envp The environment variable array.
+ * @param var The variable name (e.g., "PWD" or "OLDPWD").
+ * @param value The new value to assign to the variable.
+ */
 void	update_env_var(char **envp, const char *var, const char *value)
 {
 	int		index;
@@ -51,6 +70,19 @@ void	update_env_var(char **envp, const char *var, const char *value)
 	}
 }
 
+/**
+ * @brief Implements the `cd` builtin command.
+ *
+ * Handles the following:
+ * - `cd` with no arguments: goes to `$HOME`
+ * - `cd [dir]`: changes to the given directory
+ * - Too many arguments: prints an error
+ * - Updates `PWD` and `OLDPWD` after a successful change
+ *
+ * @param argv Command arguments (`argv[0] = "cd"`, `argv[1] = target`)
+ * @param envp The environment variable array (modifiable).
+ * @return 0 on success; 1 on failure (with appropriate error messages).
+ */
 int	msh_cd(char **argv, char **envp)
 {
 	char	current_path[PATH_MAX];
