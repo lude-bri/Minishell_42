@@ -12,6 +12,14 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Debug helper that checks for '-' flags in the upcoming token.
+ *
+ * This function is used for diagnostic output to determine whether
+ * the token after a redirection might contain execution flags (e.g., `-n`, `-l`).
+ *
+ * @param tokens The current redirection token.
+ */
 static void	flags_check(t_tkn *tokens)
 {
 	if (ft_strchr(tokens->next->next->name, '-') != 0)
@@ -20,6 +28,19 @@ static void	flags_check(t_tkn *tokens)
 		printf("and it is not exec\n");
 }
 
+/**
+ * @brief Handles redirection based on the token type.
+ *
+ * Dispatches the token to the correct redirection handler:
+ * - `redir_in()` for input (`<`)
+ * - `redir_out()` for output (`>`)
+ * - `redir_append()` for append (`>>`)
+ *
+ * Also includes a debug check to determine if there is a following command token.
+ *
+ * @param tokens The redirection token to process.
+ * @param msh The minishell context structure.
+ */
 void	redirs(t_tkn *tokens, t_msh *msh)
 {
 	t_tkn	*tkn_exec;
@@ -38,12 +59,16 @@ void	redirs(t_tkn *tokens, t_msh *msh)
 		redir_append(tkn_exec, msh);
 }
 
-// static int	redir_found(t_tkn *tokens)
-// {
-// 	return ((tokens->type == TKN_IN || tokens->type == TKN_OUT
-// 			|| tokens->type == TKN_APPEND));
-// }
-
+/**
+ * @brief Iterates through tokens and applies redirections when found.
+ *
+ * This function walks through all tokens and, when a redirection token is
+ * encountered (`<`, `>`, or `>>`), it calls `redirs_2()` to apply it.
+ *
+ * @param tokens The list of tokens to scan.
+ * @param msh The minishell context structure.
+ * @return Always returns SUCCESS (0).
+ */
 int	exec_redirs(t_tkn *tokens, t_msh *msh)
 {
 	t_tkn	*tkn;
