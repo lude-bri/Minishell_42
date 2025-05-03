@@ -14,6 +14,16 @@
 # define MINISHELL_H
 # define _GNU_SOURCE
 
+/**
+ * @file minishell.h
+ * @brief Main header file for the minishell project.
+ *
+ * This header includes all the definitions, structures, enumerations, and function
+ * prototypes necessary for implementing a basic shell in C, capable of parsing,
+ * executing commands, managing environment variables, handling redirections, pipes,
+ * signals, and built-in shell functionalities.
+ */
+
 /* ************************************************************************** */
 /*                                  INCLUDES                                  */
 /* ************************************************************************** */
@@ -35,28 +45,34 @@
 /* ************************************************************************** */
 
 //Max
-# define PATH_MAX 4096
-# define BUF_SIZE 4096
+# define PATH_MAX 4096     /**< Maximum allowed path length. */
+# define BUF_SIZE 4096     /**< Default buffer size. */
 
 //Semantics
-# define NO_ENV -1
-# define NO_VAR -1
-# define NO_TOKEN 0
-# define NO_PATH 0
-# define NO_CMDS 0
+# define NO_ENV -1         /**< Indicator for missing environment */
+# define NO_VAR -1         /**< Indicator for missing variable. */
+# define NO_TOKEN 0        /**< Indicator for no token found. */
+# define NO_PATH 0         /**< Indicator for no path. */
+# define NO_CMDS 0         /**< Indicator for no commands. */
 
 /* ************************************************************************** */
 /*                                  ENUMS								  	  */
 /* ************************************************************************** */
 
-//Minishell Status
+/**
+ * @enum e_status
+ * @brief Execution status codes.
+ */
 typedef enum e_status
 {
 	FAILURE,
 	SUCCESS
 }	t_status;
 
-//Token Groups
+/**
+ * @enum e_token_group
+ * @brief Token types used in parsing the command line.
+ */
 typedef enum e_token_group
 {
 	TKN_IN,
@@ -70,7 +86,10 @@ typedef enum e_token_group
 	TKN_HEREDOC
 }	t_token_group;
 
-//Command Groups
+/**
+ * @enum e_cmd_group
+ * @brief Built-in command types.
+ */
 typedef enum e_cmd_group
 {
 	CMD_EXEC,
@@ -89,7 +108,10 @@ typedef enum e_cmd_group
 /*                                  STRUCTS                                   */
 /* ************************************************************************** */
 
-//heredoc struct
+/**
+ * @struct s_heredoc
+ * @brief Structure for managing heredoc instances.
+ */
 typedef struct s_heredoc
 {
 	// bool				exist;
@@ -102,8 +124,10 @@ typedef struct s_heredoc
 	struct s_heredoc	*next;
 }						t_heredoc;
 
-//struct to deal with operations when tokenizing
-//used in 200_tokenization.c
+/**
+ * @struct s_tkn_op
+ * @brief Helper struct for tokenizing input. Used in 200_tokenization.c
+ */
 typedef struct s_tkn_op
 {
 	int		i;
@@ -113,7 +137,10 @@ typedef struct s_tkn_op
 	char	**argv;
 }			t_tkn_op;
 
-//struct to deal with tokens
+/**
+ * @struct s_tkn
+ * @brief Represents a parsed token in the input.
+ */
 typedef struct s_tkn
 {
 	t_token_group	type;
@@ -128,7 +155,10 @@ typedef struct s_tkn
 	struct s_tkn	*next; //linked list -> helps w free
 }					t_tkn;
 
-//struct that deals with commands
+/**
+ * @struct s_command
+ * @brief Represents a parsed command and its arguments.
+ */
 typedef struct s_command
 {
 	int		ac; //argument counter
@@ -136,7 +166,10 @@ typedef struct s_command
 	char	*cmd; //command
 }			t_command;
 
-//struct to realloc and deal with tokens
+/**
+ * @struct s_vector
+ * @brief Dynamic array for storing tokens.
+ */
 typedef struct s_vector
 {
 	int		count;
@@ -144,8 +177,10 @@ typedef struct s_vector
 	t_tkn	**buffer;
 }			t_vector;
 
-//main struct to deal with the hole minishell system
-//it's called msh because its a MiniSHell
+/**
+ * @struct s_msh
+ * @brief Core struct for the entire shell's state.
+ */
 typedef struct s_msh
 {
 	t_command	*cmds;
@@ -179,7 +214,10 @@ typedef struct s_msh
 
 }				t_msh;
 
-//struct for export, there were too many variables needed
+/**
+ * @struct s_exp
+ * @brief Struct to handle export logic and states.
+ */
 typedef struct s_exp
 {
 	bool	flag;
@@ -203,7 +241,10 @@ typedef struct s_exp
 	int		start;
 }				t_exp;
 
-//to handle quotes
+/**
+ * @struct s_quote
+ * @brief Used for managing quotes in strings.
+ */
 typedef struct s_quote
 {
 	char	*buffer;
@@ -211,6 +252,10 @@ typedef struct s_quote
 	int		*i;
 }				t_quote;
 
+/**
+ * @struct s_params
+ * @brief Used to pass context parameters during parsing/tokenizing.
+ */
 typedef struct s_params
 {
 	const char	*input;
@@ -221,8 +266,12 @@ typedef struct s_params
 	bool		is_first_word;
 }				t_params;
 
-//Global_variable
+/**
+ * @var g_signal
+ * @brief Global signal state.
+ */
 extern volatile int	g_signal;
+
 /* ************************************************************************** */
 /*                                 FUNCTIONS                                  */
 /* ************************************************************************** */
