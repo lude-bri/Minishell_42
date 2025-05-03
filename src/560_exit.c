@@ -15,8 +15,16 @@
 static int	verify_arg(char **argv, t_msh *msh, t_tkn *tokens);
 int			msh_exit(char **argv, t_msh *msh, t_tkn *tokens);
 static int	exit_msh(char **argv, t_msh *msh, t_tkn *tokens);
-// static int	exit_msh(t_msh *msh);
 
+/**
+ * @brief Handles `exit` when a single numeric argument is passed.
+ *
+ * Validates sign and digits, sets the appropriate exit status.
+ *
+ * @param argv Argument vector from the command line.
+ * @param msh The minishell context.
+ * @return Exit code to be used by the shell.
+ */
 static int	handle_two_commands(char **argv, t_msh *msh)
 {
 	if (is_letter(argv[1]))
@@ -36,6 +44,16 @@ static int	handle_two_commands(char **argv, t_msh *msh)
 	return (msh->exit_status);
 }
 
+/**
+ * @brief Handles `exit` when multiple arguments are passed.
+ *
+ * If the first argument is numeric and more follow, an error is raised:
+ * `exit: too many arguments`. If non-numeric, it raises a format error.
+ *
+ * @param argv Argument vector.
+ * @param msh The shell state context.
+ * @return Exit code or error code (1/2).
+ */
 static int	handle_multiple_commands(char **argv, t_msh *msh)
 {
 	if (is_sign(argv[1]))
@@ -58,6 +76,16 @@ static int	handle_multiple_commands(char **argv, t_msh *msh)
 	return (msh->exit_status);
 }
 
+/**
+ * @brief Verifies validity of `exit` arguments and determines how to proceed.
+ *
+ * Handles numeric overflow, pipe conflicts, and calls the correct helper.
+ *
+ * @param argv Arguments passed to `exit`.
+ * @param msh Shell state.
+ * @param tokens The token list for cleanup.
+ * @return Final exit status to use.
+ */
 static int	verify_arg(char **argv, t_msh *msh, t_tkn *tokens)
 {
 	long long	ll;
@@ -83,7 +111,17 @@ static int	verify_arg(char **argv, t_msh *msh, t_tkn *tokens)
 		return (handle_multiple_commands(argv, msh));
 }
 
-//OG VERSION
+/**
+ * @brief Performs final cleanup and terminates the shell.
+ *
+ * Frees all relevant memory (env, tokens, command, file descriptors),
+ * then calls `exit()` with the current shell status.
+ *
+ * @param argv Arguments passed to `exit`.
+ * @param msh Shell state.
+ * @param tokens The token list.
+ * @return Never returns (calls `exit()` internally).
+ */
 static int	exit_msh(char **argv, t_msh *msh, t_tkn *tokens)
 {
 	if (argv != NULL)
@@ -96,19 +134,16 @@ static int	exit_msh(char **argv, t_msh *msh, t_tkn *tokens)
 	exit(msh->exit_status);
 }
 
-// static int	exit_msh(t_msh *msh)
-// {
-// 	printf("exit\n");
-// 	free_arg(msh->envp);
-// 	free_arg(msh->ex_envp);
-// 	free_arg(msh->cmds->av);
-// 	free(msh->line);
-// 	free(msh->cmds);
-// 	free_vector(&msh->tokens);
-// 	free_heredoc(&msh->heredoc);
-// 	exit(msh->exit_status);
-// }
-
+/**
+ * @brief The main `exit` builtin entry point.
+ *
+ * Decides if the shell should exit or report an error, and finalizes the status.
+ *
+ * @param argv Arguments passed (e.g. `exit 1`)
+ * @param msh Shell context.
+ * @param tokens Token list to free if exiting.
+ * @return Exit status (usually 0, 1, or 2)
+ */
 int	msh_exit(char **argv, t_msh *msh, t_tkn *tokens)
 {
 	if (msh->cmd_count >= 2)
