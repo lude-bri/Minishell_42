@@ -12,6 +12,21 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Checks if a token corresponds to a valid builtin command.
+ *
+ * Recognized builtins:
+ * - `cd`
+ * - `pwd`
+ * - `env`
+ * - `echo`
+ * - `exit`
+ * - `unset`
+ * - `export`
+ *
+ * @param tokens Pointer to the command token.
+ * @return SUCCESS if it's a builtin; FAILURE otherwise.
+ */
 int	is_bi(t_tkn *tokens)
 {
 	if (tokens->cmd_type)
@@ -37,6 +52,16 @@ int	is_bi(t_tkn *tokens)
 		return (FAILURE);
 }
 
+/**
+ * @brief Checks if a builtin should be executed **without** forking.
+ *
+ * These are builtins that affect shell state directly, such as:
+ * - `cd`, `export`, `unset`, `exit`, `env`, `pwd`
+ * They must run in the parent process to persist their changes.
+ *
+ * @param tokens Pointer to the command token.
+ * @return SUCCESS if special builtin; FAILURE otherwise.
+ */
 static int	is_special_bi(t_tkn *tokens)
 {
 	if (tokens->cmd_type == CMD_CD)
@@ -55,6 +80,17 @@ static int	is_special_bi(t_tkn *tokens)
 		return (FAILURE);
 }
 
+/**
+ * @brief Handles the execution of a builtin command.
+ *
+ * - If it's a special builtin (e.g. `cd`), executes directly in parent.
+ * - Otherwise, forks and runs in a child process.
+ *
+ * Signal handlers are reset to default before forking.
+ *
+ * @param msh Pointer to the shell state.
+ * @param tokens Pointer to the command token.
+ */
 void	handle_builtin_commands(t_msh *msh, t_tkn *tokens)
 {
 	int					pid;
@@ -77,6 +113,15 @@ void	handle_builtin_commands(t_msh *msh, t_tkn *tokens)
 	}
 }
 
+/**
+ * @brief Checks if the token list contains only null tokens.
+ *
+ * This function is used to detect cases like empty input or invalid
+ * tokens that the parser didn't classify as commands.
+ *
+ * @param tokens Pointer to the token list.
+ * @return 1 if only null tokens are present; 0 otherwise.
+ */
 static int	verify_only_null(t_tkn *tokens)
 {
 	t_tkn	*tkn;
@@ -99,6 +144,18 @@ static int	verify_only_null(t_tkn *tokens)
 	return (flag);
 }
 
+/**
+ * @brief Executes a single command (non-piped).
+ *
+ * - Skips null tokens and checks for invalid input.
+ * - Executes builtins with or without forking as needed.
+ * - Executes external commands using `exec_exe()`.
+ * - Handles redirections like `<`, `>`, `>>`.
+ *
+ * @param msh Pointer to the shell state.
+ * @param tokens Pointer to the full token list.
+ * @return Always returns SUCCESS (errors handled internally).
+ */
 int	exec_one(t_msh *msh, t_tkn *tokens)
 {
 	if (verify_only_null(tokens) == 1)
