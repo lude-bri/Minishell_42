@@ -12,6 +12,15 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Handles the double output redirection token ('>>').
+ *
+ * Adds the token `">>"` to the token list. If the token is quoted in the original
+ * input (e.g., `"">>"`), it is stored as a quoted string (`">>"`).
+ *
+ * @param input The raw input string.
+ * @param sp Pointer to the token operation structure.
+ */
 void	handle_double_out_redir(const char *input, t_tkn_op *sp)
 {
 	if (sp->i > 0 && input[sp->i - 1] == '"')
@@ -21,6 +30,19 @@ void	handle_double_out_redir(const char *input, t_tkn_op *sp)
 	(sp->i) += 2;
 }
 
+/**
+ * @brief Handles the single output redirection token ('>').
+ *
+ * Takes into account the total number of tokens (`msh->len`) and checks for edge cases
+ * involving quotes or null characters. Adds the appropriate token to the token array.
+ *
+ * - If the token appears quoted (e.g., `">"`), stores it as such.
+ * - If malformed or unsupported, the function may return early.
+ *
+ * @param input The raw input string.
+ * @param sp Pointer to the token operation structure.
+ * @param msh Pointer to the main shell state structure, used for context like `len`.
+ */
 void	handle_single_out_redir(const char *input, t_tkn_op *sp, t_msh *msh)
 {
 	if (input[sp->i] == '>')
