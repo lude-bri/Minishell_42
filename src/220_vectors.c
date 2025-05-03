@@ -12,6 +12,16 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Adds a token to a dynamic vector, resizing the buffer if needed.
+ *
+ * If the vector is uninitialized, it is first initialized with a default size (100).
+ * When the current number of elements (`count`) reaches the buffer capacity (`size`),
+ * the buffer is resized to `size * 2 + 1`, preserving all existing elements.
+ *
+ * @param vector Pointer to the dynamic vector structure.
+ * @param token Pointer to the token (t_tkn) to be added to the vector.
+ */
 void	vector_push(t_vector *vector, t_tkn *token)
 {
 	int		i;
