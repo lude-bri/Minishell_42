@@ -12,6 +12,23 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Handles heredoc input collection in a child process.
+ *
+ * This function is executed in a forked child process.
+ * It opens a temporary file (at `temp_path`), reads user input via
+ * `fill_heredoc()` until the EOF delimiter is reached, and stores the
+ * heredoc content in the file.
+ *
+ * It handles:
+ * - Signal setup (e.g., `SIGINT`).
+ * - Temporary file creation/truncation.
+ * - Handling different exit statuses (normal completion, interrupt).
+ *
+ * @param eof The EOF delimiter string (e.g., "EOF" in `<< EOF`).
+ * @param temp_path Path to the temporary file used to store heredoc input.
+ * @param msh Pointer to the shell’s state (`t_msh`), used to free memory.
+ */
 void	heredoc_child_process(char *eof, char *temp_path, t_msh *msh)
 {
 	int		status;
