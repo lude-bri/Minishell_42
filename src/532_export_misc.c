@@ -12,6 +12,14 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Prints an environment variable that contains an '=' sign.
+ *
+ * Formats the output as: `declare -x VAR="value"` to match Bash style.
+ *
+ * @param env_var The full environment variable string.
+ * @param equal_sign Pointer to the '=' character inside `env_var`.
+ */
 static void	handle_w_equal_sign(char *env_var, char *equal_sign)
 {
 	int		j;
@@ -27,6 +35,14 @@ static void	handle_w_equal_sign(char *env_var, char *equal_sign)
 	printf("=\"%s\"\n", equal_sign + 1);
 }
 
+/**
+ * @brief Prints an environment variable in a shell-compatible format.
+ *
+ * - If the variable contains `=`, it prints `declare -x VAR="value"`.
+ * - Otherwise, it prints just `declare -x VAR`.
+ *
+ * @param env_var The environment variable string.
+ */
 void	print_env_var(char *env_var)
 {
 	char	*equal_sign;
@@ -49,6 +65,16 @@ void	print_env_var(char *env_var)
 	}
 }
 
+/**
+ * @brief Finds the index of an existing variable in `envp`.
+ *
+ * - Matches by variable name, stopping at `=` or string end.
+ * - Updates `exp->existing_value` if a match is found and has `=`.
+ *
+ * @param envp Pointer to the environment variable array.
+ * @param exp Double pointer to the export context (`t_exp`).
+ * @return Index of the variable if found, -1 otherwise.
+ */
 int	find_existing_variable(char ***envp, t_exp **exp)
 {
 	int		i;
@@ -74,6 +100,15 @@ int	find_existing_variable(char ***envp, t_exp **exp)
 	return (-1);
 }
 
+/**
+ * @brief Checks if a variable exists in the environment.
+ *
+ * Used when no assignment is given in the export command.
+ *
+ * @param envp Pointer to the environment array.
+ * @param var Variable name (without '=' or value).
+ * @return 1 if found; 0 otherwise.
+ */
 int	variable_exists(char ***envp, const char *var)
 {
 	int		i;
@@ -93,6 +128,20 @@ int	variable_exists(char ***envp, const char *var)
 	return (0);
 }
 
+/**
+ * @brief Updates an existing variable in the export environment (`ex_envp`).
+ *
+ * Supports:
+ * - Appending (`+=`)
+ * - Removing substrings (`-=`)
+ * - Replacing (`=`)
+ *
+ * Calls `update_variable_entry()` to finalize the update.
+ *
+ * @param envp Pointer to the environment array.
+ * @param exp Pointer to the export context (`t_exp`).
+ * @return 0 on success; 1 on memory error; 2 if variable not found.
+ */
 int	update_existing_variable_env(char ***envp, t_exp *exp)
 {
 	int	i;
