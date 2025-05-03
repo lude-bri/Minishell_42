@@ -14,6 +14,17 @@
 
 volatile int	g_signal = 0;
 
+/**
+ * @brief Entry point of the minishell program.
+ *
+ * Initializes the main shell structure, sets up the environment,
+ * and starts the shell loop.
+ *
+ * @param ac Argument count (unused).
+ * @param av Argument vector (unused).
+ * @param envp Environment variables.
+ * @return Exit status of the shell program.
+ */
 int	main(int ac, char **av, char **envp)
 {
 	t_msh		msh;
@@ -26,6 +37,18 @@ int	main(int ac, char **av, char **envp)
 	return (free_array(msh.envp, 0));
 }
 
+/**
+ * @brief Entry point of the minishell program.
+ *
+ * Initializes the main shell structure, sets up the environment,
+ * and starts the shell loop.
+ *
+ * @param ac Argument count (unused).
+ * @param av Argument vector (unused).
+ * @param envp Environment variables.
+ * @param tokens Transforms arguments in tokens and then executes
+ * @return Exit status of the shell program.
+ */
 int	msh_loop(t_msh *msh)
 {
 	t_tkn	*tokens;
