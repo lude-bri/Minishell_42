@@ -12,6 +12,13 @@
 
 #include "../includes/minishell.h"
 
+/**
+ * @brief Initializes the heredoc structure.
+ *
+ * Sets default values for all fields of a t_heredoc instance.
+ *
+ * @param heredoc Pointer to the t_heredoc structure to initialize.
+ */
 static void	init_heredoc(t_heredoc *heredoc)
 {
 	heredoc->i = 0;
@@ -21,6 +28,15 @@ static void	init_heredoc(t_heredoc *heredoc)
 	heredoc->next = NULL;
 }
 
+/**
+ * @brief Initializes the main minishell structure with environment variables and token vector.
+ *
+ * Allocates memory and sets initial values for environment arrays, command list,
+ * execution tree, and token buffer. Also increments the shell level (SHLVL).
+ *
+ * @param msh Pointer to the t_msh structure to initialize.
+ * @param envp Array of strings containing the system environment variables.
+ */
 void	init_msh(t_msh *msh, char **envp)
 {
 	if (!msh->envp)
@@ -34,6 +50,13 @@ void	init_msh(t_msh *msh, char **envp)
 	increment_shlvl(msh->envp);
 }
 
+/**
+ * @brief Resets transient fields in the t_msh structure for a new shell iteration.
+ *
+ * Clears path-related fields, flags, argument lists, and allocates a new heredoc structure.
+ *
+ * @param msh Pointer to the t_msh structure to reset.
+ */
 void	init_struct(t_msh *msh)
 {
 	msh->path = NULL;
@@ -45,6 +68,14 @@ void	init_struct(t_msh *msh)
 	init_heredoc(msh->heredoc);
 }
 
+/**
+ * @brief Initializes a dynamic vector structure to store token pointers.
+ *
+ * Allocates a buffer with the given initial capacity and resets counters.
+ *
+ * @param vector Pointer to the t_vector structure.
+ * @param size Initial capacity of the vector.
+ */
 void	init_vector(t_vector *vector, size_t size)
 {
 	vector->count = 0;
@@ -52,6 +83,14 @@ void	init_vector(t_vector *vector, size_t size)
 	vector->buffer = malloc(sizeof(t_tkn *) * size);
 }
 
+/**
+ * @brief Creates a duplicate of the system environment variables.
+ *
+ * Allocates and copies each string from the original environment array into a new array.
+ *
+ * @param envp Original environment variable array.
+ * @return A newly allocated null-terminated array of duplicated strings, or NULL on failure.
+ */
 char	**init_env(char **envp)
 {
 	char	**env_copy;
