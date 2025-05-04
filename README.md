@@ -10,6 +10,8 @@
 
 This project is the implementation of a simple Unix shell, written in C as part of the 42 School Common Core curriculum. The objective is to gain a deep understanding of how command-line shells work at a system level: parsing input, handling processes, managing environment variables, and dealing with pipes and redirections. **Minishell** is not just a coding project, it is a structured software engineering study, focused on systems programming and OS-level interactions.
 
+## How it is organized 
+
 But beyond its functional implementation, this project is also structured as a pedagogical tool.
 
 It is organized in a modular and **chapter-based** way, inspired by the structure of books. Each section of the project is grouped using a numerical system:
@@ -46,7 +48,9 @@ This design allows you to read the source code almost as if it were a textbook, 
 	<ul style="list-style-type:disc">
 		<li><a href="#21-msh-a-replica"> 2.1. msh: a Replica! </a></li>
 		<li><a href="#22-msh-how-does-it-works"> 2.2. msh: How does it works? </a></li>
+		<li><a href="#23-why-a-minishell-anyways"> 2.3. Why a Minishell anyways? </a></li>
 	</ul>
+	<li><strong><a href="#sources" style="color:white"> Sources </a></strong></li>
 </ul>
 
 <div align="center">
@@ -181,6 +185,39 @@ Even though it is a "mini" version, the shell must support many complex behavior
 | Environment | Dynamic modification and inheritance of environment variables.|
 | Error and syntax handling | Custom parsing logic with error checking for unclosed quotes, bad pipes, etc. |
 | Signals | Robust reaction to keyboard input (e.g., stopping heredocs with `Ctrl+C`).|
+
+## <a name="#index-1">2.3. Why a Minishell anyways?</a>
+
+The significance of implementing a shell like Minishell lies in its unique ability to bridge the gap between abstract systems theory and practical programming experience. While many programming projects focus on user-facing features or algorithms, a shell forces the developer to work directly at the boundary between user and operating system — a critical frontier in software development.
+
+By developing a shell from scratch, students gain firsthand experience with the fundamental building blocks of modern computing. They do not rely on abstraction layers or frameworks but instead must engage directly with system calls, process management, memory handling, and file descriptors. This interaction fosters a deeper understanding of how operating systems function internally and how user-level applications interact with the kernel.
+
+Moreover, the shell serves as an ideal case study in the design of interpreters. The task of reading user input, parsing it into tokens, building a syntax tree, handling edge cases like quoted strings or redirection syntax, and finally executing it mirrors the same design challenges found in compilers and interpreters for programming languages. The student effectively builds a real-world language interpreter, albeit for a shell-like syntax.
+
+Additionally, the project cultivates a mindset of defensive programming and error awareness. Unlike academic exercises with clean inputs, shell interaction involves unpredictable user input, nested command structures, and asynchronous events like signals or system interruptions. Handling these gracefully requires careful planning, robust logic, and a mature approach to software architecture.
+
+In essence, Minishell is important because it brings together critical topics — systems programming, process control, parsing, execution, and user experience — into one cohesive and challenging project. It encourages autonomy, resilience, and craftsmanship, all while producing something that is both educational and fundamentally useful.
+
+Writing a shell is a rite of passage in systems programming. By following a textbook-style layout, this implementation of minishell aims not only to provide functionality but also to tell a story — one that goes from user input to forked processes, redirections, and execution.
+
+This project is an excellent resource for anyone wishing to understand how the shell works under the hood — and how the operating system responds to it.
+Whether you're a beginner or an experienced developer, there's something to learn at every chapter.
+
+## <a name="#index-1">Sources</a>
+
+* Aho, A. V., et al. (2006). Compilers: Principles, Techniques, and Tools. Pearson.
+* Bourne, S. R. (1978). The Unix Shell. Bell System Technical Journal.
+* Bryant, R. E., & O'Hallaron, D. R. (2015). Computer Systems: A Programmer's Perspective. Pearson
+* Debian Wiki. (2023). Dash as /bin/sh. https://wiki.debian.org/DashAsBinSh
+* Falco, R. (2015). Oh-My-Zsh: A Community-Driven Framework. GitHub.
+* Fox, B., & Ramey, C. (1994). Bash Reference Manual. GNU Press.
+* IEEE Std 1003.1. (2018). *POSIX.1-2017: Standard for Information Technology*. IEEE.
+* Kerrisk, M. (2010). The Linux Programming Interface. No Starch Press.
+* Ritchie, D. M., & Thompson, K. (1974). The UNIX Time-Sharing System. CACM.
+* Robbins, A. (2021). Bash Pocket Reference. O’Reilly.
+* Snover, J. (2017). PowerShell: Unix’s Successor?. Microsoft DevBlogs.
+* Stevens, W. R., & Rago, S. A. (2013). Advanced Programming in the Unix Environment. Addison-Wesley.
+* Tanenbaum, A. S., & Bos, H. (2015). Modern Operating Systems. Pearson.
 
 # Usage
 
