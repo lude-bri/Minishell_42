@@ -45,7 +45,7 @@
 /* ************************************************************************** */
 
 //Max
-# define PATH_MAX 4096     /**< Maximum allowed path length. */
+//# define PATH_MAX 4096     /**< Maximum allowed path length. */
 # define BUF_SIZE 4096     /**< Default buffer size. */
 
 //Semantics
