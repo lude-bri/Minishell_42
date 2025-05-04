@@ -96,7 +96,9 @@ The term **shell** refers to how it is a relatively thin layer around an operati
 
 This architectural positioning is often described metaphorically as a "shell" because it wraps around the kernel, providing a human-accessible interface while insulating users from low-level system complexities (Ritchie & Thompson, 1974).
 
-
+<div align=center>
+	<image src=https://miro.medium.com/v2/resize:fit:4800/format:webp/0*hswntOoInHuT2mKN.png>
+</div>
 
 
 But, long story short and from a software engineering perspective, a shell is actually a **command interpreter** that:
