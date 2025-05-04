@@ -76,7 +76,7 @@ This design allows you to read the source code almost as if it were a textbook, 
 
 <div align="center">
 <ul>
-	<li><strong><a href="#usage"> # Usage of Libft #</a></strong></li>
+	<li><strong><a href="#usage"> # Usage of Minishell #</a></strong></li>
 </ul>
 	</div>
  
