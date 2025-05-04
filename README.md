@@ -182,6 +182,28 @@ Even though it is a "mini" version, the shell must support many complex behavior
 | Error and syntax handling | Custom parsing logic with error checking for unclosed quotes, bad pipes, etc. |
 | Signals | Robust reaction to keyboard input (e.g., stopping heredocs with `Ctrl+C`).|
 
+# Usage
+
+## Setup & Compilation
+
+1. Clone repository:
+
+```sh
+git clone git@github.com:lude-bri/Minishell_42.git
+```
+
+2. Go inside the project folder and run `make`:
+
+```sh
+cd Minishell_42
+make
+```
+
+3. To use minishell, run the following command and have fun!
+
+```bash
+./minishell
+```
 
 ### License
 
