@@ -29,13 +29,6 @@ Each major group can have subchapters (e.g., 110, 111) and specific segments (e.
 This design allows you to read the source code almost as if it were a textbook, understanding the shell in layers: from how input is taken and split into tokens, all the way to forking processes and redirecting I/O.
 
 ----
-1. Shell
-   1.1. What is a Shell? Definition and Core Functionality
-   1.2. Historical Context and Evolution
-   1.3. Archictecture of a Shell
-   1.4. Types of Shell
-   1.5. Why Shell matters anyways?
-
 
 <!-------Index-------->
 
@@ -52,21 +45,8 @@ This design allows you to read the source code almost as if it were a textbook, 
 	<li><strong><a href="#2-minishell-or-msh-" style="color:white">2. Minishell (or msh) </a></strong></li>
 	<ul style="list-style-type:disc">
 		<li><a href="#21-msh-a-replica"> 2.1. msh: a Replica! </a></li>
-		<li><a href="#22-types-of-preprocessors-directives"> 2.2. Types of Preprocessors Directives</a></li>
-		<li><a href="#23-about-libraries-again"> 2.3. About Libraries... again </a></li>
+		<li><a href="#22-msh-how-does-it-works"> 2.2. msh: How does it works? </a></li>
 	</ul>
-	<li><strong><a href="#-3-building-our-first-c-library-" style="color:white">3. Building our first C Library </a></strong></li>
-	<ul style="list-style-type:disc">
-		<li><a href="#-31-the-preprocessor-directives-for-libft-"> 3.1. The Preprocessor Directives for Libft </a></li>
-		<li><a href="#-32-the-functions-"> 3.2. The Functions </a></li>	
-	</ul>
-	<li><strong><a href="#-4-makefile-" style="color:white">4. Makefile </a></strong></li>
- 	<ul style="list-style-type:disc">
-		<li><a href="#-41-what-is-makefile-"> 4.1. What is Makefile? </a></li>
-		<li><a href="#-42-why-do-we-need-makefile-"> 4.2. Why do we need Makefile? </a></li>
-		<li><a href="#-43-how-to-makefile-"> 4.3. How to Makefile? </a></li>
- 	</ul>
-	<li><strong><a href="#-conclusion-" style="color:white">5. Conclusion </a></strong></li>
 </ul>
 
 <div align="center">
@@ -190,16 +170,17 @@ This means every aspect (from handling quotes and escapes in strings  to buildin
 ## <a name="#index-1">2.2. msh: How does it works?</a>
 
 Even though it is a "mini" version, the shell must support many complex behaviors:
-| Shell	| Strengths | Weaknesses | Ideal Use |
--------------- | ---------------  | ---------- |--------- |
-| Bash  | POSIX-compliant, scripting-heavy, default on most Linux systems | Heavyweight | General-purpose scripting | 
-| Zsh	| Improved autocomplete, plugins | Complex config | Developer workflows | 
-| Fish	| User-friendly syntax, web-based config | Non-POSIX | Interactive exploration | 
-| Dash	| Lightweight, minimal |  Feature-poor | System boot scripts |
-| PowerShell | Object pipelines | High latency | Windows automation |
 
-
-
+| Feature	| Descriptions |
+-------------- | ---------------  |
+| Prompt  | Custom prompt display using dynamic environment values like `USER` or `PWD`. |
+| Built-ins	| Implementation of `cd`, `echo`, `pwd`, `export`, `unset`, `env`, and `exit`. |
+| Execution	| Support for system binaries (e.g., `ls`, `/usr/bin/env`, `cat`) | 
+| Pipes	| Ability to chain commands using pipes and file descriptors | 
+| Redirections | Handle `<`, `>`, `>>`, and heredocs `<<`. |
+| Environment | Dynamic modification and inheritance of environment variables.|
+| Error and syntax handling | Custom parsing logic with error checking for unclosed quotes, bad pipes, etc. |
+| Signals | Robust reaction to keyboard input (e.g., stopping heredocs with `Ctrl+C`).|
 
 
 ### License
